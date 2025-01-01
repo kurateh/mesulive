@@ -4,7 +4,10 @@
     "Adsense",
     "clsx",
     "meso",
+    "mesulive",
     "nextui",
+    "starcatch",
+    "starforce",
     "trpc"
   ],
   "eslint.codeActionsOnSave.mode": "problems",
