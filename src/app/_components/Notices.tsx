@@ -1,12 +1,10 @@
-"use client";
+import "server-only";
 
 import { Alert, Link, type AlertProps } from "@nextui-org/react";
 import { omit } from "lodash-es";
 import { CirclePlus } from "lucide-react";
 import NextLink from "next/link";
-import { useRef } from "react";
 
-import { getKSTDate } from "~/shared/date";
 import { cx } from "~/shared/style";
 import { mergeClassNames } from "~/shared/style/utils";
 import { type Optional } from "~/shared/types";
@@ -39,7 +37,7 @@ const noticeContents: (Optional<
         에 <b>미라클 타임</b> 기능이 추가되었습니다.
       </>
     ),
-    date: getKSTDate("2024-12-24"),
+    date: new Date("2024-12-24"),
     classNames: {
       base: cx("bg-primary-400"),
       alertIcon: cx("fill-white text-primary-400"),
@@ -64,7 +62,7 @@ const noticeContents: (Optional<
         에 <b>옵션 세트 프리셋</b> 기능이 추가되었습니다.
       </>
     ),
-    date: getKSTDate("2024-12-25"),
+    date: new Date("2024-12-25"),
     classNames: {
       base: cx("bg-secondary-500"),
       alertIcon: cx("fill-white text-secondary-500"),
@@ -73,12 +71,13 @@ const noticeContents: (Optional<
   },
 ];
 
+export const revalidate = 86400;
+
 export const Notices = ({ classNames }: Props) => {
-  const now = useRef(new Date());
+  const now = new Date();
   const contents = noticeContents.filter(
     ({ date }) =>
-      Math.abs(now.current.getTime() - date.getTime()) <=
-      10 * 24 * 60 * 60 * 1000,
+      Math.abs(now.getTime() - date.getTime()) <= 10 * 24 * 60 * 60 * 1000,
   );
 
   return contents.length > 0 ? (
