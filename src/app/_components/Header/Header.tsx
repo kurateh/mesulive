@@ -22,7 +22,7 @@ export const Header = ({ parentRef }: Props) => {
       parentRef={parentRef}
     >
       <MenuButton />
-      <Link as={NextLink} href="/" className="ml-2">
+      <Link as={NextLink} prefetch={false} href="/" className="ml-2">
         <Logo className="h-6 md:h-8" />
       </Link>
     </Navbar>

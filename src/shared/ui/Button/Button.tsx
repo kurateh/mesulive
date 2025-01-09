@@ -19,4 +19,4 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       />
     );
   },
-);
+) as typeof ButtonOrig;

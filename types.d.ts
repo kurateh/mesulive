@@ -10,15 +10,4 @@ declare module "*.svg?url" {
   export default content;
 }
 
-declare module "next/link" {
-  import NextLink from "next/link";
-  export default NextLink;
-}
-
-declare module "next/image" {
-  import NextImage, { StaticImageData } from "next/image";
-  export { StaticImageData };
-  export default NextImage;
-}
-
 declare module "jotai-devtools/styles.css";

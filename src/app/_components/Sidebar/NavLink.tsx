@@ -25,6 +25,7 @@ export const NavLink = ({
   return (
     <Link
       as={NextLink}
+      prefetch={false}
       {...linkProps}
       className={cx(
         `group flex items-center justify-between rounded-xl px-4 py-2.5 text-sm font-bold

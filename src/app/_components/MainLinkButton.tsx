@@ -33,6 +33,7 @@ export const MainLinkButton = ({
         classNames?.button,
       )}
       as={NextLink}
+      prefetch={false}
       href={href}
     >
       <Icon

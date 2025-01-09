@@ -27,6 +27,7 @@ const noticeContents: (Optional<
         2024.12.24{" "}
         <Link
           as={NextLink}
+          prefetch={false}
           href="/calc/potential"
           className="text-sm text-white"
           underline="always"
