@@ -29,6 +29,9 @@ export const metadata: Metadata = {
     icon: "/icon-192x192.png",
     apple: "/apple-icon.png",
   },
+  other: {
+    "google-adsense-account": process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT!,
+  }
 };
 
 export const viewport: Viewport = {
