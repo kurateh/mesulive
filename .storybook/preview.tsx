@@ -8,7 +8,7 @@ import type { Preview } from "@storybook/react";
 import { OverlayProvider } from "~/app/_components/providers";
 import { cx } from "~/shared/style";
 
-import "~/shared/style/globals.css";
+import "~/app/globals.css";
 
 const preview: Preview = {
   parameters: {
