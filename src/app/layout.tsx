@@ -1,7 +1,9 @@
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 
+import { googleAdsenseAccountId } from "~/shared/constants";
 import { cx } from "~/shared/style";
 
 import { MainLayout } from "./_components";
@@ -30,8 +32,8 @@ export const metadata: Metadata = {
     apple: "/apple-icon.png",
   },
   other: {
-    "google-adsense-account": process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT!,
-  }
+    "google-adsense-account": googleAdsenseAccountId,
+  },
 };
 
 export const viewport: Viewport = {
@@ -62,6 +64,11 @@ export default function RootLayout({
           </JotaiProvider>
         </MotionProvider>
         <SpeedInsights />
+        <Script
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${googleAdsenseAccountId}`}
+          async
+          crossOrigin="anonymous"
+        />
       </body>
     </html>
   );

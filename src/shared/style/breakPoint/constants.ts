@@ -5,4 +5,5 @@ export const breakPoints = {
   [BreakPoint.md]: 768,
   [BreakPoint.lg]: 1024,
   [BreakPoint.xl]: 1280,
+  [BreakPoint["2xl"]]: 1770,
 };

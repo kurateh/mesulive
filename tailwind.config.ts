@@ -35,6 +35,9 @@ const config: Config = {
         artisanCube: "#6B4D99",
         strangeAddiCube: "#668866",
       },
+      screens: {
+        "2xl": "1770px",
+      },
     },
   },
   darkMode: "class",

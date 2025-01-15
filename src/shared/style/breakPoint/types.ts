@@ -3,4 +3,5 @@ export enum BreakPoint {
   "md",
   "lg",
   "xl",
+  "2xl",
 }
