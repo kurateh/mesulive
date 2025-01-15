@@ -222,7 +222,7 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
 
   const eventAtom = atom<Starforce.Event | null>(null);
 
-  const discountAtom = atom<Starforce.Discount[]>([]);
+  const discountsAtom = atom<Starforce.Discount[]>([]);
 
   return {
     levelAtom,
@@ -233,7 +233,7 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
     safeGuardRecordAtom,
     starcatchRecordAtom,
     eventAtom,
-    discountAtom,
+    discountsAtom,
   };
 }) satisfies MoleculeConstructor<unknown>;
 

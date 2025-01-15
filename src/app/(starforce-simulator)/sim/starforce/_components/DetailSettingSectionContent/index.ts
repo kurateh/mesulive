@@ -1,0 +1,1 @@
+export { DetailSettingSectionContent } from "./DetailSettingSectionContent";

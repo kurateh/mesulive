@@ -1,12 +1,12 @@
 "use client";
 
+import { Input } from "@nextui-org/react";
 import { useMolecule } from "bunshi/react";
 import { identity, pipe } from "fp-ts/lib/function";
 import { useAtom } from "jotai";
 
 import { StarforceSimulatorMolecule } from "~/app/(starforce-simulator)/sim/starforce/_lib/molecule";
 import { E } from "~/shared/fp";
-import { S } from "~/shared/ui";
 
 export const CurrentStarforceInput = () => {
   const { currentStarforceAtom } = useMolecule(StarforceSimulatorMolecule);
@@ -17,7 +17,7 @@ export const CurrentStarforceInput = () => {
   );
 
   return (
-    <S.Input
+    <Input
       label="현재 스타포스"
       type="number"
       value={currentStarforce.input}

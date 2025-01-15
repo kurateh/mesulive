@@ -1,6 +1,8 @@
 import { type Metadata } from "next";
 
+import { Notice } from "~/app/_components";
 import { ScopeProvider } from "~/app/_components/providers";
+import { PageTitle } from "~/shared/ui";
 
 import { PageContent } from "./_components/PageContent";
 import { StarforceSimulatorScope } from "./_lib/molecule";
@@ -18,7 +20,13 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <ScopeProvider scope={StarforceSimulatorScope}>
-      <PageContent />
+      <div className="mx-auto max-w-screen-xl">
+        <PageTitle endColorVar="var(--mesulive-primary)">
+          스타포스 시뮬레이터
+        </PageTitle>
+        <Notice />
+        <PageContent />
+      </div>
     </ScopeProvider>
   );
 }

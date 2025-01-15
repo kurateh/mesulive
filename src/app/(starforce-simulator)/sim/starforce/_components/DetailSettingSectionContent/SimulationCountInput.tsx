@@ -7,27 +7,30 @@ import { useAtom } from "jotai";
 
 import { StarforceSimulatorMolecule } from "~/app/(starforce-simulator)/sim/starforce/_lib/molecule";
 import { E } from "~/shared/fp";
+import { putUnit } from "~/shared/number";
 
-export const SpareCostInput = () => {
-  const { spareCostAtom } = useMolecule(StarforceSimulatorMolecule);
-  const [spareCost, setSpareCost] = useAtom(spareCostAtom);
+export const SimulationCountInput = () => {
+  const { simulationCountAtom } = useMolecule(StarforceSimulatorMolecule);
+  const [simulationCount, setSimulationCount] = useAtom(simulationCountAtom);
   const errorMessage = pipe(
-    spareCost.value,
+    simulationCount.value,
     E.match(identity, () => undefined),
   );
 
   return (
     <Input
-      label="스페어 비용"
+      label="시뮬레이션 횟수"
       type="number"
-      value={spareCost.input}
+      value={simulationCount.input}
       onValueChange={(value) => {
-        setSpareCost(value);
+        setSimulationCount(value);
       }}
       isInvalid={!!errorMessage}
       errorMessage={errorMessage}
-      description="빈칸이면 0메소로 계산합니다."
-      endContent={<span className="min-w-fit text-sm text-gray-400">메소</span>}
+      description={pipe(
+        simulationCount.value,
+        E.matchW(() => undefined, putUnit),
+      )}
     />
   );
 };

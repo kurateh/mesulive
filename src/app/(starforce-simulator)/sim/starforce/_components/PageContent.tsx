@@ -1,23 +1,32 @@
 "use client";
 
-import { Notice } from "~/app/_components";
-import { PageTitle, SectionContainer } from "~/shared/ui";
+import { SectionContainer } from "~/shared/ui";
 
+import { CalculateButton } from "./CalculateButton";
+import { CancelButton } from "./CancelButton";
+import { DetailSettingSectionContent } from "./DetailSettingSectionContent";
 import { EquipSettingSectionContent } from "./EquipSettingSectionContent";
 
 export const PageContent = () => {
   return (
-    <div className="mx-auto max-w-screen-xl">
-      <PageTitle endColorVar="var(--mesulive-primary)">
-        스타포스 시뮬레이터
-      </PageTitle>
-      <Notice />
-      <div className="mt-4 flex flex-col gap-4 lg:flex-row">
-        <div className="flex w-full flex-col gap-4 lg:flex-1">
-          <SectionContainer title="장비 설정">
-            <EquipSettingSectionContent />
-          </SectionContainer>
+    <div className="mt-4 flex flex-col gap-4 lg:flex-row">
+      <div className="flex flex-col gap-4 lg:flex-1">
+        <SectionContainer title="장비 설정">
+          <EquipSettingSectionContent />
+        </SectionContainer>
+        <SectionContainer title="세부 설정">
+          <DetailSettingSectionContent />
+        </SectionContainer>
+        <div className="flex gap-4">
+          <CalculateButton className="flex-1" />
+          <CancelButton className="flex-1" />
         </div>
+      </div>
+      <div className="lg:min-h-full lg:flex-1">
+        <SectionContainer
+          title="시뮬레이션 결과"
+          className="lg:h-full"
+        ></SectionContainer>
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ export const eventSchema = z.enum([
   "샤타포스",
 ]);
 export type Event = z.infer<typeof eventSchema>;
+export const events = eventSchema.options;
 export const eventLabelRecord: Record<Event, string> = {
   "10성 이하 1+1": "10성 이하에서 강화 시 1+1",
   "30% 할인": "비용 30% 할인",
@@ -20,6 +21,7 @@ export const discountSchema = z.enum([
   "MVP Diamond",
   "PC Room",
 ]);
+export const discounts = discountSchema.options;
 export type Discount = z.infer<typeof discountSchema>;
 export const discountLabelRecord: Record<Discount, string> = {
   "MVP Silver": "MVP 실버",
