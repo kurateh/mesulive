@@ -25,7 +25,6 @@ export const metadata: Metadata = {
     description: "메수라이브, 각종 메이플 시뮬레이터와 기댓값 계산기",
     url: "https://mesu.live",
     siteName: "메수라이브",
-    images: { url: "https://mesu.live/thumbnail.png" },
   },
   icons: {
     icon: "/icon-192x192.png",
