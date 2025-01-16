@@ -5,13 +5,13 @@ import { forwardRef } from "react";
 export const Input = forwardRef<
   HTMLInputElement,
   React.ComponentProps<typeof InputOrig>
->(({ type, onWheel, ...props }, ref) => {
+>(({ onWheel, ...props }, ref) => {
   return (
     <InputOrig
       {...props}
       ref={ref}
       onWheel={
-        (onWheel ?? type === "number")
+        (onWheel ?? props.type === "number")
           ? (e) => {
               e.preventDefault();
             }

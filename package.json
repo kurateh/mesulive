@@ -98,5 +98,10 @@
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
     "vitest": "^1.6.0"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "@nextui-org/input": "patches/@nextui-org__input.patch"
+    }
   }
 }
