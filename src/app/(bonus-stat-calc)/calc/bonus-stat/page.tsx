@@ -54,9 +54,11 @@ export default function Page() {
               <StatSimulationContent />
             </SectionContainer>
           </div>
-          <SectionContainer title="계산 결과" className="w-full lg:flex-1">
-            <ResultSectionContent />
-          </SectionContainer>
+          <div className="w-full lg:flex-1">
+            <SectionContainer title="계산 결과" className="w-full">
+              <ResultSectionContent />
+            </SectionContainer>
+          </div>
         </div>
       </div>
       <StatEfficiencyModal />
