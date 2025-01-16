@@ -1,6 +1,5 @@
 "use client";
 
-import { Input } from "@nextui-org/react";
 import { pipe } from "fp-ts/lib/function";
 import { useAtom, useAtomValue } from "jotai";
 
@@ -10,6 +9,7 @@ import { effectiveStatLabels } from "~/entities/stat";
 import { O } from "~/shared/fp";
 import { convertToNumber } from "~/shared/number";
 import { cx } from "~/shared/style";
+import { Input } from "~/shared/ui";
 
 interface Props {
   stat: BonusStat.PossibleStat;

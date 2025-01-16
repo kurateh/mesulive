@@ -1,4 +1,4 @@
-import { Card, Input, SelectItem } from "@nextui-org/react";
+import { Card, SelectItem } from "@nextui-org/react";
 import { useMolecule } from "bunshi/react";
 import { identity, pipe } from "fp-ts/lib/function";
 import { atom, useAtomValue, useSetAtom } from "jotai";
@@ -11,7 +11,7 @@ import { Potential } from "~/entities/potential";
 import { type EffectiveStat, effectiveStatLabels } from "~/entities/stat";
 import { E, O } from "~/shared/fp";
 import { cx } from "~/shared/style";
-import { Button, Select } from "~/shared/ui";
+import { Button, Input, Select } from "~/shared/ui";
 
 interface Props {
   index: number;

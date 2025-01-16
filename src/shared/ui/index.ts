@@ -6,6 +6,7 @@ export { ModalHeader } from "./ModalHeader";
 export { Radio } from "./Radio";
 export { RadioGroup } from "./RadioGroup";
 export { Select } from "./Select";
+export { Input } from "./Input";
 
 export * from "./containers";
 export * from "./typographies";

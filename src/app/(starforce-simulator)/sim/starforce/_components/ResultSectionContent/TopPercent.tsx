@@ -1,4 +1,3 @@
-import { Input } from "@nextui-org/react";
 import { identity, pipe } from "fp-ts/lib/function";
 import { type Atom, useAtomValue } from "jotai";
 import { ArrowRightLeftIcon } from "lucide-react";
@@ -9,6 +8,7 @@ import { maxFractionDigits, maxFractionDigitsString } from "~/shared/math";
 import { TopPctCost } from "~/shared/math/geometricDistribution";
 import { convertToNumber, putUnit } from "~/shared/number";
 import { cx } from "~/shared/style";
+import { Input } from "~/shared/ui";
 
 const MAX_FRAC_DIGITS = 3;
 
@@ -85,13 +85,7 @@ export const TopPercent = ({ dataAtom, type }: Props) => {
           onValueChange={(v) => {
             const converted = convertToNumber(v);
 
-            setTopPct(
-              pipe(
-                converted,
-                O.map(maxFractionDigits(MAX_FRAC_DIGITS)),
-                O.match(() => "", String),
-              ),
-            );
+            setTopPct(v);
 
             setCost(
               pipe(

@@ -1,4 +1,4 @@
-import { Input, ModalBody, ModalContent, SelectItem } from "@nextui-org/react";
+import { ModalBody, ModalContent, SelectItem } from "@nextui-org/react";
 import { useMolecule } from "bunshi/react";
 import { identity, pipe } from "fp-ts/lib/function";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
@@ -11,7 +11,7 @@ import { Potential } from "~/entities/potential";
 import { E } from "~/shared/fp";
 import { entries } from "~/shared/object";
 import { cx } from "~/shared/style";
-import { Modal, ModalHeader, Select } from "~/shared/ui";
+import { Input, Modal, ModalHeader, Select } from "~/shared/ui";
 
 type Props = Omit<
   ComponentProps<typeof Modal>,

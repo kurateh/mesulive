@@ -1,11 +1,10 @@
 "use client";
 
-import { Input } from "@nextui-org/react";
 import { useState } from "react";
 
 import type { PotentialCalcMoleculeStructure } from "~/app/(potential-calc)/calc/potential/_lib/molecules";
 import type { AtomValue } from "~/shared/jotai";
-import { Button, DefaultModal } from "~/shared/ui";
+import { Button, DefaultModal, Input } from "~/shared/ui";
 import type { ModalProps } from "~/shared/ui/Modal";
 
 export const EditNameModal = ({

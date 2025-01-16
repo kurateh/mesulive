@@ -93,6 +93,7 @@ export default [
                 "Radio",
                 "RadioGroup",
                 "Select",
+                "Input",
               ],
               message: 'Use the custom Button component from "~/shared/ui".',
             },

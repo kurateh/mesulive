@@ -1,4 +1,3 @@
-import { Input } from "@nextui-org/react";
 import { pipe } from "fp-ts/lib/function";
 import { ArrowRightLeftIcon } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -9,7 +8,7 @@ import { O } from "~/shared/fp";
 import { maxFractionDigits, useTopPctCost } from "~/shared/math";
 import { convertToNumber, putUnit } from "~/shared/number";
 import { cx } from "~/shared/style";
-import { SectionSubtitle } from "~/shared/ui";
+import { Input, SectionSubtitle } from "~/shared/ui";
 
 const MAX_FRAC_DIGITS = 4;
 
@@ -78,13 +77,7 @@ export const ResultRow = ({ method, prob }: Props) => {
           onValueChange={(v) => {
             const converted = convertToNumber(v);
 
-            setTopPct(
-              pipe(
-                converted,
-                O.map(maxFractionDigits(MAX_FRAC_DIGITS)),
-                O.match(() => "", String),
-              ),
-            );
+            setTopPct(v);
 
             setCost(
               pipe(

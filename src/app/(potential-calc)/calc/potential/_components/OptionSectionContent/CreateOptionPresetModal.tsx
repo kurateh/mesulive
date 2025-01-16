@@ -1,4 +1,3 @@
-import { Input } from "@nextui-org/react";
 import { pipe } from "fp-ts/lib/function";
 import { useAtomValue } from "jotai";
 import { useAtomCallback } from "jotai/utils";
@@ -6,7 +5,7 @@ import { useCallback, useState } from "react";
 
 import { type PotentialCalcMoleculeStructure } from "~/app/(potential-calc)/calc/potential/_lib/molecules";
 import { Potential } from "~/entities/potential";
-import { Button, DefaultModal } from "~/shared/ui";
+import { Button, DefaultModal, Input } from "~/shared/ui";
 import { type ModalProps } from "~/shared/ui/Modal";
 
 interface Props extends Pick<ModalProps, "isOpen" | "onClose" | "onExit"> {

@@ -1,12 +1,12 @@
 "use client";
 
-import { Input } from "@nextui-org/react";
 import { useMolecule } from "bunshi/react";
 import { identity, pipe } from "fp-ts/lib/function";
 import { useAtom } from "jotai";
 
 import { StarforceSimulatorMolecule } from "~/app/(starforce-simulator)/sim/starforce/_lib/molecule";
 import { E } from "~/shared/fp";
+import { Input } from "~/shared/ui";
 
 export const CurrentStarforceInput = () => {
   const { currentStarAtom: currentStarforceAtom } = useMolecule(

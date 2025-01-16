@@ -1,6 +1,5 @@
 "use client";
 
-import { Input } from "@nextui-org/react";
 import { pipe } from "fp-ts/lib/function";
 import { useAtom, useAtomValue } from "jotai";
 import { useEffect, useState } from "react";
@@ -11,6 +10,7 @@ import { effectiveStatLabels } from "~/entities/stat";
 import { E, O } from "~/shared/fp";
 import { convertToNumber } from "~/shared/number";
 import { cx } from "~/shared/style";
+import { Input } from "~/shared/ui";
 import { getFirstZodErrorMessage } from "~/shared/zod";
 
 interface Props {
