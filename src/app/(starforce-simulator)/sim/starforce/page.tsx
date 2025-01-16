@@ -1,7 +1,9 @@
+import { Chip } from "@nextui-org/react";
 import { type Metadata } from "next";
 
 import { Notice } from "~/app/_components";
 import { ScopeProvider } from "~/app/_components/providers";
+import { cx } from "~/shared/style";
 import { PageTitle } from "~/shared/ui";
 
 import { PageContent } from "./_components/PageContent";
@@ -21,9 +23,18 @@ export default function Page() {
   return (
     <ScopeProvider scope={StarforceSimulatorScope}>
       <div className="mx-auto max-w-screen-xl">
-        <PageTitle endColorVar="var(--mesulive-primary)">
-          스타포스 시뮬레이터
-        </PageTitle>
+        <div className="flex flex-col gap-2 md:flex-row md:items-end">
+          <PageTitle endColorVar="var(--mesulive-primary)">
+            스타포스 시뮬레이터
+          </PageTitle>
+          <Chip
+            color="default"
+            variant="flat"
+            classNames={{ content: cx("font-medium") }}
+          >
+            로직 업데이트: 2024.01.25
+          </Chip>
+        </div>
         <Notice />
         <PageContent />
       </div>

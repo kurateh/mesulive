@@ -1,6 +1,8 @@
+import { Chip } from "@nextui-org/react";
 import { type Metadata } from "next";
 
 import { Notices } from "~/app/_components/Notices";
+import { cx } from "~/shared/style";
 import { PageTitle, SectionContainer } from "~/shared/ui";
 
 import {
@@ -26,9 +28,18 @@ export default function Page() {
   return (
     <BonusStatCalcProvider>
       <div className="mx-auto max-w-screen-xl">
-        <PageTitle endColorVar="var(--mesulive-secondary-500)">
-          추가옵션 기댓값 계산기
-        </PageTitle>
+        <div className="flex flex-col gap-2 md:flex-row md:items-end">
+          <PageTitle endColorVar="var(--mesulive-secondary-500)">
+            추가옵션 기댓값 계산기
+          </PageTitle>
+          <Chip
+            color="default"
+            variant="flat"
+            classNames={{ content: cx("font-medium") }}
+          >
+            확률 정보 업데이트: 2024.07.29
+          </Chip>
+        </div>
         <Notices />
 
         <div className="mt-4 flex flex-col gap-4 lg:flex-row">

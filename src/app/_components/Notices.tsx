@@ -24,7 +24,7 @@ const noticeContents: (Optional<
     color: "primary",
     description: (
       <>
-        2024.12.24{" "}
+        2025.01.17{" "}
         <Link
           as={NextLink}
           prefetch={false}
@@ -33,40 +33,15 @@ const noticeContents: (Optional<
           underline="always"
           showAnchorIcon
         >
-          잠재능력 계산기
+          스타포스 시뮬레이터
         </Link>
-        에 <b>미라클 타임</b> 기능이 추가되었습니다.
+        가 <b>신버전</b>으로 교체되었습니다.
       </>
     ),
-    date: new Date("2024-12-24"),
+    date: new Date("2025-1-17"),
     classNames: {
       base: cx("bg-primary-400"),
       alertIcon: cx("fill-white text-primary-400"),
-    },
-    icon: <CirclePlus />,
-  },
-  {
-    variant: "solid",
-    color: "secondary",
-    description: (
-      <>
-        2024.12.25{" "}
-        <Link
-          as={NextLink}
-          href="/calc/potential"
-          className="text-sm text-white"
-          underline="always"
-          showAnchorIcon
-        >
-          잠재능력 계산기
-        </Link>
-        에 <b>옵션 세트 프리셋</b> 기능이 추가되었습니다.
-      </>
-    ),
-    date: new Date("2024-12-25"),
-    classNames: {
-      base: cx("bg-secondary-500"),
-      alertIcon: cx("fill-white text-secondary-500"),
     },
     icon: <CirclePlus />,
   },
