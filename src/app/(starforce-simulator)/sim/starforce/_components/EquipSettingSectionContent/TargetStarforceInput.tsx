@@ -12,7 +12,9 @@ import { E } from "~/shared/fp";
 export const TargetStarforceInput = () => {
   const [touched, setTouched] = useState(false);
 
-  const { targetStarforceAtom } = useMolecule(StarforceSimulatorMolecule);
+  const { targetStarAtom: targetStarforceAtom } = useMolecule(
+    StarforceSimulatorMolecule,
+  );
   const [targetStarforce, setTargetStarforce] = useAtom(targetStarforceAtom);
   const errorMessage = pipe(
     targetStarforce.value,

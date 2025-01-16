@@ -29,3 +29,9 @@ export const discountLabelRecord: Record<Discount, string> = {
   "MVP Diamond": "MVP 다이아",
   "PC Room": "PC방",
 };
+export const discountRatio: Record<Discount, number> = {
+  "MVP Silver": 0.03,
+  "MVP Gold": 0.05,
+  "MVP Diamond": 0.1,
+  "PC Room": 0.05,
+};

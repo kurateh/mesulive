@@ -2,8 +2,7 @@
 
 import { SectionContainer } from "~/shared/ui";
 
-import { CalculateButton } from "./CalculateButton";
-import { CancelButton } from "./CancelButton";
+import { CalculateButtons } from "./CalculateButtons";
 import { DetailSettingSectionContent } from "./DetailSettingSectionContent";
 import { EquipSettingSectionContent } from "./EquipSettingSectionContent";
 
@@ -17,10 +16,7 @@ export const PageContent = () => {
         <SectionContainer title="세부 설정">
           <DetailSettingSectionContent />
         </SectionContainer>
-        <div className="flex gap-4">
-          <CalculateButton className="flex-1" />
-          <CancelButton className="flex-1" />
-        </div>
+        <CalculateButtons />
       </div>
       <div className="lg:min-h-full lg:flex-1">
         <SectionContainer

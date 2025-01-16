@@ -1,11 +1,11 @@
 "use client";
 
 import { createScope, molecule, type MoleculeConstructor } from "bunshi";
-import { flow, pipe } from "fp-ts/lib/function";
+import { flow, identity, pipe } from "fp-ts/lib/function";
 import { atom } from "jotai";
 import { z } from "zod";
 
-import { type Starforce } from "~/entities/starforce";
+import { Starforce } from "~/entities/starforce";
 import { E, O } from "~/shared/fp";
 import { convertToNumber } from "~/shared/number";
 import { type FormPayload } from "~/shared/react";
@@ -75,14 +75,16 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
     },
   );
 
-  const _currentStarforce = atom<FormPayload<number>>({
-    input: "",
-    value: E.of(0),
-  });
-  const currentStarforceAtom = atom(
-    (get) => get(_currentStarforce),
-    (get, set, input: string) => {
-      set(_currentStarforce, {
+  const _currentStarInputAtom = atom("");
+  const currentStarAtom = atom(
+    (get): FormPayload<number> => {
+      const level = pipe(
+        get(levelAtom).value,
+        E.getOrElse(() => 200),
+      );
+      const reachableStar = Starforce.getReachableStar(level);
+
+      return pipe(get(_currentStarInputAtom), (input) => ({
         input,
         value: pipe(
           convertToNumber(input || 0),
@@ -96,44 +98,33 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
               .min(0, {
                 message: "0 이상의 값을 입력해주세요.",
               })
-              .max(24, {
-                message: "24 이하의 값을 입력해주세요.",
+              .max(reachableStar - 1, {
+                message: `${reachableStar} 이하의 값을 입력해주세요.`,
               }),
           ),
         ),
-      });
+      }));
+    },
+    (get, set, input: string) => {
+      set(_currentStarInputAtom, input);
     },
   );
 
-  const _targetStarforce = atom<FormPayload<number>>({
-    input: "",
-    value: E.left("목표 스타포스를 입력해주세요."),
-  });
-  const _filteredTargetStarforce = atom((get) => {
-    const currentStarforce = pipe(
-      get(_currentStarforce).value,
-      E.getOrElse(() => 0),
-    );
-    return pipe(get(_targetStarforce), (o) => ({
-      ...o,
-      value: pipe(
-        o.value,
-        E.filterOrElse(
-          (n) => n > currentStarforce,
-          () => "현재 스타포스보다 높은 값을 입력해주세요.",
-        ),
-      ),
-    }));
-  });
-  const targetStarforceAtom = atom(
-    (get) => get(_filteredTargetStarforce),
-    (get, set, input: string) => {
+  const _targetStarInputAtom = atom("");
+
+  const targetStarAtom = atom(
+    (get): FormPayload<number> => {
       const currentStarforce = pipe(
-        get(_currentStarforce).value,
+        get(currentStarAtom).value,
         E.getOrElse(() => 0),
       );
+      const level = pipe(
+        get(levelAtom).value,
+        E.getOrElse(() => 200),
+      );
+      const reachableStar = Starforce.getReachableStar(level);
 
-      set(_targetStarforce, {
+      return pipe(get(_targetStarInputAtom), (input) => ({
         input,
         value: pipe(
           input,
@@ -157,14 +148,17 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
                   .min(currentStarforce + 1, {
                     message: "현재 스타포스보다 높은 값을 입력해주세요.",
                   })
-                  .max(25, {
-                    message: "25 이하의 값을 입력해주세요.",
+                  .max(reachableStar, {
+                    message: `${reachableStar} 이하의 값을 입력해주세요.`,
                   }),
               ),
             ),
           ),
         ),
-      });
+      }));
+    },
+    (get, set, input: string) => {
+      set(_targetStarInputAtom, input);
     },
   );
 
@@ -208,12 +202,12 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
     },
   );
 
-  const safeGuardRecordAtom = atom<{ [key: number]: boolean }>({
+  const safeGuardRecordAtom = atom<{ [key: `${number}`]: boolean }>({
     15: false,
     16: false,
   });
 
-  const starcatchRecordAtom = atom<{ [key: number]: boolean }>(
+  const starcatchRecordAtom = atom<{ [key: `${number}`]: boolean }>(
     Array.from({ length: 25 }).reduce<{ [key: number]: boolean }>(
       (acc, _, i) => ({ ...acc, [i]: false }),
       {},
@@ -224,16 +218,76 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
 
   const discountsAtom = atom<Starforce.Discount[]>([]);
 
+  const inputsAtom = atom((get) =>
+    pipe(
+      E.Do,
+      E.apS(
+        "level",
+        pipe(
+          get(levelAtom).value,
+          E.mapLeft(() => "장비 레벨을 정확히 입력해주세요."),
+        ),
+      ),
+      E.apS(
+        "spareCost",
+        pipe(
+          get(spareCostAtom).value,
+          E.mapLeft(() => "스페어 비용을 정확히 입력해주세요."),
+        ),
+      ),
+      E.apS(
+        "currentStar",
+        pipe(
+          get(currentStarAtom).value,
+          E.mapLeft(() => "현재 스타포스 수치를 정확히 입력해주세요."),
+        ),
+      ),
+      E.apS(
+        "targetStar",
+        pipe(
+          get(targetStarAtom).value,
+          E.mapLeft(() => "목표 스타포스 수치를 정확히 입력해주세요."),
+        ),
+      ),
+      E.apS(
+        "simulationCount",
+        pipe(
+          get(simulationCountAtom).value,
+          E.mapLeft(() => "시뮬레이션 횟수를 정확히 입력해주세요."),
+        ),
+      ),
+      E.map((inputs) => ({
+        ...inputs,
+        safeguardRecord: get(safeGuardRecordAtom),
+        starcatchRecord: get(starcatchRecordAtom),
+        event: get(eventAtom),
+        discounts: get(discountsAtom),
+      })),
+    ),
+  );
+
+  const inputsErrorMessageAtom = atom((get) =>
+    pipe(
+      get(inputsAtom),
+      E.match(identity, () => null),
+    ),
+  );
+
+  const resultsAtom = atom<{ cost: number; destroyed: number }[]>([]);
+
   return {
     levelAtom,
     spareCostAtom,
-    currentStarforceAtom,
-    targetStarforceAtom,
+    currentStarAtom,
+    targetStarAtom,
     simulationCountAtom,
     safeGuardRecordAtom,
     starcatchRecordAtom,
     eventAtom,
     discountsAtom,
+    inputsAtom,
+    inputsErrorMessageAtom,
+    resultsAtom,
   };
 }) satisfies MoleculeConstructor<unknown>;
 

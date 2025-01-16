@@ -9,7 +9,9 @@ import { StarforceSimulatorMolecule } from "~/app/(starforce-simulator)/sim/star
 import { E } from "~/shared/fp";
 
 export const CurrentStarforceInput = () => {
-  const { currentStarforceAtom } = useMolecule(StarforceSimulatorMolecule);
+  const { currentStarAtom: currentStarforceAtom } = useMolecule(
+    StarforceSimulatorMolecule,
+  );
   const [currentStarforce, setLevel] = useAtom(currentStarforceAtom);
   const errorMessage = pipe(
     currentStarforce.value,

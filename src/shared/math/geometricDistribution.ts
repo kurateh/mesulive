@@ -88,10 +88,10 @@ export class TopPctCost {
         this.probabilities.reduce((acc, prob, i) => acc + (i + 1) * prob, 0),
       )
       .with({ type: "Bernoulli" }, ({ probability }) => mean(probability))
-      .with({ type: "data" }, () =>
-        Math.ceil(
+      .with(
+        { type: "data" },
+        () =>
           this.sortedData.reduce((a, b) => a + b, 0) / this.sortedData.length,
-        ),
       )
       .otherwise(() => undefined);
     this.meanTopPct = pipe(

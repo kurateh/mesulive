@@ -12,11 +12,12 @@ import { Button, SectionSubtitle } from "~/shared/ui";
 export const StarcatchButtonGroup = () => {
   const [shouldSelectAll, setShouldSelectAll] = useState(true);
 
-  const { starcatchRecordAtom, currentStarforceAtom } = useMolecule(
+  const { starcatchRecordAtom, currentStarAtom, targetStarAtom } = useMolecule(
     StarforceSimulatorMolecule,
   );
   const [starcatchRecord, setStarcatchRecord] = useAtom(starcatchRecordAtom);
-  const currentStarforce = useAtomValue(currentStarforceAtom);
+  const currentStar = useAtomValue(currentStarAtom);
+  const targetStar = useAtomValue(targetStarAtom);
 
   return (
     <div>
@@ -59,8 +60,8 @@ export const StarcatchButtonGroup = () => {
                 [star]: !prev[star],
               }));
             }}
-            className="border-l border-t border-default text-default-500 [&:nth-child(-n+5)]:border-t-0
-              [&:nth-child(5n-4)]:border-l-0"
+            className="min-w-0 border-l border-t border-default text-default-500
+              [&:nth-child(-n+5)]:border-t-0 [&:nth-child(5n-4)]:border-l-0"
             isDisabled={pipe(
               convertToNumber(star),
               O.map(
@@ -68,10 +69,15 @@ export const StarcatchButtonGroup = () => {
                   !(
                     star >= 12 ||
                     pipe(
-                      currentStarforce.value,
+                      currentStar.value,
                       E.getOrElse(() => 0),
                       (currentStar) => currentStar <= star,
                     )
+                  ) ||
+                  pipe(
+                    targetStar.value,
+                    E.getOrElse(() => 0),
+                    (targetStar) => star >= targetStar,
                   ),
               ),
               O.toUndefined,
