@@ -28,7 +28,7 @@ const noticeContents: (Optional<
         <Link
           as={NextLink}
           prefetch={false}
-          href="/calc/potential"
+          href="/sim/starforce"
           className="text-sm text-white"
           underline="always"
           showAnchorIcon
