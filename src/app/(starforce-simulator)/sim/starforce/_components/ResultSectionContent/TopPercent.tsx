@@ -104,7 +104,7 @@ export const TopPercent = ({ dataAtom, type }: Props) => {
             );
           }}
         />
-        <ArrowRightLeftIcon className="size-6 text-default-500" />
+        <ArrowRightLeftIcon className="mt-2 size-6 text-default-500" />
         <Input
           classNames={{ base: cx("flex-1") }}
           type="number"
