@@ -7,6 +7,7 @@ import { useAtom } from "jotai";
 
 import { StarforceSimulatorMolecule } from "~/app/(starforce-simulator)/sim/starforce/_lib/molecule";
 import { E } from "~/shared/fp";
+import { putUnit } from "~/shared/number";
 
 export const SpareCostInput = () => {
   const { spareCostAtom } = useMolecule(StarforceSimulatorMolecule);
@@ -26,7 +27,11 @@ export const SpareCostInput = () => {
       }}
       isInvalid={!!errorMessage}
       errorMessage={errorMessage}
-      description="빈칸이면 0메소로 계산합니다."
+      description={
+        spareCost.input
+          ? putUnit(E.getOrElse(() => 0)(spareCost.value))
+          : "빈칸이면 0메소로 계산합니다."
+      }
       endContent={<span className="min-w-fit text-sm text-gray-400">메소</span>}
     />
   );
