@@ -19,7 +19,7 @@ export const Footer = () => {
         <br />
         mesulive is not associated with NEXON Korea.
         <br />
-        Contact: help@mesu.live
+        Contact: me@kurateh.com
       </p>
     </footer>
   );
