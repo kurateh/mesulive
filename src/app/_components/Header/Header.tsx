@@ -1,4 +1,4 @@
-import { Link, Navbar } from "@nextui-org/react";
+import { Link, Navbar } from "@heroui/react";
 import NextLink from "next/link";
 import { type RefObject } from "react";
 

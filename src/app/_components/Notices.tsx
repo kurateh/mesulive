@@ -1,6 +1,6 @@
 import "server-only";
 
-import { Alert, Link, type AlertProps } from "@nextui-org/react";
+import { Alert, Link, type AlertProps } from "@heroui/react";
 import { omit } from "lodash-es";
 import { CirclePlus } from "lucide-react";
 import NextLink from "next/link";

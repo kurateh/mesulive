@@ -1,6 +1,6 @@
 "use client";
 
-import { Link, Spacer, type LinkProps } from "@nextui-org/react";
+import { Link, Spacer, type LinkProps } from "@heroui/react";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { type ReactNode } from "react";

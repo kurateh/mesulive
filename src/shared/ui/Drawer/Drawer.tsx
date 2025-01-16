@@ -1,4 +1,4 @@
-import { VisuallyHidden } from "@nextui-org/react";
+import { VisuallyHidden } from "@heroui/react";
 import { type ReactNode } from "react";
 import { match } from "ts-pattern";
 

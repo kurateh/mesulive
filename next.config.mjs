@@ -36,12 +36,7 @@ const nextConfig = {
 
   experimental: {
     swcPlugins: [["@swc-jotai/debug-label", {}]],
-    optimizePackageImports: [
-      "@nextui-org/react",
-      "fp-ts",
-      "zod",
-      "~/shared/ui",
-    ],
+    optimizePackageImports: ["@heroui/react", "fp-ts", "zod", "~/shared/ui"],
   },
 };
 

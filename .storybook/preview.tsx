@@ -1,4 +1,4 @@
-import { NextUIProvider } from "@nextui-org/react";
+import { HeroUIProvider } from "@heroui/react";
 import {
   withThemeByClassName,
   withThemeFromJSXProvider,
@@ -24,7 +24,7 @@ const preview: Preview = {
     layout: "centered",
   },
   decorators: [
-    withThemeFromJSXProvider({ Provider: NextUIProvider }),
+    withThemeFromJSXProvider({ Provider: HeroUIProvider }),
     withThemeByClassName({
       themes: {
         default: cx("font-pretendard", "font-medium"),

@@ -1,4 +1,4 @@
-export { NextUIProvider } from "./NextUIProvider";
+export { HeroUIProvider } from "./HeroUIProvider";
 export { MotionProvider } from "./MotionProvider";
 export { JotaiProvider } from "./JotaiProvider";
 export { OverlayProvider } from "./OverlayProvider";

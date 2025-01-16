@@ -1,4 +1,4 @@
-import { Image, Link } from "@nextui-org/react";
+import { Image, Link } from "@heroui/react";
 import NextImage from "next/image";
 import { z } from "zod";
 

@@ -1,4 +1,4 @@
-import { Card, SelectItem } from "@nextui-org/react";
+import { Card, SelectItem } from "@heroui/react";
 import { useMolecule } from "bunshi/react";
 import { identity, pipe } from "fp-ts/lib/function";
 import { atom, useAtomValue, useSetAtom } from "jotai";

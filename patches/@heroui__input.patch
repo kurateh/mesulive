@@ -1,0 +1,120 @@
+diff --git a/dist/chunk-WHEPXHSP.mjs b/dist/chunk-WHEPXHSP.mjs
+index b43635722935a8e2267666afad52c9ace3ecce2d..a7585547d7f56a8ac357b84441d10e7cbd8eaf18 100644
+--- a/dist/chunk-WHEPXHSP.mjs
++++ b/dist/chunk-WHEPXHSP.mjs
+@@ -254,7 +254,8 @@ function useInput(originalProps) {
+         ),
+         "aria-readonly": dataAttr(originalProps.isReadOnly),
+         onChange: chain(inputProps.onChange, onChange),
+-        ref: domRef
++        ref: domRef,
++        type: type === "number" ? type : undefined
+       };
+     },
+     [
+@@ -270,7 +271,8 @@ function useInput(originalProps) {
+       classNames == null ? void 0 : classNames.input,
+       originalProps.isReadOnly,
+       originalProps.isRequired,
+-      onChange
++      onChange,
++      type
+     ]
+   );
+   const getInputWrapperProps = useCallback(
+diff --git a/dist/index.js b/dist/index.js
+index bc3b1c8d39fbcba657a0fdaa48402836356b1eac..3bcaf3b6586d8b13933dd1d37bc7ad722df61969 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -292,7 +292,8 @@ function useInput(originalProps) {
+         ),
+         "aria-readonly": (0, import_shared_utils.dataAttr)(originalProps.isReadOnly),
+         onChange: (0, import_utils2.chain)(inputProps.onChange, onChange),
+-        ref: domRef
++        ref: domRef,
++        type: type === "number" ? type : undefined
+       };
+     },
+     [
+@@ -308,7 +309,8 @@ function useInput(originalProps) {
+       classNames == null ? void 0 : classNames.input,
+       originalProps.isReadOnly,
+       originalProps.isRequired,
+-      onChange
++      onChange,
++      type
+     ]
+   );
+   const getInputWrapperProps = (0, import_react.useCallback)(
+diff --git a/dist/input.js b/dist/input.js
+index 7f8d3484efd6c38b2e5ae932b5526b9e1caa2061..1e2cf0dae30c16c3f71f4a53c61257de4c50d42b 100644
+--- a/dist/input.js
++++ b/dist/input.js
+@@ -282,7 +282,8 @@ function useInput(originalProps) {
+         ),
+         "aria-readonly": (0, import_shared_utils.dataAttr)(originalProps.isReadOnly),
+         onChange: (0, import_utils2.chain)(inputProps.onChange, onChange),
+-        ref: domRef
++        ref: domRef,
++        type: type === "number" ? type : undefined
+       };
+     },
+     [
+@@ -298,7 +299,8 @@ function useInput(originalProps) {
+       classNames == null ? void 0 : classNames.input,
+       originalProps.isReadOnly,
+       originalProps.isRequired,
+-      onChange
++      onChange,
++      type
+     ]
+   );
+   const getInputWrapperProps = (0, import_react.useCallback)(
+diff --git a/dist/textarea.js b/dist/textarea.js
+index 4743a03b6b4dc8f7593faf838b8a413a9e1340a9..f96d933aa02b579845da9c9785d961bba6cf94f4 100644
+--- a/dist/textarea.js
++++ b/dist/textarea.js
+@@ -291,7 +291,8 @@ function useInput(originalProps) {
+         ),
+         "aria-readonly": (0, import_shared_utils.dataAttr)(originalProps.isReadOnly),
+         onChange: (0, import_utils2.chain)(inputProps.onChange, onChange),
+-        ref: domRef
++        ref: domRef,
++        type: type === "number" ? type : undefined
+       };
+     },
+     [
+@@ -307,7 +308,8 @@ function useInput(originalProps) {
+       classNames == null ? void 0 : classNames.input,
+       originalProps.isReadOnly,
+       originalProps.isRequired,
+-      onChange
++      onChange,
++      type
+     ]
+   );
+   const getInputWrapperProps = (0, import_react.useCallback)(
+diff --git a/dist/use-input.js b/dist/use-input.js
+index e17ebb21b7808c9d74e9907794b6dab4c461802e..d2814edbef31594a96226a303c4dff29c4335a37 100644
+--- a/dist/use-input.js
++++ b/dist/use-input.js
+@@ -277,7 +277,8 @@ function useInput(originalProps) {
+         ),
+         "aria-readonly": (0, import_shared_utils.dataAttr)(originalProps.isReadOnly),
+         onChange: (0, import_utils2.chain)(inputProps.onChange, onChange),
+-        ref: domRef
++        ref: domRef,
++        type: type === "number" ? type : undefined
+       };
+     },
+     [
+@@ -293,7 +294,8 @@ function useInput(originalProps) {
+       classNames == null ? void 0 : classNames.input,
+       originalProps.isReadOnly,
+       originalProps.isRequired,
+-      onChange
++      onChange,
++      type
+     ]
+   );
+   const getInputWrapperProps = (0, import_react.useCallback)(

@@ -4,7 +4,7 @@ import {
   // eslint-disable-next-line no-restricted-imports
   CheckboxGroup as CheckboxGroupOrig,
   type CheckboxGroupProps,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { forwardRef } from "react";
 
 import { cx } from "~/shared/style";

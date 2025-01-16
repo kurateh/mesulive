@@ -1,6 +1,6 @@
 "use client";
 
-import { Tooltip } from "@nextui-org/react";
+import { Tooltip } from "@heroui/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useMolecule } from "bunshi/react";
 import { flow, identity, pipe } from "fp-ts/lib/function";

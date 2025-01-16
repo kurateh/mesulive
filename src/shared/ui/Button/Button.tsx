@@ -1,7 +1,7 @@
 "use client";
 
 // eslint-disable-next-line no-restricted-imports
-import { type ButtonProps, Button as ButtonOrig } from "@nextui-org/react";
+import { type ButtonProps, Button as ButtonOrig } from "@heroui/react";
 import { forwardRef } from "react";
 
 import { cx } from "~/shared/style";

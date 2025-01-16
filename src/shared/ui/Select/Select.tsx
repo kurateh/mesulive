@@ -1,7 +1,7 @@
 "use client";
 
 // eslint-disable-next-line no-restricted-imports
-import { Select as SelectOrig, type SelectProps } from "@nextui-org/react";
+import { Select as SelectOrig, type SelectProps } from "@heroui/react";
 import { forwardRef } from "react";
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(

@@ -1,4 +1,4 @@
-import { ModalBody, ModalContent } from "@nextui-org/react";
+import { ModalBody, ModalContent } from "@heroui/react";
 import { type ComponentProps, type ReactNode } from "react";
 
 import { cx } from "~/shared/style";

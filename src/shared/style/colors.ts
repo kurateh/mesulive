@@ -1,4 +1,4 @@
-import { type ColorScale } from "@nextui-org/react";
+import { type ColorScale } from "@heroui/react";
 
 export const primary: ColorScale = {
   DEFAULT: "#FF8009",

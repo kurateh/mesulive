@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-restricted-imports
-import { Input as InputOrig } from "@nextui-org/react";
+import { Input as InputOrig } from "@heroui/react";
 import { forwardRef } from "react";
 
 export const Input = forwardRef<

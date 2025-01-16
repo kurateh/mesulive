@@ -63,6 +63,7 @@ export const ResultRow = ({ method, prob }: Props) => {
         <Input
           classNames={{ base: cx("flex-1") }}
           type="number"
+          step={`${MAX_FRAC_DIGITS > 0 ? `0.${"0".repeat(MAX_FRAC_DIGITS - 1)}1` : "1"}`}
           startContent={
             <span className="break-keep text-sm font-bold text-default-500">
               상위

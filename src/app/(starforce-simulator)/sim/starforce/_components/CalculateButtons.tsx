@@ -1,4 +1,4 @@
-import { Tooltip } from "@nextui-org/react";
+import { Tooltip } from "@heroui/react";
 import { useMolecule } from "bunshi/react";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useAtomCallback } from "jotai/utils";

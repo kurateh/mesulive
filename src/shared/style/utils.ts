@@ -1,4 +1,4 @@
-import { type SlotsToClasses } from "@nextui-org/react";
+import { type SlotsToClasses } from "@heroui/react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 

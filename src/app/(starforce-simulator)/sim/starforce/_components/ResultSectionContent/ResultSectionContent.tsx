@@ -1,6 +1,6 @@
 "use client";
 
-import { Skeleton, Spacer } from "@nextui-org/react";
+import { Skeleton, Spacer } from "@heroui/react";
 import { useMolecule } from "bunshi/react";
 import Highcharts from "highcharts";
 import Boost from "highcharts/modules/boost";

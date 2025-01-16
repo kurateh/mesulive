@@ -1,6 +1,6 @@
 "use client";
 
-import { Chip } from "@nextui-org/react";
+import { Chip } from "@heroui/react";
 import { useMolecule } from "bunshi/react";
 import { pipe } from "fp-ts/lib/function";
 import { atom, useAtomValue, useSetAtom } from "jotai";

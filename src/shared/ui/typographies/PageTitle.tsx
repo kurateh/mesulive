@@ -1,4 +1,4 @@
-import { cn } from "@nextui-org/react";
+import { cn } from "@heroui/react";
 import { type HTMLAttributes, forwardRef, type CSSProperties } from "react";
 
 export const PageTitle = forwardRef<

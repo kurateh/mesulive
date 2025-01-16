@@ -4,7 +4,7 @@ import {
   // eslint-disable-next-line no-restricted-imports
   RadioGroup as RadioGroupOrig,
   type RadioGroupProps,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { forwardRef } from "react";
 
 import { cx } from "~/shared/style";

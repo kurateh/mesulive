@@ -1,6 +1,6 @@
 "use client";
 
-import { CircularProgress } from "@nextui-org/react";
+import { CircularProgress } from "@heroui/react";
 import { AnimatePresence, m } from "framer-motion";
 import { match } from "ts-pattern";
 

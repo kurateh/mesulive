@@ -1,6 +1,6 @@
 "use client";
 
-import { type InputProps } from "@nextui-org/react";
+import { type InputProps } from "@heroui/react";
 import { pipe } from "fp-ts/lib/function";
 import { useAtom, useAtomValue } from "jotai";
 

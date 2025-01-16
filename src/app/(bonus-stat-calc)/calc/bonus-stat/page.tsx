@@ -1,4 +1,4 @@
-import { Chip } from "@nextui-org/react";
+import { Chip } from "@heroui/react";
 import { type Metadata } from "next";
 
 import { Notices } from "~/app/_components/Notices";

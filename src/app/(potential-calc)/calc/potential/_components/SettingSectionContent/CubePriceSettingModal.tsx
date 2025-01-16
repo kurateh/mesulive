@@ -1,4 +1,4 @@
-import { ModalBody, ModalContent, SelectItem } from "@nextui-org/react";
+import { ModalBody, ModalContent, SelectItem } from "@heroui/react";
 import { useMolecule } from "bunshi/react";
 import { identity, pipe } from "fp-ts/lib/function";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";

@@ -1,6 +1,6 @@
 "use client";
 
-import { ModalBody, ModalContent, ModalFooter } from "@nextui-org/react";
+import { ModalBody, ModalContent, ModalFooter } from "@heroui/react";
 import { sequenceS } from "fp-ts/lib/Apply";
 import { flow, pipe } from "fp-ts/lib/function";
 import { fromCompare } from "fp-ts/lib/Ord";

@@ -1,4 +1,4 @@
-import { Link } from "@nextui-org/react";
+import { Link } from "@heroui/react";
 import { type Metadata } from "next";
 
 import { Flame, Logo, PotentialSVG, Star } from "~/shared/assets/images";

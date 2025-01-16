@@ -1,6 +1,6 @@
 "use client";
 
-import { ModalBody, ModalContent } from "@nextui-org/react";
+import { ModalBody, ModalContent } from "@heroui/react";
 import { useAtomValue } from "jotai";
 import { type ComponentProps } from "react";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { ModalBody, ModalContent } from "@nextui-org/react";
+import { ModalBody, ModalContent } from "@heroui/react";
 import { useAtom } from "jotai";
 
 import { bonusStatCalcAtoms } from "~/app/(bonus-stat-calc)/calc/bonus-stat/_lib/atoms";

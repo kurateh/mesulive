@@ -1,6 +1,6 @@
 "use client";
 
-import { ModalBody, ModalContent } from "@nextui-org/react";
+import { ModalBody, ModalContent } from "@heroui/react";
 import { pipe } from "fp-ts/lib/function";
 import { useAtomValue, useSetAtom } from "jotai";
 import { Pencil, X } from "lucide-react";

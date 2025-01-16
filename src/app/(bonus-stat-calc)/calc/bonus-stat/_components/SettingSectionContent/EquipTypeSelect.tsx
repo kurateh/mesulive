@@ -1,6 +1,6 @@
 "use client";
 
-import { SelectItem } from "@nextui-org/react";
+import { SelectItem } from "@heroui/react";
 import { pipe } from "fp-ts/lib/function";
 import { useAtom } from "jotai";
 import { toPairs } from "lodash-es";

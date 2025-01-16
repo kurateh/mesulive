@@ -23,6 +23,7 @@ export const EquipLevelInput = () => {
     <Input
       label="장비 레벨"
       type="number"
+      step="1"
       value={level.input}
       onValueChange={(value) => {
         setTouched(true);

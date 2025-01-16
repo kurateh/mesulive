@@ -10,7 +10,7 @@ import { MainLayout } from "./_components";
 import {
   JotaiProvider,
   MotionProvider,
-  NextUIProvider,
+  HeroUIProvider,
   OverlayProvider,
   QueryProvider,
 } from "./_components/providers";
@@ -49,13 +49,13 @@ export default function RootLayout({
       <body>
         <MotionProvider>
           <JotaiProvider>
-            <NextUIProvider>
+            <HeroUIProvider>
               <QueryProvider>
                 <OverlayProvider>
                   <MainLayout>{children}</MainLayout>
                 </OverlayProvider>
               </QueryProvider>
-            </NextUIProvider>
+            </HeroUIProvider>
           </JotaiProvider>
         </MotionProvider>
         <SpeedInsights />

@@ -1,7 +1,7 @@
 "use client";
 
 // eslint-disable-next-line no-restricted-imports
-import { Radio as RadioOrig, type RadioProps } from "@nextui-org/react";
+import { Radio as RadioOrig, type RadioProps } from "@heroui/react";
 import { forwardRef } from "react";
 
 import { cx } from "~/shared/style";

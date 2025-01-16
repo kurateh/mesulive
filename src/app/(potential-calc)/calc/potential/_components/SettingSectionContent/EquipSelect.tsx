@@ -1,6 +1,6 @@
 "use client";
 
-import { SelectItem } from "@nextui-org/react";
+import { SelectItem } from "@heroui/react";
 import { useMolecule } from "bunshi/react";
 import { useAtom } from "jotai";
 

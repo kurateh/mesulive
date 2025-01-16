@@ -115,6 +115,7 @@ export const ResultSection = ({ result, grade, level, className }: Props) => {
           classNames={{ base: cx("flex-1") }}
           type="number"
           value={topPct}
+          step={`${MAX_FRAC_DIGITS > 0 ? `0.${"0".repeat(MAX_FRAC_DIGITS - 1)}1` : "1"}`}
           onValueChange={(v) => {
             const converted = convertToNumber(v);
 

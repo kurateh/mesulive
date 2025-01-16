@@ -4,7 +4,7 @@ import {
   // eslint-disable-next-line no-restricted-imports
   ModalHeader as ModalHeaderOrig,
   type ModalHeaderProps,
-} from "@nextui-org/react";
+} from "@heroui/react";
 
 import { cx } from "~/shared/style";
 

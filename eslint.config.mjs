@@ -83,7 +83,7 @@ export default [
         {
           paths: [
             {
-              name: "@nextui-org/react",
+              name: "@heroui/react",
               importNames: [
                 "Button",
                 "Checkbox",

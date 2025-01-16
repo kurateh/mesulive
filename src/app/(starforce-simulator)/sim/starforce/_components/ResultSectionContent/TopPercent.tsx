@@ -77,6 +77,7 @@ export const TopPercent = ({ dataAtom, type }: Props) => {
               상위
             </span>
           }
+          step={`${MAX_FRAC_DIGITS > 0 ? `0.${"0".repeat(MAX_FRAC_DIGITS - 1)}1` : "1"}`}
           endContent={
             <span className="break-keep text-sm font-bold text-default-500">
               %
