@@ -1,23 +1,16 @@
 import { useMolecule } from "bunshi/react";
-import { pipe } from "fp-ts/lib/function";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom } from "jotai";
 import { useState } from "react";
 
 import { StarforceSimulatorMolecule } from "~/app/(starforce-simulator)/sim/starforce/_lib/molecule";
-import { E, O } from "~/shared/fp";
-import { convertToNumber } from "~/shared/number";
 import { keys } from "~/shared/object";
 import { Button, SectionSubtitle } from "~/shared/ui";
 
 export const StarcatchButtonGroup = () => {
   const [shouldSelectAll, setShouldSelectAll] = useState(true);
 
-  const { starcatchRecordAtom, currentStarAtom, targetStarAtom } = useMolecule(
-    StarforceSimulatorMolecule,
-  );
+  const { starcatchRecordAtom } = useMolecule(StarforceSimulatorMolecule);
   const [starcatchRecord, setStarcatchRecord] = useAtom(starcatchRecordAtom);
-  const currentStar = useAtomValue(currentStarAtom);
-  const targetStar = useAtomValue(targetStarAtom);
 
   return (
     <div>
@@ -62,26 +55,6 @@ export const StarcatchButtonGroup = () => {
             }}
             className="min-w-0 border-l border-t border-default text-default-500
               [&:nth-child(-n+5)]:border-t-0 [&:nth-child(5n-4)]:border-l-0"
-            isDisabled={pipe(
-              convertToNumber(star),
-              O.map(
-                (star) =>
-                  !(
-                    star >= 12 ||
-                    pipe(
-                      currentStar.value,
-                      E.getOrElse(() => 0),
-                      (currentStar) => currentStar <= star,
-                    )
-                  ) ||
-                  pipe(
-                    targetStar.value,
-                    E.getOrElse(() => 0),
-                    (targetStar) => star >= targetStar,
-                  ),
-              ),
-              O.toUndefined,
-            )}
           >
             {star}성
           </Button>

@@ -48,7 +48,8 @@ addEventListener(
       simulationTotalCount / simulationSetCount,
     );
 
-    const results: { cost: number; destroyed: number }[] = [];
+    const costs: number[] = [];
+    const destroyedCounts: number[] = [];
 
     for (let s = 1; s <= simulationSetCount; s++) {
       for (
@@ -116,7 +117,8 @@ addEventListener(
 
           // 성공했으면 result에 넣기
           if (star >= targetStar) {
-            results.push({ cost: spentCost, destroyed: destroyedCount });
+            costs.push(spentCost);
+            destroyedCounts.push(destroyedCount);
             break;
           }
         }
@@ -129,7 +131,8 @@ addEventListener(
 
     postMessage({
       type: "done",
-      result: results,
+      costs,
+      destroyedCounts,
     } satisfies SimulateStarforceOutput);
   },
 );

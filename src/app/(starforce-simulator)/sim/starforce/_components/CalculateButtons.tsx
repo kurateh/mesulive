@@ -1,8 +1,9 @@
 import { Tooltip } from "@nextui-org/react";
 import { useMolecule } from "bunshi/react";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useAtomCallback } from "jotai/utils";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState, useTransition } from "react";
+import { useIsomorphicLayoutEffect } from "usehooks-ts";
 
 import { StarforceSimulatorMolecule } from "~/app/(starforce-simulator)/sim/starforce/_lib/molecule";
 import {
@@ -14,42 +15,60 @@ import { maxFractionDigits, maxFractionDigitsString } from "~/shared/math";
 import { Button } from "~/shared/ui";
 
 export const CalculateButtons = () => {
-  const workerCount = useRef(1);
+  const maxWorkerCount = useRef(1);
   const workers = useRef<Worker[]>([]);
-  const [localResults, setLocalResults] = useState<
-    { cost: number; destroyed: number }[]
-  >([]);
+  const localCosts = useRef<number[]>([]);
+  const localDestroyedCounts = useRef<number[]>([]);
+  const finishedWorkerCount = useRef(0);
   const [progress, setProgress] = useState(0);
-  const [finishedWorkerCount, setFinishedWorkerCount] = useState(0);
-  const [isCalculating, setIsCalculating] = useState(false);
 
-  const { inputsAtom, inputsErrorMessageAtom, resultsAtom } = useMolecule(
-    StarforceSimulatorMolecule,
-  );
+  const [, startTransition] = useTransition();
+
+  const {
+    inputsAtom,
+    inputsErrorMessageAtom,
+    costsAtom,
+    destroyedCountsAtom,
+    isCalculatingAtom,
+  } = useMolecule(StarforceSimulatorMolecule);
+  const [isCalculating, setIsCalculating] = useAtom(isCalculatingAtom);
   const inputsErrorMessage = useAtomValue(inputsErrorMessageAtom);
-  const setResults = useSetAtom(resultsAtom);
+  const setCosts = useSetAtom(costsAtom);
+  const setDestroyedCounts = useSetAtom(destroyedCountsAtom);
 
   const handleWorkerOutput = useAtomCallback(
     useCallback(
       (_, set, output: SimulateStarforceOutput, progressUnit: number) => {
-        if (output.type === "calculating") {
-          setProgress((prev) => Math.min(100, prev + progressUnit));
-        } else {
-          setFinishedWorkerCount((prev) => prev + 1);
-          setLocalResults((prev) => [...prev, ...output.result]);
-        }
+        startTransition(() => {
+          if (output.type === "calculating") {
+            setProgress((prev) => Math.min(100, prev + progressUnit));
+          } else {
+            finishedWorkerCount.current += 1;
+            localCosts.current = [...localCosts.current, ...output.costs];
+            localDestroyedCounts.current = [
+              ...localDestroyedCounts.current,
+              ...output.destroyedCounts,
+            ];
+            // console.log(finishedWorkerCount);
+          }
+
+          if (finishedWorkerCount.current === workers.current.length) {
+            localCosts.current.sort((a, b) => a - b);
+            localDestroyedCounts.current.sort((a, b) => a - b);
+
+            setCosts(localCosts.current);
+            setDestroyedCounts(localDestroyedCounts.current);
+            setIsCalculating(false);
+          }
+        });
       },
-      [],
+      [setCosts, setDestroyedCounts, setIsCalculating],
     ),
   );
 
   const startCalculate = useAtomCallback(
     useCallback(
       (get) => {
-        if (workers.current.length === 0) {
-          return;
-        }
-
         const inputs = E.getOrElseW(() => null)(get(inputsAtom));
 
         if (inputs) {
@@ -60,12 +79,13 @@ export const CalculateButtons = () => {
           );
           const progressUnit = maxFractionDigits(2)(100 / simulationSetCount);
 
-          const simulationWorkerSetCount = Math.floor(
-            simulationSetCount / workerCount.current,
+          const simulationWorkerSetCount = Math.max(
+            1,
+            Math.floor(simulationSetCount / maxWorkerCount.current),
           );
 
           workers.current = Array.from({
-            length: workerCount.current,
+            length: Math.min(maxWorkerCount.current, simulationTotalCount),
           }).map(
             () =>
               new Worker(
@@ -116,33 +136,12 @@ export const CalculateButtons = () => {
     }
   };
 
-  useEffect(() => {
-    workerCount.current = Math.max(
+  useIsomorphicLayoutEffect(() => {
+    maxWorkerCount.current = Math.max(
       1,
       Math.floor(navigator.hardwareConcurrency * 0.5),
     );
-    workers.current = Array.from({
-      length: workerCount.current,
-    }).map(
-      () =>
-        new Worker(
-          new URL(
-            "~/app/(starforce-simulator)/sim/starforce/_lib/workers/simulateStarforce.ts",
-            import.meta.url,
-          ),
-        ),
-    );
   }, []);
-
-  useEffect(() => {
-    if (
-      workerCount.current > 0 &&
-      finishedWorkerCount === workerCount.current
-    ) {
-      setIsCalculating(false);
-      setResults(localResults);
-    }
-  }, [finishedWorkerCount, localResults, setResults]);
 
   return (
     <div className="flex gap-4">
@@ -157,11 +156,13 @@ export const CalculateButtons = () => {
           onPress={() => {
             setProgress(0);
             setIsCalculating(true);
-            setFinishedWorkerCount(0);
-            setLocalResults([]);
+            finishedWorkerCount.current = 0;
+            localCosts.current = [];
+            localDestroyedCounts.current = [];
             startCalculate();
           }}
           isDisabled={!!inputsErrorMessage || isCalculating}
+          isLoading={isCalculating}
         >
           {isCalculating
             ? `계산 중...${maxFractionDigitsString(0)(progress)}%`

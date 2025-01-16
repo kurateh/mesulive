@@ -152,6 +152,8 @@ export class TopPctCost {
           cost,
           O.fromPredicate((c) => c > 0),
           O.map((c) => {
+            if (this.sortedData[0] >= c) return 0;
+
             let i = 0;
             while (i < this.sortedData.length) {
               i++;

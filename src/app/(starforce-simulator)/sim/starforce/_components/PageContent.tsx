@@ -5,6 +5,7 @@ import { SectionContainer } from "~/shared/ui";
 import { CalculateButtons } from "./CalculateButtons";
 import { DetailSettingSectionContent } from "./DetailSettingSectionContent";
 import { EquipSettingSectionContent } from "./EquipSettingSectionContent";
+import { ResultSectionContent } from "./ResultSectionContent";
 
 export const PageContent = () => {
   return (
@@ -18,11 +19,23 @@ export const PageContent = () => {
         </SectionContainer>
         <CalculateButtons />
       </div>
+
       <div className="lg:min-h-full lg:flex-1">
         <SectionContainer
-          title="시뮬레이션 결과"
+          title={
+            <>
+              시뮬레이션 결과
+              <p className="text-xs text-default-500">
+                각 차트에선 하위 0.1%가 생략되어 있지만,
+                <br />
+                평균 및 상위 N% 구하기에는 포함되어 있습니다.
+              </p>
+            </>
+          }
           className="lg:h-full"
-        ></SectionContainer>
+        >
+          <ResultSectionContent />
+        </SectionContainer>
       </div>
     </div>
   );

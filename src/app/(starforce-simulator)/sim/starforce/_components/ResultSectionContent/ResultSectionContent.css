@@ -1,0 +1,20 @@
+
+.highcharts-axis {
+  @apply font-pretendard;
+}
+
+.highcharts-axis-labels {
+  @apply font-pretendard;
+}
+
+.highcharts-legend-item {
+  @apply font-pretendard;
+}
+
+.highcharts-tooltip {
+  @apply font-pretendard;
+}
+
+.highcharts-axis-title {
+  @apply font-bold
+}

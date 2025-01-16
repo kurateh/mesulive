@@ -188,11 +188,11 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
                   .int({
                     message: "정수를 입력해주세요.",
                   })
-                  .min(1, {
-                    message: "1 이상의 값을 입력해주세요.",
+                  .min(2, {
+                    message: "2 이상의 값을 입력해주세요.",
                   })
-                  .max(1000000, {
-                    message: "100만 이하의 값을 입력해주세요.",
+                  .max(100000, {
+                    message: "10만 이하의 값을 입력해주세요.",
                   }),
               ),
             ),
@@ -273,7 +273,13 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
     ),
   );
 
-  const resultsAtom = atom<{ cost: number; destroyed: number }[]>([]);
+  const isCalculatingAtom = atom(false);
+
+  const costsAtom = atom<number[]>([]);
+
+  const destroyedCountsAtom = atom<number[]>([]);
+
+  const resultExistsAtom = atom((get) => get(costsAtom).length > 0);
 
   return {
     levelAtom,
@@ -287,7 +293,10 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
     discountsAtom,
     inputsAtom,
     inputsErrorMessageAtom,
-    resultsAtom,
+    isCalculatingAtom,
+    costsAtom,
+    destroyedCountsAtom,
+    resultExistsAtom,
   };
 }) satisfies MoleculeConstructor<unknown>;
 

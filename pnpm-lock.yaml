@@ -53,6 +53,12 @@ importers:
       framer-motion:
         specifier: ^11.15.0
         version: 11.15.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      highcharts:
+        specifier: ^10.2.1
+        version: 10.3.3
+      highcharts-react-official:
+        specifier: ^3.1.0
+        version: 3.2.1(highcharts@10.3.3)(react@18.3.1)
       immer:
         specifier: ^10.1.1
         version: 10.1.1
@@ -5212,6 +5218,15 @@ packages:
   he@1.2.0:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
+
+  highcharts-react-official@3.2.1:
+    resolution: {integrity: sha512-hyQTX7ezCxl7JqumaWiGsroGWalzh24GedQIgO3vJbkGOZ6ySRAltIYjfxhrq4HszJOySZegotEF7v+haQ75UA==}
+    peerDependencies:
+      highcharts: '>=6.0.0'
+      react: '>=16.8.0'
+
+  highcharts@10.3.3:
+    resolution: {integrity: sha512-r7wgUPQI9tr3jFDn3XT36qsNwEIZYcfgz4mkKEA6E4nn5p86y+u1EZjazIG4TRkl5/gmGRtkBUiZW81g029RIw==}
 
   highlight.js@11.11.0:
     resolution: {integrity: sha512-6ErL7JlGu2CNFHyRQEuDogOyGPNiqcuWdt4iSSFUPyferNTGlNTPFqeV36Y/XwA4V/TJ8l0sxp6FTnxud/mf8g==}
@@ -14659,6 +14674,13 @@ snapshots:
       function-bind: 1.1.2
 
   he@1.2.0: {}
+
+  highcharts-react-official@3.2.1(highcharts@10.3.3)(react@18.3.1):
+    dependencies:
+      highcharts: 10.3.3
+      react: 18.3.1
+
+  highcharts@10.3.3: {}
 
   highlight.js@11.11.0: {}
 

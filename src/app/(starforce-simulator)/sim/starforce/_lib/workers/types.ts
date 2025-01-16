@@ -19,8 +19,6 @@ export type SimulateStarforceOutput =
   | { type: "calculating" }
   | {
       type: "done";
-      result: {
-        cost: number;
-        destroyed: number;
-      }[];
+      costs: number[];
+      destroyedCounts: number[];
     };
