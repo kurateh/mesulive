@@ -26,10 +26,6 @@ export const metadata: Metadata = {
     url: "https://mesu.live",
     siteName: "메수라이브",
   },
-  icons: {
-    icon: "/icon-192x192.png",
-    apple: "/apple-icon.png",
-  },
   other: {
     "google-adsense-account": googleAdsenseAccountId,
   },
