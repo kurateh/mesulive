@@ -1,4 +1,3 @@
-import { option } from "fp-ts";
 import { pipe } from "fp-ts/lib/function";
 import { P, match } from "ts-pattern";
 
@@ -156,20 +155,18 @@ export class TopPctCost {
       .with({ type: "data" }, () =>
         pipe(
           cost,
-          O.fromPredicate((c) => c > 0),
+          O.fromPredicate((c) => c >= 0),
           O.map((c) => {
             if (this.sortedData.length === 0) return undefined;
 
-            if (this.sortedData[0] >= c) return 0;
-
             let i = 0;
             while (i < this.sortedData.length) {
+              if (this.sortedData[i] > c) break;
               i++;
-              if (this.sortedData[i - 1] >= c) break;
             }
             return (i / this.sortedData.length) * 100;
           }),
-          option.toUndefined,
+          O.toUndefined,
         ),
       )
       .otherwise(() => undefined);
