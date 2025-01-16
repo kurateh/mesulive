@@ -23,6 +23,7 @@ export const TopPercent = ({ dataAtom, type }: Props) => {
     new TopPctCost({
       type: "data",
       samples: data,
+      sorted: true,
     }),
   );
 

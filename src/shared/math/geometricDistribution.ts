@@ -45,7 +45,7 @@ export class TopPctCost {
         probability: number;
         ceil?: number;
       }
-    | { type: "data"; samples: number[] };
+    | { type: "data"; samples: number[]; sorted?: boolean };
   // type: "data"
   private sortedData: number[];
 
@@ -59,11 +59,16 @@ export class TopPctCost {
   constructor(
     params:
       | { type: "Bernoulli"; probability: number; ceil?: number }
-      | { type: "data"; samples: number[] },
+      | { type: "data"; samples: number[]; sorted?: boolean },
   ) {
     this.params = params;
     this.sortedData =
-      params.type === "data" ? [...params.samples].sort((a, b) => a - b) : [];
+      params.type === "data"
+        ? [...params.samples].toSorted((a, b) => a - b)
+        : [];
+    if (params.type === "data" && !params.sorted) {
+      this.sortedData.sort((a, b) => a - b);
+    }
     this.probabilities =
       params.type === "Bernoulli" && params.ceil != null
         ? [
@@ -88,12 +93,13 @@ export class TopPctCost {
         this.probabilities.reduce((acc, prob, i) => acc + (i + 1) * prob, 0),
       )
       .with({ type: "Bernoulli" }, ({ probability }) => mean(probability))
-      .with(
-        { type: "data" },
-        () =>
-          this.sortedData.reduce((a, b) => a + b, 0) / this.sortedData.length,
+      .with({ type: "data" }, () =>
+        this.sortedData.length > 0
+          ? this.sortedData.reduce((a, b) => a + b, 0) / this.sortedData.length
+          : undefined,
       )
       .otherwise(() => undefined);
+
     this.meanTopPct = pipe(
       this.meanCost,
       O.fromNullable,
@@ -152,6 +158,8 @@ export class TopPctCost {
           cost,
           O.fromPredicate((c) => c > 0),
           O.map((c) => {
+            if (this.sortedData.length === 0) return undefined;
+
             if (this.sortedData[0] >= c) return 0;
 
             let i = 0;
