@@ -13,3 +13,4 @@ export { default as RedCube } from "./red_cube.png";
 export { default as Star } from "./star.svg";
 export { default as StrangeAddiCube } from "./strange_addi_cube.png";
 export { default as StrangeCube } from "./strange_cube.png";
+export { default as GithubMark } from "./github-mark.svg";
