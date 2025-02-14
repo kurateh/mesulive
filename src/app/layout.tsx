@@ -3,7 +3,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 
-import { googleAdsenseAccountId } from "~/shared/constants";
 import { cx } from "~/shared/style";
 
 import { MainLayout } from "./_components";
@@ -27,7 +26,7 @@ export const metadata: Metadata = {
     siteName: "메수라이브",
   },
   other: {
-    "google-adsense-account": googleAdsenseAccountId,
+    "google-adsense-account": process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT,
   },
 };
 
@@ -60,7 +59,7 @@ export default function RootLayout({
         </MotionProvider>
         <SpeedInsights />
         <Script
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${googleAdsenseAccountId}`}
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT}`}
           async
           crossOrigin="anonymous"
         />

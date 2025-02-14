@@ -5,8 +5,9 @@
     "dev:next": "next dev",
     "dev:storybook": "storybook dev -p 6006 --no-open --quiet",
     "dev": "concurrently \"pnpm dev:next\" \"pnpm dev:storybook\"",
-    "build": "next build",
+    "build": "pnpm generate-ads-txt && next build",
     "build:analyze": "ANALYZE=true next build",
+    "generate-ads-txt": "tsx scripts/generateAds.ts",
     "start": "next start",
     "lint": "next lint",
     "build-storybook": "storybook build",
@@ -17,6 +18,7 @@
   "packageManager": "pnpm@9.15.1",
   "dependencies": {
     "@heroui/react": "^2.6.12",
+    "@next/env": "^15.1.7",
     "@next/third-parties": "15.1.2",
     "@prisma/client": "5.22.0",
     "@radix-ui/react-use-callback-ref": "^1.1.0",

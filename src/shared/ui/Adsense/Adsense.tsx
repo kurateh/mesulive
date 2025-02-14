@@ -1,4 +1,3 @@
-import { googleAdsenseAccountId } from "~/shared/constants";
 import { cx } from "~/shared/style";
 
 interface Props {
@@ -22,7 +21,7 @@ export const Adsense = ({
           process.env.NODE_ENV === "development" && "bg-default-200",
           className,
         )}
-        data-ad-client={googleAdsenseAccountId}
+        data-ad-client={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT}
         data-ad-slot={adSlot}
         data-ad-format={adFormat}
         data-full-width-responsive={IsFullWidthResponsive ? "true" : undefined}

@@ -16,6 +16,9 @@ importers:
       '@heroui/react':
         specifier: ^2.6.12
         version: 2.6.12(@types/react@18.3.18)(framer-motion@11.18.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.7.2)))
+      '@next/env':
+        specifier: ^15.1.7
+        version: 15.1.7
       '@next/third-parties':
         specifier: 15.1.2
         version: 15.1.2(next@15.1.2(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
@@ -2300,6 +2303,9 @@ packages:
 
   '@next/env@15.1.2':
     resolution: {integrity: sha512-Hm3jIGsoUl6RLB1vzY+dZeqb+/kWPZ+h34yiWxW0dV87l8Im/eMOwpOA+a0L78U0HM04syEjXuRlCozqpwuojQ==}
+
+  '@next/env@15.1.7':
+    resolution: {integrity: sha512-d9jnRrkuOH7Mhi+LHav2XW91HOgTAWHxjMPkXMGBc9B2b7614P7kjt8tAplRvJpbSt4nbO1lugcT/kAaWzjlLQ==}
 
   '@next/eslint-plugin-next@15.1.2':
     resolution: {integrity: sha512-sgfw3+WdaYOGPKCvM1L+UucBmRfh8V2Ygefp7ELON0+0vY7uohQwXXnVWg3rY7mXDKharQR3o7uedpfvnU2hlQ==}
@@ -11031,6 +11037,8 @@ snapshots:
       - utf-8-validate
 
   '@next/env@15.1.2': {}
+
+  '@next/env@15.1.7': {}
 
   '@next/eslint-plugin-next@15.1.2':
     dependencies:
