@@ -6,15 +6,18 @@ import { Button } from "~/shared/ui";
 export const Footer = () => {
   return (
     <footer className="mx-auto my-14 flex flex-col items-center gap-3">
-      <Link
+      <Button
+        size="lg"
+        color="primary"
+        className="font-semibold"
+        as={Link}
         href="https://open.kakao.com/me/kurate"
         target="_blank"
         rel="noreferrer"
       >
-        <Button size="lg" color="primary" className="font-semibold">
-          제작자에게 커피 사주기
-        </Button>
-      </Link>
+        제작자에게 커피 사주기
+      </Button>
+
       <Link target="_blank" href="https://github.com/kurateh/mesulive">
         <GithubMark className="size-10 fill-gray-600" />
       </Link>
