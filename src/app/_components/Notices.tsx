@@ -1,9 +1,8 @@
 import "server-only";
 
-import { Alert, Link, type AlertProps } from "@heroui/react";
+import { Alert, type AlertProps } from "@heroui/react";
 import { omit } from "lodash-es";
-import { CirclePlus } from "lucide-react";
-import NextLink from "next/link";
+import { Info } from "lucide-react";
 
 import { cx } from "~/shared/style";
 import { mergeClassNames } from "~/shared/style/utils";
@@ -24,26 +23,15 @@ const noticeContents: (Optional<
     color: "primary",
     description: (
       <>
-        2025.01.17{" "}
-        <Link
-          as={NextLink}
-          prefetch={false}
-          href="/sim/starforce"
-          className="text-sm text-white"
-          underline="always"
-          showAnchorIcon
-        >
-          스타포스 시뮬레이터
-        </Link>
-        가 <b>신버전</b>으로 교체되었습니다.
+        2025.03.20 적용 예정인 <b>스타포스 강화 비용</b> 공식 제보받습니다.
       </>
     ),
-    date: new Date("2025-1-17"),
+    date: new Date("2025-3-13"),
     classNames: {
       base: cx("bg-primary-400"),
       alertIcon: cx("fill-white text-primary-400"),
     },
-    icon: <CirclePlus />,
+    icon: <Info />,
   },
 ];
 
