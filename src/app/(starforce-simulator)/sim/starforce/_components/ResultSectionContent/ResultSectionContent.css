@@ -4,7 +4,7 @@
 }
 
 .highcharts-axis-labels {
-  @apply font-pretendard;
+  @apply font-pretendard text-sm;
 }
 
 .highcharts-legend-item {
