@@ -111,6 +111,7 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
         shadow: false,
         borderWidth: 0,
         borderRadius: 20,
+        padding: 10,
         style: {
           color: "white",
         },
