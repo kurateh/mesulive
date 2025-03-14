@@ -2,11 +2,7 @@ import "server-only";
 
 import { Alert, type AlertProps } from "@heroui/react";
 import { omit } from "lodash-es";
-<<<<<<< HEAD
 import { Info } from "lucide-react";
-=======
-import { CirclePlus } from "lucide-react";
->>>>>>> 1a49275 (Setup preview page configs)
 
 import { cx } from "~/shared/style";
 import { mergeClassNames } from "~/shared/style/utils";
