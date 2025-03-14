@@ -56,8 +56,8 @@ export const getProbTable = (
     [0.01, 0.792, 0.198], // 29
   ];
 
-  if (event === "21성 이하 파괴 확률 30%" || event === "샤타포스") {
-    Array.from({ length: 21 }).forEach((_, i) => {
+  if (event === "21성 이하 파괴 확률 30% 감소" || event === "샤타포스") {
+    Array.from({ length: 22 }).forEach((_, i) => {
       const destroyProbability = defaultTable[i][PROB_TABLE_DESTROY_INDEX];
       defaultTable[i][PROB_TABLE_DESTROY_INDEX] = destroyProbability * 0.7;
       defaultTable[i][PROB_TABLE_MAINTAIN_INDEX] += destroyProbability * 0.3;
