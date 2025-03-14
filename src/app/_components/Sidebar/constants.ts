@@ -19,15 +19,14 @@ export const linkData: Record<string, ComponentProps<typeof NavLink>[]> = {
   ],
   시뮬레이터: [
     {
-      href: "/sim/starforce",
+      href: "https://mesu.live/sim/starforce",
       Icon: Star,
       children: "스타포스",
     },
     {
-      href: "https://next.mesu.live/sim/starforce",
+      href: "/sim/starforce",
       Icon: Star,
-      children: "스타포스",
-      Label: "Preview",
+      children: "스타포스(미리보기)",
     },
   ],
 };
