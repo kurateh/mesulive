@@ -1,12 +1,12 @@
 import { Chip } from "@heroui/react";
 import { type Metadata } from "next";
-import Script from "next/script";
 
 import { Notice } from "~/app/_components";
 import { ScopeProvider } from "~/app/_components/providers";
 import { cx } from "~/shared/style";
 import { PageTitle } from "~/shared/ui";
 
+import { LoadHighCharts } from "./_components/LoadHighCharts";
 import { PageContent } from "./_components/PageContent";
 import { StarforceSimulatorScope } from "./_lib/molecule";
 
@@ -22,27 +22,24 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <>
-      <ScopeProvider scope={StarforceSimulatorScope}>
-        <div className="mx-auto max-w-screen-xl">
-          <div className="flex flex-col gap-2 md:flex-row md:items-end">
-            <PageTitle endColorVar="var(--mesulive-primary)">
-              스타포스 시뮬레이터(미리보기)
-            </PageTitle>
-            <Chip
-              color="default"
-              variant="flat"
-              classNames={{ content: cx("font-medium") }}
-            >
-              로직 업데이트: 2025.03.20
-            </Chip>
-          </div>
-          <Notice />
-          <PageContent />
+    <ScopeProvider scope={StarforceSimulatorScope}>
+      <div className="mx-auto max-w-screen-xl">
+        <div className="flex flex-col gap-2 md:flex-row md:items-end">
+          <PageTitle endColorVar="var(--mesulive-primary)">
+            스타포스 시뮬레이터(미리보기)
+          </PageTitle>
+          <Chip
+            color="default"
+            variant="flat"
+            classNames={{ content: cx("font-medium") }}
+          >
+            로직 업데이트: 2025.03.20
+          </Chip>
         </div>
-      </ScopeProvider>
-      <Script src="https://code.highcharts.com/highcharts.js" />
-      <Script src="https://code.highcharts.com/modules/histogram-bellcurve.js" />
-    </>
+        <Notice />
+        <PageContent />
+      </div>
+      <LoadHighCharts />
+    </ScopeProvider>
   );
 }
