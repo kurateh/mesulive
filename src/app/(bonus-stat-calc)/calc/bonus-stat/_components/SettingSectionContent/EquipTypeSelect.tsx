@@ -28,9 +28,7 @@ export const EquipTypeSelect = () => {
       defaultSelectedKeys={[equipType]}
     >
       {toPairs(equipTypeLabels).map(([value, label]) => (
-        <SelectItem key={value} value={value}>
-          {label}
-        </SelectItem>
+        <SelectItem key={value}>{label}</SelectItem>
       ))}
     </Select>
   );

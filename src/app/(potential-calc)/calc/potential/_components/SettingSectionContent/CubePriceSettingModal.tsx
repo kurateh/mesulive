@@ -78,7 +78,7 @@ export const CubePriceSettingModal = ({ ...props }: Props) => {
                   aria-label={Potential.resetMethodLabels[cube]}
                 >
                   {currencyUnits.map((unit) => (
-                    <SelectItem key={unit} value={unit}>
+                    <SelectItem key={unit}>
                       {currencyUnitLabels[unit]}
                     </SelectItem>
                   ))}

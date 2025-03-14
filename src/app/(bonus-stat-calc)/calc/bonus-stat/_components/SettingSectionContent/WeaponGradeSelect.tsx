@@ -40,7 +40,7 @@ export const WeaponGradeSelect = () => {
           .map((_, i) => i + 1 + (isBossDrop ? 2 : 0))
           .reverse(),
       ].map((grade) => (
-        <SelectItem key={grade || "none"} value={grade || undefined}>
+        <SelectItem key={grade || "none"}>
           {grade ? `${8 - grade}추` : "선택안함"}
         </SelectItem>
       ))}

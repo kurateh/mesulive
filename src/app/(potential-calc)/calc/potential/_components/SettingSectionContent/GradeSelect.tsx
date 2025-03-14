@@ -21,9 +21,7 @@ export const GradeSelect = () => {
       selectedKeys={[grade]}
     >
       {Potential.grades.map((grade) => (
-        <SelectItem key={grade} value={grade}>
-          {Potential.gradeLabels[grade]}
-        </SelectItem>
+        <SelectItem key={grade}>{Potential.gradeLabels[grade]}</SelectItem>
       ))}
     </Select>
   );

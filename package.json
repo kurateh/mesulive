@@ -17,7 +17,7 @@
   },
   "packageManager": "pnpm@9.15.1",
   "dependencies": {
-    "@heroui/react": "^2.6.12",
+    "@heroui/react": "^2.7.5",
     "@next/env": "^15.1.7",
     "@next/third-parties": "15.1.2",
     "@prisma/client": "5.22.0",

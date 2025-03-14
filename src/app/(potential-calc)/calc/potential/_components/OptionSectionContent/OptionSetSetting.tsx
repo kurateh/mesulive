@@ -96,14 +96,13 @@ export const OptionSetSetting = ({ index }: Props) => {
               {enableOptions.map(([stat, name]) => (
                 <SelectItem
                   key={stat}
-                  value={stat}
                   className={cx(stat === "NONE" && "text-default-400")}
                 >
                   {name}
                 </SelectItem>
               ))}
               {unableOptions.map(([stat, name]) => (
-                <SelectItem key={stat} value={stat} className="hidden">
+                <SelectItem key={stat} className="hidden">
                   {name}
                 </SelectItem>
               ))}

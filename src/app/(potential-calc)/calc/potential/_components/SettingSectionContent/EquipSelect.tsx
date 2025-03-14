@@ -21,9 +21,7 @@ export const EquipSelect = () => {
       selectedKeys={[equip]}
     >
       {equips.map((equip) => (
-        <SelectItem key={equip} value={equip}>
-          {equip}
-        </SelectItem>
+        <SelectItem key={equip}>{equip}</SelectItem>
       ))}
     </Select>
   );
