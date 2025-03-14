@@ -150,9 +150,7 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
   }, [rawData, simulationCount, type]);
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    Highcharts.chart(chartContainerId, options);
+    window.Highcharts.chart(chartContainerId, options);
   }, [chartContainerId, options]);
 
   return <div className="h-[400px]" id={chartContainerId}></div>;
