@@ -19,9 +19,11 @@ export const ResultSectionContent = () => {
     isCalculatingAtom,
     costsAtom,
     destroyedCountsAtom,
+    isHighchartsLoadedAtom,
   } = useMolecule(StarforceSimulatorMolecule);
   const resultsExists = useAtomValue(resultExistsAtom);
   const isCalculating = useAtomValue(isCalculatingAtom);
+  const isHighchartsLoaded = useAtomValue(isHighchartsLoadedAtom);
 
   return (
     <div className="flex flex-col gap-2">
@@ -32,7 +34,7 @@ export const ResultSectionContent = () => {
           resultsExists || "flex items-center justify-center",
         )}
       >
-        {isCalculating ? (
+        {isCalculating || !isHighchartsLoaded ? (
           <Skeleton className="m-2 h-full w-full rounded-2xl" />
         ) : resultsExists ? (
           <ResultChart dataAtom={costsAtom} type="cost" />
@@ -51,7 +53,7 @@ export const ResultSectionContent = () => {
           resultsExists || "flex items-center justify-center",
         )}
       >
-        {isCalculating ? (
+        {isCalculating || !isHighchartsLoaded ? (
           <Skeleton className="m-2 h-full w-full rounded-2xl" />
         ) : resultsExists ? (
           <ResultChart dataAtom={destroyedCountsAtom} type="destroyedCount" />
