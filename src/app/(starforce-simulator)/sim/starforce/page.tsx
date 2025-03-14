@@ -41,8 +41,10 @@ export default function Page() {
           <PageContent />
         </div>
       </ScopeProvider>
-      <Script src="https://code.highcharts.com/12/highcharts.js" />
-      <Script src="https://code.highcharts.com/12/modules/histogram-bellcurve.js" />
+      <Script src="https://code.highcharts.com/12.1.2/highcharts.js" />
+      <Script src="https://code.highcharts.com/12.1.2/modules/exporting.js" />
+      <Script src="https://code.highcharts.com/12.1.2/modules/accessibility.js" />
+      <Script src="https://code.highcharts.com/12.1.2/modules/histogram-bellcurve.js" />
     </>
   );
 }
