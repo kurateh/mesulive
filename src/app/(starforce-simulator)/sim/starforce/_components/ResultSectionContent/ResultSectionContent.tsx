@@ -2,13 +2,9 @@
 
 import { Skeleton, Spacer } from "@heroui/react";
 import { useMolecule } from "bunshi/react";
-import Highcharts from "highcharts";
-import Boost from "highcharts/modules/boost";
-import factory from "highcharts/modules/histogram-bellcurve";
 import { useAtomValue } from "jotai";
 
 import { StarforceSimulatorMolecule } from "~/app/(starforce-simulator)/sim/starforce/_lib/molecule";
-import { isServer } from "~/shared/react";
 import { cx } from "~/shared/style";
 import { SectionSubtitle } from "~/shared/ui";
 
@@ -16,11 +12,6 @@ import { ResultChart } from "./ResultChart";
 import { TopPercent } from "./TopPercent";
 
 import "./ResultSectionContent.css";
-
-if (!isServer()) {
-  factory(Highcharts);
-  Boost(Highcharts);
-}
 
 export const ResultSectionContent = () => {
   const {

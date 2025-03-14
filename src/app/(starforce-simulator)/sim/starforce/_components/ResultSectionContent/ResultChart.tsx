@@ -1,7 +1,7 @@
-import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
+import { semanticColors } from "@heroui/react";
+import type Highcharts from "highcharts";
 import { type Atom, useAtomValue } from "jotai";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 import { putUnit } from "~/shared/number";
 import { primary, secondary } from "~/shared/style/colors";
@@ -12,6 +12,8 @@ interface Props {
 }
 
 export const ResultChart = ({ dataAtom, type }: Props) => {
+  const chartContainerId = `starforce-result-chart-container-${type}`;
+
   const rawData = useAtomValue(dataAtom);
   const simulationCount = rawData.length;
 
@@ -52,6 +54,8 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
         {
           title: { text: type === "cost" ? "메소" : "파괴 횟수" },
           alignTicks: false,
+          tickColor: semanticColors.light.default[300],
+          lineColor: semanticColors.light.default[300],
           labels: {
             formatter() {
               let value;
@@ -60,6 +64,9 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
               else value = this.value;
 
               return `${putUnit(value)}`;
+            },
+            style: {
+              color: semanticColors.light.default[500],
             },
           },
         },
@@ -71,7 +78,17 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
           visible: false,
         },
         {
-          title: { text: "횟수" },
+          title: {
+            text: "횟수",
+            style: {
+              color: semanticColors.light.default[500],
+            },
+          },
+          labels: {
+            style: {
+              color: semanticColors.light.default[500],
+            },
+          },
         },
       ],
 
@@ -93,15 +110,16 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
       tooltip: {
         shadow: false,
         borderWidth: 0,
-        borderRadius: 30,
+        borderRadius: 20,
+        padding: 10,
         style: {
           color: "white",
         },
         backgroundColor: type === "cost" ? primary[600] : secondary[600],
         formatter() {
-          return `${putUnit(this.point.x)} ~ ${putUnit(
-            this.point.x + width,
-          )} : <b x=8 y=40>${this.point.y}회</b>`;
+          return `${putUnit(this.x)} ~ ${putUnit(
+            this.x + width,
+          )} : <b x=8 y=40>${this.y}회</b>`;
         },
       },
 
@@ -131,11 +149,11 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
     };
   }, [rawData, simulationCount, type]);
 
-  return (
-    <div className="h-[400px]">
-      {rawData.length > 0 ? (
-        <HighchartsReact highcharts={Highcharts} options={options} />
-      ) : null}
-    </div>
-  );
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    Highcharts.chart(chartContainerId, options);
+  }, [chartContainerId, options]);
+
+  return <div className="h-[400px]" id={chartContainerId}></div>;
 };
