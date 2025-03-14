@@ -281,6 +281,8 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
 
   const resultExistsAtom = atom((get) => get(costsAtom).length > 0);
 
+  const isHighchartsLoadedAtom = atom(false);
+
   return {
     levelAtom,
     spareCostAtom,
@@ -297,6 +299,7 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
     costsAtom,
     destroyedCountsAtom,
     resultExistsAtom,
+    isHighchartsLoadedAtom,
   };
 }) satisfies MoleculeConstructor<unknown>;
 
