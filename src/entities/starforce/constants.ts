@@ -3,7 +3,7 @@ import { z } from "zod";
 export const eventSchema = z.enum([
   "10성 이하 1+1",
   "30% 할인",
-  "5/10/15성 100%",
+  "21성 이하 파괴 확률 30%",
   "샤타포스",
 ]);
 export type Event = z.infer<typeof eventSchema>;
@@ -11,7 +11,7 @@ export const events = eventSchema.options;
 export const eventLabelRecord: Record<Event, string> = {
   "10성 이하 1+1": "10성 이하에서 강화 시 1+1",
   "30% 할인": "비용 30% 할인",
-  "5/10/15성 100%": "5, 10, 15성에서 강화 시 성공확률 100%",
+  "21성 이하 파괴 확률 30%": "21성 이하에서 파괴 확률 30% 감소",
   샤타포스: "샤이닝 스타포스",
 };
 

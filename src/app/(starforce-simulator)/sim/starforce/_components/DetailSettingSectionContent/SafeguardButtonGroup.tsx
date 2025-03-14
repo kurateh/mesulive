@@ -53,10 +53,7 @@ export const SafeguardButtonGroup = () => {
                 [star]: !prev[star],
               }));
             }}
-            isDisabled={
-              star === "15" &&
-              (event === "5/10/15성 100%" || event === "샤타포스")
-            }
+            isDisabled={star === "15" && event === "샤타포스"}
           >
             {star}성
           </Button>

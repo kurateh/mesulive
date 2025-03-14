@@ -32,7 +32,7 @@ export default function Page() {
             variant="flat"
             classNames={{ content: cx("font-medium") }}
           >
-            로직 업데이트: 2024.01.25
+            로직 업데이트: 2025.03.20
           </Chip>
         </div>
         <Notice />
