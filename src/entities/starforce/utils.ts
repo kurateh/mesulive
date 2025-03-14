@@ -103,12 +103,15 @@ export const getProbTable = (
 export const getCosts = (equipLevel: number): number[] => {
   return Array.from({ length: 25 }).map((_, star) => {
     if (star <= 9) {
-      return 1000 + (equipLevel ** 3 * (star + 1)) / 36;
+      return (
+        Math.round((1000 + (equipLevel ** 3 * (star + 1)) / 36) / 100) * 100
+      );
     }
 
-    const base = 1000 + equipLevel ** 3 * (star + 1) ** 2.7;
+    const base = equipLevel ** 3 * (star + 1) ** 2.7;
 
     return (
+      1000 +
       Math.round(
         match(star)
           .with(10, () => base / 571)
@@ -117,7 +120,8 @@ export const getCosts = (equipLevel: number): number[] => {
           .with(13, () => base / 157)
           .with(14, () => base / 107)
           .otherwise(() => base / 200) / 100,
-      ) * 100
+      ) *
+        100
     );
   });
 };
