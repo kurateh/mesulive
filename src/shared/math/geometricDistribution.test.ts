@@ -110,7 +110,7 @@ describe("TopPctCost", () => {
     expect(topPctCost.getCostFromTopPct(Infinity)).toBe(undefined);
     expect(topPctCost.getCostFromTopPct(0)).toBe(undefined);
 
-    expect(topPctCost.getTopPctFromCost(0)).toBe(undefined);
+    expect(topPctCost.getTopPctFromCost(0)).toBe(0);
     expect(topPctCost.getTopPctFromCost(1)).toBe(20);
     expect(topPctCost.getTopPctFromCost(Infinity)).toBe(100);
   });
