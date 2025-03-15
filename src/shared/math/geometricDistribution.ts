@@ -155,7 +155,7 @@ export class TopPctCost {
       .with({ type: "data" }, () =>
         pipe(
           cost,
-          O.fromPredicate((c) => c > 0),
+          O.fromPredicate((c) => c >= 0),
           O.map((c) => {
             if (this.sortedData.length === 0) return undefined;
 

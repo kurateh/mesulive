@@ -10,4 +10,11 @@ declare module "*.svg?url" {
   export default content;
 }
 
+declare global {
+  import type HighchartsDefault from "highcharts";
+  interface Window {
+    Highcharts: typeof HighchartsDefault;
+  }
+}
+
 declare module "jotai-devtools/styles.css";

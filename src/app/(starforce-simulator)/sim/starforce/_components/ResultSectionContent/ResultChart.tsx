@@ -7,7 +7,7 @@ import { putUnit } from "~/shared/number";
 import { primary, secondary } from "~/shared/style/colors";
 
 interface Props {
-  dataAtom: Atom<number[]>;
+  dataAtom: Atom<number[]>; // Sorted Data Atom
   type: "cost" | "destroyedCount";
 }
 
@@ -18,23 +18,31 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
   const simulationCount = rawData.length;
 
   const options: Highcharts.Options = useMemo(() => {
-    const data = rawData.slice(0, Math.round(simulationCount * 0.999));
-    let bin = 30;
-    let width = Math.ceil((data[data.length - 1] - data[0]) / bin);
-    const digit = width.toString().length;
-    width = Math.round(width / 10 ** (digit - 1)) * 10 ** (digit - 1);
+    const isDataUniform = rawData[0] === rawData.at(-1);
+
+    const data = isDataUniform
+      ? rawData
+      : rawData.slice(0, Math.round(simulationCount * 0.999));
+    let binsNumber = 30;
+    let binWidth = isDataUniform
+      ? 1
+      : Math.ceil((data[data.length - 1] - data[0]) / binsNumber);
+    const digit = String(binWidth).length;
+    binWidth = Math.round(binWidth / 10 ** (digit - 1)) * 10 ** (digit - 1);
 
     for (let i = 0; i < data.length; i++) {
-      data[i] = Math.floor(data[i] / width) * width;
+      data[i] = Math.floor(data[i] / binWidth) * binWidth;
     }
-    bin = data[data.length - 1] / width + 1;
+    binsNumber = data[data.length - 1] / binWidth + 1;
 
-    // 마지막 바가 A 이상 ~ B 이하를 모두 포함하는 Highcharts의 문제를 해결
-    for (let i = data.length - 2; i >= 0; i--) {
-      if (data[i] < data[data.length - 1]) break;
-      data[i] += width;
+    if (binsNumber > 1) {
+      // 마지막 바가 A 이상 ~ B 이하를 모두 포함하는 Highcharts의 문제를 해결
+      for (let i = data.length - 2; i >= 0; i--) {
+        if (data[i] < data[data.length - 1]) break;
+        data[i] += binWidth;
+      }
+      data[data.length - 1] += binWidth;
     }
-    data[data.length - 1] += width;
 
     return {
       title: {
@@ -117,9 +125,11 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
         },
         backgroundColor: type === "cost" ? primary[600] : secondary[600],
         formatter() {
-          return `${putUnit(this.x)} ~ ${putUnit(
-            this.x + width,
-          )} : <b x=8 y=40>${this.y}회</b>`;
+          return `${
+            binWidth === 1
+              ? putUnit(this.x)
+              : `${putUnit(this.x)} ~ ${putUnit(this.x + binWidth - Number(digit < 4))}`
+          } : <b x=8 y=40>${this.y}회</b>`;
         },
       },
 
@@ -130,8 +140,8 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
           baseSeries: "s1",
           xAxis: 1,
           yAxis: 1,
-          binsNumber: bin,
-          binWidth: width,
+          binsNumber,
+          binWidth: binsNumber === 1 ? undefined : binWidth,
           showInLegend: false,
         },
         {
@@ -150,10 +160,10 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
   }, [rawData, simulationCount, type]);
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    Highcharts.chart(chartContainerId, options);
-  }, [chartContainerId, options]);
+    if (rawData.length > 0) {
+      window.Highcharts.chart(chartContainerId, options);
+    }
+  }, [chartContainerId, options, rawData.length]);
 
   return <div className="h-[400px]" id={chartContainerId}></div>;
 };
