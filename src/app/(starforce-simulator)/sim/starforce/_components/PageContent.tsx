@@ -10,7 +10,7 @@ import { ResultSectionContent } from "./ResultSectionContent";
 export const PageContent = () => {
   return (
     <div className="mt-4 flex flex-col gap-4 lg:flex-row">
-      <div className="flex flex-col gap-4 lg:flex-1">
+      <div className="flex flex-col gap-4 lg:w-0 lg:flex-1">
         <SectionContainer title="장비 설정">
           <EquipSettingSectionContent />
         </SectionContainer>
@@ -20,7 +20,7 @@ export const PageContent = () => {
         <CalculateButtons />
       </div>
 
-      <div className="lg:min-h-full lg:flex-1">
+      <div className="lg:min-h-full lg:w-0 lg:flex-1">
         <SectionContainer
           title={
             <>
