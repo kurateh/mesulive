@@ -59,10 +59,17 @@ export default function Home() {
             title="스타포스 시뮬레이터"
             Icon={Star}
             classNames={{
-              link: cx("md:last:col-span-full"),
               button: cx("bg-primary"),
             }}
             subtitle="3/20 업데이트"
+          />
+          <MainLinkButton
+            href="https://legacy.mesu.live/sim/starforce"
+            title="스타포스 시뮬레이터(구버전)"
+            Icon={Star}
+            classNames={{
+              button: cx("bg-primary-600 text-base"),
+            }}
           />
         </div>
         <div className="mt-4">
