@@ -15,6 +15,7 @@ export const linkData: Record<string, ComponentProps<typeof NavLink>[]> = {
       href: "https://mesu.live/calc/potential",
       Icon: PotentialSVG,
       children: "잠재능력",
+      Label: "UPDATED",
     },
   ],
   시뮬레이터: [
