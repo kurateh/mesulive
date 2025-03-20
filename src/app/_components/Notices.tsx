@@ -2,7 +2,6 @@ import "server-only";
 
 import { Alert, type AlertProps } from "@heroui/react";
 import { omit } from "lodash-es";
-import { Info } from "lucide-react";
 
 import { cx } from "~/shared/style";
 import { mergeClassNames } from "~/shared/style/utils";
@@ -17,24 +16,7 @@ const noticeContents: (Optional<
   "variant" | "color"
 > & {
   date: Date;
-})[] = [
-  {
-    variant: "solid",
-    color: "primary",
-    description: (
-      <>
-        <b>21성 이하 파괴 확률 30% 감소</b> 이벤트 활성화 시 21성에서 강화 시
-        파괴 확률 감소가 적용되지 않던 문제 수정
-      </>
-    ),
-    date: new Date("2025-3-14"),
-    classNames: {
-      base: cx("bg-primary-400"),
-      alertIcon: cx("fill-white text-primary-400"),
-    },
-    icon: <Info />,
-  },
-];
+})[] = [];
 
 export const revalidate = 86400;
 

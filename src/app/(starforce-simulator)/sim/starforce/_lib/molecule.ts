@@ -205,11 +205,10 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
   const safeGuardRecordAtom = atom<{ [key: `${number}`]: boolean }>({
     15: false,
     16: false,
-    17: false,
   });
 
   const starcatchRecordAtom = atom<{ [key: `${number}`]: boolean }>(
-    Array.from({ length: 30 }).reduce<{ [key: number]: boolean }>(
+    Array.from({ length: 25 }).reduce<{ [key: number]: boolean }>(
       (acc, _, i) => ({ ...acc, [i]: false }),
       {},
     ),
