@@ -272,16 +272,7 @@ export const createPotentialOptionTable = TE.tryCatchK(
         optionRecords: {
           create: params.optionRecords.map(({ optionName, probability }) => ({
             probability,
-            option: {
-              connectOrCreate: {
-                where: {
-                  name: optionName,
-                },
-                create: {
-                  name: optionName,
-                },
-              },
-            },
+            name: optionName,
           })),
         },
       },
