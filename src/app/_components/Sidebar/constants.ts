@@ -22,12 +22,12 @@ export const linkData: Record<string, ComponentProps<typeof NavLink>[]> = {
       href: "https://mesu.live/sim/starforce",
       Icon: Star,
       children: "스타포스",
+      Label: "UPDATED",
     },
     {
       href: "/sim/starforce",
       Icon: Star,
-      children: "스타포스",
-      Label: "Preview",
+      children: "스타포스(구버전)",
     },
   ],
 };

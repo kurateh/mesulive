@@ -1,5 +1,5 @@
 import { useMolecule } from "bunshi/react";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { useState } from "react";
 
 import { StarforceSimulatorMolecule } from "~/app/(starforce-simulator)/sim/starforce/_lib/molecule";
@@ -8,8 +8,11 @@ import { Button, SectionSubtitle } from "~/shared/ui";
 
 export const SafeguardButtonGroup = () => {
   const [shouldSelectAll, setShouldSelectAll] = useState(true);
-  const { safeGuardRecordAtom } = useMolecule(StarforceSimulatorMolecule);
+  const { safeGuardRecordAtom, eventAtom } = useMolecule(
+    StarforceSimulatorMolecule,
+  );
   const [safeGuardRecord, setSafeguardRecord] = useAtom(safeGuardRecordAtom);
+  const event = useAtomValue(eventAtom);
 
   return (
     <div>

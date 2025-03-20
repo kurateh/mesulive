@@ -26,7 +26,7 @@ export default function Page() {
       <div className="mx-auto max-w-screen-xl">
         <div className="flex flex-col gap-2 md:flex-row md:items-end">
           <PageTitle endColorVar="var(--mesulive-primary)">
-            스타포스 시뮬레이터(미리보기)
+            스타포스 시뮬레이터(구버전)
           </PageTitle>
           <Chip
             color="default"
