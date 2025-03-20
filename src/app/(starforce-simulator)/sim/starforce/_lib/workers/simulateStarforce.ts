@@ -62,7 +62,6 @@ addEventListener(
         i++
       ) {
         let star = currentStar;
-        let stack = 0;
         let spentCost = 0;
         let destroyedCount = 0;
 
@@ -70,18 +69,19 @@ addEventListener(
           const probabilities = probTable[star];
 
           // 100 % 여부 계산
-          const isDecided = stack === 2 || probTable[star][0] === 1;
+          const isDecided = probTable[star][0] === 1;
 
           // Cost 계산
           const cost =
             discountedCosts[star] +
-            (isDecided || !safeguardRecord[`${star}`] ? 0 : defaultCosts[star]);
+            (isDecided || !safeguardRecord[`${star}`]
+              ? 0
+              : defaultCosts[star] * 2);
           spentCost += cost;
 
           // 랜덤 돌리고 다음 결과
           if (isDecided) {
             star += 1;
-            stack = 0;
           } else {
             let result = probabilities.length;
             let r = Math.random();
@@ -94,20 +94,14 @@ addEventListener(
               r -= probabilities[i];
             }
 
-            if (result === 0) {
+            if (result === Starforce.PROB_TABLE_SUCCESS_INDEX) {
               // 성공
               star += 1 + (event === "10성 이하 1+1" && star <= 10 ? 1 : 0);
-              stack = 0;
-            } else if (result === 1) {
+            } else if (result === Starforce.PROB_TABLE_MAINTAIN_INDEX) {
               // 유지
-            } else if (result === 2) {
-              // 하락
-              star -= 1;
-              stack += 1;
-            } else if (result === 3) {
+            } else if (result === Starforce.PROB_TABLE_DESTROY_INDEX) {
               // 파괴
               star = 12;
-              stack = 0;
               spentCost += spareCost;
               destroyedCount += 1;
             } else {
