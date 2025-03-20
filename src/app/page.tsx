@@ -52,6 +52,7 @@ export default function Home() {
             title="잠재능력 기댓값 계산기"
             Icon={PotentialSVG}
             classNames={{ button: cx("bg-warning-500") }}
+            subtitle="3/20 업데이트"
           />
           <MainLinkButton
             href="/sim/starforce"
@@ -61,7 +62,7 @@ export default function Home() {
               link: cx("md:last:col-span-full"),
               button: cx("bg-primary"),
             }}
-            subtitle="UPDATED"
+            subtitle="3/20 업데이트"
           />
         </div>
         <div className="mt-4">

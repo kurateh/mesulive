@@ -32,7 +32,7 @@ export default function Page() {
             variant="flat"
             classNames={{ content: cx("font-medium") }}
           >
-            확률 정보 업데이트: 2024.10.18
+            확률 정보 업데이트: 2025.03.20
           </Chip>
         </div>
         <Notice />
