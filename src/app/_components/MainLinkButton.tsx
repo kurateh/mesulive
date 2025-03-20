@@ -44,7 +44,7 @@ export const MainLinkButton = ({
         )}
       />
       <p className="text-2xl font-bold">{title}</p>
-      {subtitle && <p>{subtitle}</p>}
+      {subtitle && <p className="font-normal">{subtitle}</p>}
     </Button>
   );
 };

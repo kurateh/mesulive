@@ -61,6 +61,7 @@ export default function Home() {
               link: cx("md:last:col-span-full"),
               button: cx("bg-primary"),
             }}
+            subtitle="UPDATED"
           />
         </div>
         <div className="mt-4">

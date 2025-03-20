@@ -14,12 +14,7 @@ export const linkData: Record<string, ComponentProps<typeof NavLink>[]> = {
       href: "/sim/starforce",
       Icon: Star,
       children: "스타포스",
-    },
-    {
-      href: "https://next.mesu.live/sim/starforce",
-      Icon: Star,
-      children: "스타포스",
-      Label: "Preview",
+      Label: "UPDATED",
     },
   ],
 };
