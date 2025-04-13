@@ -1,7 +1,8 @@
 import "server-only";
 
-import { Alert, type AlertProps } from "@heroui/react";
+import { Alert, Link, type AlertProps } from "@heroui/react";
 import { omit } from "lodash-es";
+import { CirclePlus } from "lucide-react";
 
 import { cx } from "~/shared/style";
 import { mergeClassNames } from "~/shared/style/utils";
@@ -17,29 +18,30 @@ const noticeContents: (Optional<
 > & {
   date: Date;
 })[] = [
-  // {
-  //   variant: "solid",
-  //   color: "primary",
-  //   description: (
-  //     <>
-  //       2025.03.20 적용 예정인{" "}
-  //       <Link
-  //         href="https://next.mesu.live/sim/starforce"
-  //         className="text-sm font-bold text-white"
-  //         underline="always"
-  //         showAnchorIcon
-  //       >
-  //         스타포스 시뮬레이터 미리보기
-  //       </Link>
-  //     </>
-  //   ),
-  //   date: new Date("2025-3-14"),
-  //   classNames: {
-  //     base: cx("bg-primary-400"),
-  //     alertIcon: cx("fill-white text-primary-400"),
-  //   },
-  //   icon: <Info />,
-  // },
+  {
+    variant: "solid",
+    color: "primary",
+    description: (
+      <>
+        2025.04.13{" "}
+        <Link
+          href="/calc/potential"
+          className="text-sm font-bold text-white"
+          underline="always"
+          showAnchorIcon
+        >
+          잠재능력 기댓값 계산기
+        </Link>
+        의 옵션 설정에서 <b>크리티컬 확률</b> 스탯 추가
+      </>
+    ),
+    date: new Date("2025-4-13"),
+    classNames: {
+      base: cx("bg-primary-500"),
+      alertIcon: cx("fill-white text-primary-500"),
+    },
+    icon: <CirclePlus />,
+  },
 ];
 
 export const revalidate = 86400;

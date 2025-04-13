@@ -11,7 +11,6 @@ export const linkData: Record<string, ComponentProps<typeof NavLink>[]> = {
       href: "/calc/potential",
       Icon: PotentialSVG,
       children: "잠재능력",
-      Label: "UPDATED",
     },
   ],
   시뮬레이터: [
@@ -19,7 +18,6 @@ export const linkData: Record<string, ComponentProps<typeof NavLink>[]> = {
       href: "/sim/starforce",
       Icon: Star,
       children: "스타포스",
-      Label: "UPDATED",
     },
     {
       href: "https://legacy.mesu.live/sim/starforce",
