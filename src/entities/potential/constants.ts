@@ -165,6 +165,7 @@ export const possibleStats = [
   "IGNORE_DEFENSE",
   "BOSS_DAMAGE",
   "CRITICAL_DAMAGE",
+  "CRITICAL_PROB",
   "COOL_DOWN",
 
   "ITEM_DROP",
@@ -201,6 +202,7 @@ export const possibleStatRegexRecord: Record<PossibleStat, RegExp> = {
   IGNORE_DEFENSE: /^\s*몬스터\s*방어율\s*무시\s*:\s*\+(\d+)\s*%\s*$/,
   BOSS_DAMAGE: /^\s*보스\s*몬스터\s*공격\s*시\s*데미지\s*:\s*\+(\d+)\s*%\s*$/,
   CRITICAL_DAMAGE: /^\s*크리티컬\s*데미지\s*:\s*\+(\d+)\s*%\s*$/,
+  CRITICAL_PROB: /^\s*크리티컬\s*확률\s*:\s*\+(\d+)\s*%\s*$/,
   COOL_DOWN: /^\s*모든\s*스킬의\s*재사용\s*대기시간\s*:\s*-(\d+)\s*초\s*/,
 
   ITEM_DROP: /^\s*아이템\s*드롭률\s*:\s*\+(\d+)\s*%\s*$/,
