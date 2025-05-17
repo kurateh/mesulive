@@ -16,7 +16,7 @@ export const PROB_TABLE_DESTROY_INDEX = 2;
 
 /**
  *
- * @returns [상승, 유지, 하락, 파괴][]
+ * @returns [상승, 유지, 파괴][]
  */
 export const getProbTable = (
   starcatchRecord: { [key: number]: boolean },
@@ -61,6 +61,12 @@ export const getProbTable = (
       const destroyProbability = defaultTable[i][PROB_TABLE_DESTROY_INDEX];
       defaultTable[i][PROB_TABLE_DESTROY_INDEX] = destroyProbability * 0.7;
       defaultTable[i][PROB_TABLE_MAINTAIN_INDEX] += destroyProbability * 0.3;
+    });
+  } else if (event === "5/10/15성 100%") {
+    [5, 10, 15].forEach((i) => {
+      defaultTable[i][PROB_TABLE_SUCCESS_INDEX] = 1;
+      defaultTable[i][PROB_TABLE_MAINTAIN_INDEX] = 0;
+      defaultTable[i][PROB_TABLE_DESTROY_INDEX] = 0;
     });
   }
 
