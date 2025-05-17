@@ -52,23 +52,13 @@ export default function Home() {
             title="잠재능력 기댓값 계산기"
             Icon={PotentialSVG}
             classNames={{ button: cx("bg-warning-500") }}
-            subtitle="3/20 업데이트"
           />
           <MainLinkButton
             href="/sim/starforce"
             title="스타포스 시뮬레이터"
             Icon={Star}
             classNames={{
-              button: cx("bg-primary"),
-            }}
-            subtitle="3/20 업데이트"
-          />
-          <MainLinkButton
-            href="https://legacy.mesu.live/sim/starforce"
-            title="스타포스 시뮬레이터(구버전)"
-            Icon={Star}
-            classNames={{
-              button: cx("bg-primary-600 text-base"),
+              button: cx("bg-primary md:col-span-full"),
             }}
           />
         </div>
