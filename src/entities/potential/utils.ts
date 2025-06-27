@@ -133,12 +133,13 @@ export const getResetCost = (params: {
       if (level <= 249) return 88_000_000;
       return 98_000_000;
     })
-    .otherwise(({ level }) => {
-      if (level <= 30) return 0;
-      if (level <= 70) return 0.5 * level ** 2;
-      if (level <= 120) return 2.5 * level ** 2;
-      return 20 * level ** 2;
-    });
+    .otherwise(() => 0);
+// .otherwise(({ level }) => {
+//   if (level <= 30) return 0;
+//   if (level <= 70) return 0.5 * level ** 2;
+//   if (level <= 120) return 2.5 * level ** 2;
+//   return 20 * level ** 2;
+// });
 
 export const parseStat = (
   str: string,

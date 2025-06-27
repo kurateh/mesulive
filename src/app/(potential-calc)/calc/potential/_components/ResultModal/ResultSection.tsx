@@ -101,14 +101,18 @@ export const ResultSection = ({ result, grade, level, className }: Props) => {
         <p>
           {putUnit(maxFractionDigits(0)(topPctCost.current.meanCost ?? 0))}회
         </p>
-        <p>
-          감정비용:{" "}
-          {putUnit(
-            Potential.getResetCost({ method: result.method, grade, level }) *
-              Math.round(topPctCost.current.meanCost ?? 0),
-          )}{" "}
-          메소
-        </p>
+        {(
+          ["ADDI_POTENTIAL", "POTENTIAL"] satisfies Potential.ResetMethod[]
+        ).includes(result.method as never) && (
+          <p>
+            감정비용:{" "}
+            {putUnit(
+              Potential.getResetCost({ method: result.method, grade, level }) *
+                Math.round(topPctCost.current.meanCost ?? 0),
+            )}{" "}
+            메소
+          </p>
+        )}
       </div>
       <div className="flex items-start gap-2">
         <Input
