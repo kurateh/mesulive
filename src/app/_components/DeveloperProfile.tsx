@@ -53,7 +53,7 @@ export const DeveloperProfile = async () => {
       <p className="text-center text-sm font-bold text-default-500">제작자</p>
       <div className="flex items-center">
         <Link
-          href="https://maple.gg/u/%EC%BF%A0%EB%9D%BC%ED%85%8C"
+          href="https://meaegi.com/s/%EC%BF%A0%EB%9D%BC%ED%85%8C"
           target="_blank"
           rel="noreferrer"
           className="flex-col text-sm"
@@ -71,7 +71,7 @@ export const DeveloperProfile = async () => {
         </Link>
         <Equal className="text-default-700" />
         <Link
-          href="https://maple.gg/u/%EC%BF%A0%EB%9D%BC%ED%85%8C"
+          href="https://meaegi.com/s/%ED%85%8C%EC%82%B4%EB%A0%88"
           target="_blank"
           rel="noreferrer"
           className="flex-col overflow-hidden text-sm"
