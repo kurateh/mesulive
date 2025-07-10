@@ -62,7 +62,9 @@ export const getProbTable = (
       defaultTable[i][PROB_TABLE_DESTROY_INDEX] = destroyProbability * 0.7;
       defaultTable[i][PROB_TABLE_MAINTAIN_INDEX] += destroyProbability * 0.3;
     });
-  } else if (event === "5/10/15성 100%") {
+  }
+
+  if (event === "5/10/15성 100%" || event === "샤타포스") {
     [5, 10, 15].forEach((i) => {
       defaultTable[i][PROB_TABLE_SUCCESS_INDEX] = 1;
       defaultTable[i][PROB_TABLE_MAINTAIN_INDEX] = 0;
