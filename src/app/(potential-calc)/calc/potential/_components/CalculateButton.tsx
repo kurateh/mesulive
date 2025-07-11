@@ -20,7 +20,7 @@ import { effectiveStatSchema } from "~/entities/stat";
 import { PotentialQueries } from "~/features/get-potential-data/queries";
 import { type GradeUpRecord } from "~/features/get-potential-data/types";
 import { trpc } from "~/features/trpc/client";
-import { A, E, O, T, TO } from "~/shared/fp";
+import { A, E, O, TO } from "~/shared/fp";
 import { type AtomValue } from "~/shared/jotai";
 import { cx } from "~/shared/style";
 import { Button } from "~/shared/ui";
@@ -63,6 +63,7 @@ export const CalculateButton = ({ className }: Props) => {
         const grade = get(gradeAtom);
         const isMiracleTime = get(isMiracleTimeAtom);
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const logging = pipe(
           methods.map((method) =>
             pipe(
@@ -106,11 +107,7 @@ export const CalculateButton = ({ className }: Props) => {
           ),
         );
 
-        return pipe(
-          result,
-          T.chainFirstIOK(() => logging),
-          T.map((result) => result),
-        )();
+        return result();
       },
       [gradeAtom, isMiracleTimeAtom, queryClient, resetMethodsAtom],
     ),
@@ -125,6 +122,7 @@ export const CalculateButton = ({ className }: Props) => {
         const rawLevel = pipe(get(levelAtom).value, O.fromEither);
         const level = pipe(rawLevel, O.chain(flattenLevel));
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const logging = pipe(
           pipe(
             TO.fromOption(rawLevel),
@@ -191,11 +189,7 @@ export const CalculateButton = ({ className }: Props) => {
           ),
         );
 
-        return pipe(
-          result,
-          T.chainFirstIOK(() => logging),
-          T.map((result) => result),
-        )();
+        return result();
       },
       [
         equipAtom,
