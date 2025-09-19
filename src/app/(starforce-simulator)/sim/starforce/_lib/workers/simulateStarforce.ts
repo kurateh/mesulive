@@ -85,7 +85,7 @@ addEventListener(
           if (isDecided) {
             star += 1;
           } else {
-            let result = probabilities.length;
+            let result = probabilities.length - 1;
             let r = Math.random();
             // console.log(r);
             for (let i = 0; i < probabilities.length; i++) {
