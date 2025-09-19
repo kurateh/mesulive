@@ -5,6 +5,7 @@ import { useAtom } from "jotai";
 import { StarforceSimulatorMolecule } from "~/app/(starforce-simulator)/sim/starforce/_lib/molecule";
 import { Starforce } from "~/entities/starforce";
 import { E } from "~/shared/fp";
+import { cx } from "~/shared/style";
 import { Radio, RadioGroup, SectionSubtitle } from "~/shared/ui";
 import { parseZod } from "~/shared/zod";
 
@@ -35,8 +36,20 @@ export const EventRadioGroup = () => {
           없음
         </Radio>
         {Starforce.events.map((event) => (
-          <Radio key={event} value={event}>
+          <Radio
+            key={event}
+            value={event}
+            classNames={{
+              label: cx(event === "샤타포스" && "font-bold"),
+            }}
+          >
             {Starforce.eventLabelRecord[event]}
+            {Starforce.eventsInShiningStarforce.includes(event) && (
+              <span className="text-xs font-bold text-primary-500">
+                {" "}
+                (샤타포스)
+              </span>
+            )}
           </Radio>
         ))}
       </RadioGroup>

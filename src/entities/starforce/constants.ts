@@ -16,6 +16,10 @@ export const eventLabelRecord: Record<Event, string> = {
   "21성 이하 파괴 확률 30% 감소": "21성 이하에서 파괴 확률 30% 감소",
   샤타포스: "샤이닝 스타포스",
 };
+export const eventsInShiningStarforce: Event[] = [
+  "30% 할인",
+  "21성 이하 파괴 확률 30% 감소",
+];
 
 export const discountSchema = z.enum([
   "MVP Silver",
