@@ -23,7 +23,7 @@ const noticeContents: (Optional<
     color: "primary",
     description: (
       <>
-        2025.07.10{" "}
+        2025.09.19{" "}
         <Link
           href="/calc/potential"
           className="text-sm font-bold text-white"
@@ -33,10 +33,10 @@ const noticeContents: (Optional<
           스타포스 시뮬레이터
         </Link>
         의 <b>샤이닝 스타포스</b> 이벤트에 <b>5/10/15성에서 강화 시 100%</b>{" "}
-        추가
+        제외
       </>
     ),
-    date: new Date("2025-7-10"),
+    date: new Date("2025-09-19"),
     classNames: {
       base: cx("bg-primary-500"),
       alertIcon: cx("fill-white text-primary-500"),
