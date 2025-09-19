@@ -38,7 +38,9 @@ addEventListener(
     const discountedCosts = defaultCosts
       .map((cost, index) => (index < 17 ? cost * (1 - discountRatio) : cost))
       .map(
-        event === "30% 할인" || event === "샤타포스"
+        event === "30% 할인" ||
+          event === "샤타포스" ||
+          event === "샤타포스(15 16 포함)"
           ? (cost) => cost * 0.7
           : identity,
       )

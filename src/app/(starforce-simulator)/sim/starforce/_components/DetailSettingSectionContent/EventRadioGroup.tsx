@@ -40,11 +40,15 @@ export const EventRadioGroup = () => {
             key={event}
             value={event}
             classNames={{
-              label: cx(event === "샤타포스" && "font-bold"),
+              label: cx(
+                (event === "샤타포스" || event === "샤타포스(15 16 포함)") &&
+                  "font-bold",
+              ),
             }}
           >
             {Starforce.eventLabelRecord[event]}
-            {Starforce.eventsInShiningStarforce.includes(event) && (
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+            {Starforce.eventsInShiningStarforce.includes(event as any) && (
               <span className="text-xs font-bold text-primary-500">
                 {" "}
                 (샤타포스)
