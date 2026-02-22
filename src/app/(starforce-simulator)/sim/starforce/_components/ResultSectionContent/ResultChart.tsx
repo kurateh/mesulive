@@ -18,6 +18,12 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
   const simulationCount = rawData.length;
 
   const options: Highcharts.Options = useMemo(() => {
+    // CDF 계산 - binning으로 rawData가 변형되기 전에 수행
+    const cdfData: [number, number][] = rawData.map((value, i) => [
+      value,
+      ((i + 1) / rawData.length) * 100,
+    ]);
+
     const isDataUniform = rawData[0] === rawData.at(-1);
 
     const data = isDataUniform
@@ -98,6 +104,23 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
             },
           },
         },
+        {
+          title: {
+            text: "누적확률",
+            style: {
+              color: semanticColors.light.default[500],
+            },
+          },
+          opposite: true,
+          min: 0,
+          max: 100,
+          labels: {
+            format: "{value}%",
+            style: {
+              color: semanticColors.light.default[500],
+            },
+          },
+        },
       ],
 
       plotOptions: {
@@ -154,6 +177,19 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
           },
           visible: false,
           showInLegend: false,
+        },
+        {
+          name: "누적확률",
+          type: "spline",
+          xAxis: 1,
+          yAxis: 2,
+          data: cdfData,
+          color: type === "cost" ? primary[600] : secondary[600],
+          marker: { enabled: false },
+          lineWidth: 2,
+          showInLegend: true,
+          enableMouseTracking: false,
+          turboThreshold: 0,
         },
       ],
     };
