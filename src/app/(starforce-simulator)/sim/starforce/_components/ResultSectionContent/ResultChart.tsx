@@ -19,10 +19,12 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
 
   const options: Highcharts.Options = useMemo(() => {
     // CDF 계산 - binning으로 rawData가 변형되기 전에 수행
-    const cdfData: [number, number][] = rawData.map((value, i) => [
-      value,
-      ((i + 1) / rawData.length) * 100,
-    ]);
+    const cdfData: [number, number][] = rawData
+      .map((value, i): [number, number] => [
+        value,
+        ((i + 1) / rawData.length) * 100,
+      ])
+      .filter(([, pct]) => pct <= 99.9);
 
     const isDataUniform = rawData[0] === rawData.at(-1);
 
