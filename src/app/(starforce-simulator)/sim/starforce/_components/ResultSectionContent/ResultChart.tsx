@@ -148,6 +148,9 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
         },
         backgroundColor: type === "cost" ? primary[600] : secondary[600],
         formatter() {
+          if (this.series.name === "누적확률") {
+            return `${putUnit(this.x)} : <b>${this.y?.toFixed(1)}%</b>`;
+          }
           return `${
             binWidth === 1
               ? putUnit(this.x)
@@ -188,7 +191,6 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
           marker: { enabled: false },
           lineWidth: 2,
           showInLegend: true,
-          enableMouseTracking: false,
           turboThreshold: 0,
         },
       ],
