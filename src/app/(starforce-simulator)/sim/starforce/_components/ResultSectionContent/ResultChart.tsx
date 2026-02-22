@@ -18,14 +18,6 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
   const simulationCount = rawData.length;
 
   const options: Highcharts.Options = useMemo(() => {
-    // CDF 계산 - binning으로 rawData가 변형되기 전에 수행
-    const cdfData: [number, number][] = rawData
-      .map((value, i): [number, number] => [
-        value,
-        ((i + 1) / rawData.length) * 100,
-      ])
-      .filter(([, pct]) => pct <= 99.9);
-
     const isDataUniform = rawData[0] === rawData.at(-1);
 
     const data = isDataUniform
@@ -37,6 +29,27 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
       : Math.ceil((data[data.length - 1] - data[0]) / binsNumber);
     const digit = String(binWidth).length;
     binWidth = Math.round(binWidth / 10 ** (digit - 1)) * 10 ** (digit - 1);
+
+    // CDF 계산 - 히스토그램 binWidth의 1/5 단위로 집계
+    const cdfBinWidth = binWidth / 5;
+    const cdfDigit =
+      cdfBinWidth >= 1 ? String(Math.round(cdfBinWidth)).length : 0;
+    const cdfData: [number, number][] = [];
+    if (data.length > 0) {
+      const firstEdge = Math.ceil(data[0] / cdfBinWidth) * cdfBinWidth;
+      const lastValue = data[data.length - 1];
+      const numBins = Math.ceil((lastValue - firstEdge) / cdfBinWidth);
+
+      let dataIdx = 0;
+      for (let b = 0; b <= numBins; b++) {
+        const edge = firstEdge + b * cdfBinWidth;
+        while (dataIdx < data.length && data[dataIdx] <= edge) {
+          dataIdx++;
+        }
+        const pct = (dataIdx / rawData.length) * 100;
+        cdfData.push([edge, pct]);
+      }
+    }
 
     for (let i = 0; i < data.length; i++) {
       data[i] = Math.floor(data[i] / binWidth) * binWidth;
@@ -151,7 +164,11 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
         backgroundColor: type === "cost" ? primary[600] : secondary[600],
         formatter() {
           if (this.series.name === "누적확률") {
-            return `${putUnit(this.x)} : <b>${this.y?.toFixed(1)}%</b>`;
+            const label =
+              cdfBinWidth <= 1
+                ? putUnit(this.x)
+                : `${putUnit(this.x)} ~ ${putUnit(this.x + cdfBinWidth - Number(cdfDigit < 4))}`;
+            return `${label} : <b>${this.y?.toFixed(1)}%</b>`;
           }
           return `${
             binWidth === 1
@@ -193,7 +210,6 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
           marker: { enabled: false },
           lineWidth: 2,
           showInLegend: true,
-          turboThreshold: 0,
         },
       ],
     };
