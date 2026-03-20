@@ -23,7 +23,6 @@ const noticeContents: (Optional<
     color: "primary",
     description: (
       <>
-        2025.09.19{" "}
         <Link
           href="/calc/potential"
           className="text-sm font-bold text-white"
@@ -32,10 +31,10 @@ const noticeContents: (Optional<
         >
           스타포스 시뮬레이터
         </Link>
-        의 <b>샤이닝 스타포스</b> 이벤트 분리
+       파괴 복구 기능은 3월 21일 내에 추가될 예정입니다.
       </>
     ),
-    date: new Date("2025-09-19"),
+    date: new Date("2026-03-19"),
     classNames: {
       base: cx("bg-primary-500"),
       alertIcon: cx("fill-white text-primary-500"),
