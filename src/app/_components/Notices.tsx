@@ -31,10 +31,10 @@ const noticeContents: (Optional<
         >
           스타포스 시뮬레이터
         </Link>
-       파괴 복구 기능은 3월 21일 내에 추가될 예정입니다.
+        흔적 복구 관련 기능 추가
       </>
     ),
-    date: new Date("2026-03-19"),
+    date: new Date("2026-03-21"),
     classNames: {
       base: cx("bg-primary-500"),
       alertIcon: cx("fill-white text-primary-500"),
