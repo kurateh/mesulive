@@ -16,7 +16,7 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ["!**/.storybook", ".next", "node_modules"],
+    ignores: ["!**/.storybook", ".next", "node_modules", "public"],
   },
   ...compat.extends(
     "plugin:@next/next/recommended",
