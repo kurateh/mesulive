@@ -15,6 +15,13 @@ export const StarforceSimulatorScope = createScope(undefined, {
   debugLabel: "starforce/sim",
 });
 
+export interface RestoreCostComparisonRow {
+  star: Starforce.RestoreAvailableStar;
+  noRestoreAvgCost: number | null;
+  withRestoreAvgCost: number | null;
+  isOptimized: boolean;
+}
+
 const starforceSimulatorMoleculeConstructor = ((_, scope) => {
   scope(StarforceSimulatorScope);
 
@@ -217,6 +224,15 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
       {},
     ),
   );
+  const optimizedRestoreRecordAtom = atom<{ [key: `${number}`]: boolean }>(
+    Starforce.restoreAvailableStar.reduce<{ [key: `${number}`]: boolean }>(
+      (acc, star) => ({
+        ...acc,
+        [star]: false,
+      }),
+      {},
+    ),
+  );
 
   const restoreAvailableStarsAtom = atom(
     (get): Starforce.RestoreAvailableStar[] => {
@@ -245,6 +261,7 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
   const isRestoreEnabledAtom = atom(
     (get) => get(restoreAvailableStarsAtom).length > 0,
   );
+  const isAutoOptimizeRestoreAtom = atom(false);
 
   const starcatchRecordAtom = atom<{ [key: `${number}`]: boolean }>(
     Array.from({ length: 30 }).reduce<{ [key: number]: boolean }>(
@@ -318,6 +335,9 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
   const costsAtom = atom<number[]>([]);
 
   const destroyedCountsAtom = atom<number[]>([]);
+  const optimizedCostsAtom = atom<number[]>([]);
+  const optimizedDestroyedCountsAtom = atom<number[]>([]);
+  const restoreCostComparisonRowsAtom = atom<RestoreCostComparisonRow[]>([]);
 
   const resultExistsAtom = atom((get) => get(costsAtom).length > 0);
 
@@ -331,8 +351,10 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
     simulationCountAtom,
     safeGuardRecordAtom,
     restoreRecordAtom,
+    optimizedRestoreRecordAtom,
     restoreAvailableStarsAtom,
     isRestoreEnabledAtom,
+    isAutoOptimizeRestoreAtom,
     starcatchRecordAtom,
     eventAtom,
     discountsAtom,
@@ -341,6 +363,9 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
     isCalculatingAtom,
     costsAtom,
     destroyedCountsAtom,
+    optimizedCostsAtom,
+    optimizedDestroyedCountsAtom,
+    restoreCostComparisonRowsAtom,
     resultExistsAtom,
     isHighchartsLoadedAtom,
   };

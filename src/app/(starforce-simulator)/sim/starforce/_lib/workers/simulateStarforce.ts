@@ -3,11 +3,15 @@
 import { identity } from "fp-ts/lib/function";
 
 import { Starforce } from "~/entities/starforce";
-import { getDiscountRatio } from "~/entities/starforce/utils";
+import {
+  getDiscountRatio,
+  getRestoreTotalCost,
+} from "~/entities/starforce/utils";
 
 import {
   type SimulateStarforceOutput,
   type SimulateStarforceInput,
+  type RestoreRecoveryCostStatsByStar,
 } from "./types";
 
 addEventListener(
@@ -25,9 +29,9 @@ addEventListener(
       targetStar,
       simulationTotalCount,
       simulationSetCount,
+      collectRestoreRecoveryCostStats,
     },
   }: MessageEvent<SimulateStarforceInput>) => {
-    const HUNDRED_MILLION = 100_000_000;
     const probTable = Starforce.getProbTable(
       starcatchRecord,
       safeguardRecord,
@@ -45,10 +49,6 @@ addEventListener(
           : identity,
       )
       .map(Math.round);
-    const restoreMesoDiscountRatio =
-      event !== null && Starforce.eventsWithRestoreMesoDiscount.includes(event)
-        ? 0.2
-        : 0;
     const isOnePlusOneEvent =
       event !== null && Starforce.eventsWithOnePlusOne.includes(event);
 
@@ -58,6 +58,18 @@ addEventListener(
 
     const costs: number[] = [];
     const destroyedCounts: number[] = [];
+    const restoreRecoveryCostStatsByStar = collectRestoreRecoveryCostStats
+      ? Starforce.restoreAvailableStar.reduce<RestoreRecoveryCostStatsByStar>(
+          (acc, star) => ({
+            ...acc,
+            [`${star}`]: {
+              totalCost: 0,
+              sampleCount: 0,
+            },
+          }),
+          {},
+        )
+      : null;
 
     for (let s = 1; s <= simulationSetCount; s++) {
       for (
@@ -72,6 +84,10 @@ addEventListener(
         let star = currentStar;
         let spentCost = 0;
         let destroyedCount = 0;
+        let recoveryTrackers: Array<{
+          targetStar: Starforce.RestoreAvailableStar;
+          cost: number;
+        }> = [];
 
         while (true) {
           const probabilities = probTable[star];
@@ -86,6 +102,12 @@ addEventListener(
               ? 0
               : defaultCosts[star] * 2);
           spentCost += cost;
+          if (collectRestoreRecoveryCostStats && recoveryTrackers.length > 0) {
+            recoveryTrackers = recoveryTrackers.map((tracker) => ({
+              ...tracker,
+              cost: tracker.cost + cost,
+            }));
+          }
 
           // 랜덤 돌리고 다음 결과
           if (isDecided) {
@@ -110,38 +132,84 @@ addEventListener(
             } else if (result === Starforce.PROB_TABLE_DESTROY_INDEX) {
               // 파괴
               const destroyedAtStar = star;
+              let destroyExtraCost = 0;
               const isRestoreEnabled =
                 restoreRecord[`${destroyedAtStar}`] &&
                 Starforce.isRestoreAvailableLevel(level) &&
                 Starforce.isStarforceRestoreAvailableStar(destroyedAtStar);
 
               if (isRestoreEnabled) {
-                const [requiredSpareCount, restoreCostInHundredMillions] =
-                  Starforce.restoreResourceTable[level][destroyedAtStar];
-                const restoreCostMeso = Math.round(
-                  restoreCostInHundredMillions * HUNDRED_MILLION,
-                );
-                const discountedRestoreCostMeso = Math.round(
-                  restoreCostMeso * (1 - restoreMesoDiscountRatio),
-                );
+                const restoreTotalCost = getRestoreTotalCost({
+                  level,
+                  star: destroyedAtStar,
+                  spareCost,
+                  event,
+                });
 
-                if (requiredSpareCount > 0 && restoreCostMeso > 0) {
-                  spentCost +=
-                    spareCost * requiredSpareCount + discountedRestoreCostMeso;
+                if (restoreTotalCost !== null) {
+                  destroyExtraCost = restoreTotalCost;
+                  spentCost += restoreTotalCost;
                   star = destroyedAtStar;
                 } else {
                   star = 12;
-                  spentCost += spareCost;
+                  destroyExtraCost = spareCost;
+                  spentCost += destroyExtraCost;
                 }
               } else {
                 star = 12;
-                spentCost += spareCost;
+                destroyExtraCost = spareCost;
+                spentCost += destroyExtraCost;
+              }
+
+              if (collectRestoreRecoveryCostStats) {
+                if (recoveryTrackers.length > 0) {
+                  recoveryTrackers = recoveryTrackers.map((tracker) => ({
+                    ...tracker,
+                    cost: tracker.cost + destroyExtraCost,
+                  }));
+                }
+
+                if (
+                  Starforce.isRestoreAvailableLevel(level) &&
+                  Starforce.isStarforceRestoreAvailableStar(destroyedAtStar) &&
+                  !isRestoreEnabled
+                ) {
+                  recoveryTrackers.push({
+                    targetStar: destroyedAtStar,
+                    cost: destroyExtraCost,
+                  });
+                }
               }
 
               destroyedCount += 1;
             } else {
               throw new Error("randomPickByProbabilities failed");
             }
+          }
+
+          if (
+            collectRestoreRecoveryCostStats &&
+            recoveryTrackers.length > 0 &&
+            restoreRecoveryCostStatsByStar !== null
+          ) {
+            const remainedTrackers: typeof recoveryTrackers = [];
+
+            recoveryTrackers.forEach((tracker) => {
+              if (star >= tracker.targetStar) {
+                const key = `${tracker.targetStar}` as const;
+                const prev = restoreRecoveryCostStatsByStar[key];
+                if (prev !== undefined) {
+                  restoreRecoveryCostStatsByStar[key] = {
+                    totalCost: prev.totalCost + tracker.cost,
+                    sampleCount: prev.sampleCount + 1,
+                  };
+                }
+              } else {
+                remainedTrackers.push(tracker);
+              }
+            });
+
+            recoveryTrackers = remainedTrackers;
           }
 
           // 성공했으면 result에 넣기
@@ -162,6 +230,7 @@ addEventListener(
       type: "done",
       costs,
       destroyedCounts,
+      restoreRecoveryCostStatsByStar,
     } satisfies SimulateStarforceOutput);
   },
 );

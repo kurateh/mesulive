@@ -1,5 +1,15 @@
 import { type Starforce } from "~/entities/starforce";
 
+export type RestoreRecoveryCostStatsByStar = Partial<
+  Record<
+    `${Starforce.RestoreAvailableStar}`,
+    {
+      totalCost: number;
+      sampleCount: number;
+    }
+  >
+>;
+
 export interface SimulateStarforceInput {
   level: number;
   spareCost: number;
@@ -14,6 +24,7 @@ export interface SimulateStarforceInput {
 
   simulationTotalCount: number;
   simulationSetCount: number;
+  collectRestoreRecoveryCostStats: boolean;
 }
 
 export type SimulateStarforceOutput =
@@ -22,4 +33,5 @@ export type SimulateStarforceOutput =
       type: "done";
       costs: number[];
       destroyedCounts: number[];
+      restoreRecoveryCostStatsByStar: RestoreRecoveryCostStatsByStar | null;
     };

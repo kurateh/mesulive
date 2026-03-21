@@ -4,7 +4,11 @@ import {
   discountRatio,
   eventsWithDestroyReduction,
   eventsWithGuaranteedSuccess,
+  eventsWithRestoreMesoDiscount,
+  isRestoreAvailableLevel,
+  isStarforceRestoreAvailableStar,
   probTable,
+  restoreResourceTable,
   type Discount,
   type Event,
 } from "./constants";
@@ -104,4 +108,43 @@ export const getCosts = (equipLevel: number): number[] => {
 
 export const getDiscountRatio = (discounts: Discount[]) => {
   return discounts.reduce((acc, discount) => acc + discountRatio[discount], 0);
+};
+
+const HUNDRED_MILLION = 100_000_000;
+
+export const getRestoreTotalCost = ({
+  level,
+  star,
+  spareCost,
+  event,
+}: {
+  level: number;
+  star: number;
+  spareCost: number;
+  event: Event | null;
+}) => {
+  if (
+    !isRestoreAvailableLevel(level) ||
+    !isStarforceRestoreAvailableStar(star)
+  ) {
+    return null;
+  }
+
+  const [requiredSpareCount, restoreCostInHundredMillions] =
+    restoreResourceTable[level][star];
+  const restoreCostMeso = Math.round(
+    restoreCostInHundredMillions * HUNDRED_MILLION,
+  );
+
+  if (requiredSpareCount <= 0 || restoreCostMeso <= 0) {
+    return null;
+  }
+
+  const restoreMesoDiscountRatio =
+    event !== null && eventsWithRestoreMesoDiscount.includes(event) ? 0.2 : 0;
+  const discountedRestoreCostMeso = Math.round(
+    restoreCostMeso * (1 - restoreMesoDiscountRatio),
+  );
+
+  return spareCost * requiredSpareCount + discountedRestoreCostMeso;
 };

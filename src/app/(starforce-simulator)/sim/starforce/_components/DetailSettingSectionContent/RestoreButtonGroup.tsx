@@ -5,31 +5,38 @@ import { useAtom, useAtomValue } from "jotai";
 import { StarforceSimulatorMolecule } from "~/app/(starforce-simulator)/sim/starforce/_lib/molecule";
 import { Starforce } from "~/entities/starforce";
 import { keys } from "~/shared/object";
-import { cx } from "~/shared/style";
-import { Button, SectionSubtitle } from "~/shared/ui";
+import { Button, Checkbox, SectionSubtitle } from "~/shared/ui";
 
 export const RestoreButtonGroup = () => {
-  const { restoreRecordAtom, restoreAvailableStarsAtom, isRestoreEnabledAtom } =
-    useMolecule(StarforceSimulatorMolecule);
+  const {
+    restoreRecordAtom,
+    restoreAvailableStarsAtom,
+    isRestoreEnabledAtom,
+    isAutoOptimizeRestoreAtom,
+  } = useMolecule(StarforceSimulatorMolecule);
   const [restoreRecord, setRestoreRecord] = useAtom(restoreRecordAtom);
+  const [isAutoOptimizeRestore, setIsAutoOptimizeRestore] = useAtom(
+    isAutoOptimizeRestoreAtom,
+  );
   const restoreAvailableStars = useAtomValue(restoreAvailableStarsAtom);
   const isRestoreEnabled = useAtomValue(isRestoreEnabledAtom);
+  const isManualControlDisabled = !isRestoreEnabled || isAutoOptimizeRestore;
 
   const isAllSelected =
     restoreAvailableStars.length > 0 &&
     restoreAvailableStars.every((star) => restoreRecord[`${star}`]);
 
   return (
-    <div className={cx(!isRestoreEnabled && "opacity-60")}>
+    <div>
       <div className="flex items-center justify-between">
         <div className="flex">
-          <SectionSubtitle>확정 복구</SectionSubtitle>
+          <SectionSubtitle>흔적 복구</SectionSubtitle>
           <Button
             color="primary"
             size="sm"
             variant="light"
             className="ml-1"
-            isDisabled={!isRestoreEnabled}
+            isDisabled={isManualControlDisabled}
             onPress={() => {
               setRestoreRecord((prev) =>
                 keys(prev).reduce<typeof restoreRecord>(
@@ -53,18 +60,31 @@ export const RestoreButtonGroup = () => {
           size="sm"
           className="text-xs"
           underline="always"
+          showAnchorIcon
         >
           데이터 출처: 인벤 법사캐
         </Link>
       </div>
 
-      <div className="mt-2 grid grid-cols-4 overflow-hidden rounded-2xl border border-default">
+      <Checkbox
+        size="sm"
+        isDisabled={!isRestoreEnabled}
+        isSelected={isAutoOptimizeRestore}
+        onValueChange={setIsAutoOptimizeRestore}
+      >
+        흔적 복구 최적화
+      </Checkbox>
+      <p className="mt-1 text-xs text-default-500">
+        자동으로 유리한 흔적 복구 구간을 선택합니다.
+      </p>
+
+      <div className="mt-4 grid grid-cols-4 overflow-hidden rounded-2xl border border-default">
         {Starforce.restoreAvailableStar.map((star) => (
           <Button
             key={star}
             radius="none"
             variant={restoreRecord[`${star}`] ? "flat" : "light"}
-            isDisabled={!isRestoreEnabled}
+            isDisabled={isManualControlDisabled}
             onPress={() => {
               setRestoreRecord((prev) => ({
                 ...prev,
@@ -79,10 +99,17 @@ export const RestoreButtonGroup = () => {
         ))}
       </div>
 
+      {isAutoOptimizeRestore && isRestoreEnabled && (
+        <p className="mt-1 text-xs text-default-500">
+          자동 최적화가 활성화되어 있어 수동으로 복구 구간을 선택할 수 없습니다.
+        </p>
+      )}
+
       {!isRestoreEnabled && (
         <p className="mt-1 text-xs text-default-500">
           장비 레벨이 {Starforce.restoreAvailableLevels.join(", ")} 중 하나이고,
-          목표 구간이 16성 이상일 때 활성화됩니다.
+          <br />
+          목표 스타포스가 16성 이상일 때 활성화됩니다.
         </p>
       )}
     </div>

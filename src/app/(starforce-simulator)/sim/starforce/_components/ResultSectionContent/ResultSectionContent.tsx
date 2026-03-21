@@ -8,6 +8,7 @@ import { StarforceSimulatorMolecule } from "~/app/(starforce-simulator)/sim/star
 import { cx } from "~/shared/style";
 import { SectionSubtitle } from "~/shared/ui";
 
+import { RestoreCostComparisonTable } from "./RestoreCostComparisonTable";
 import { ResultChart } from "./ResultChart";
 import { TopPercent } from "./TopPercent";
 
@@ -19,14 +20,31 @@ export const ResultSectionContent = () => {
     isCalculatingAtom,
     costsAtom,
     destroyedCountsAtom,
+    optimizedCostsAtom,
+    optimizedDestroyedCountsAtom,
+    restoreCostComparisonRowsAtom,
     isHighchartsLoadedAtom,
   } = useMolecule(StarforceSimulatorMolecule);
   const resultsExists = useAtomValue(resultExistsAtom);
   const isCalculating = useAtomValue(isCalculatingAtom);
   const isHighchartsLoaded = useAtomValue(isHighchartsLoadedAtom);
+  const optimizedCosts = useAtomValue(optimizedCostsAtom);
+  const optimizedDestroyedCounts = useAtomValue(optimizedDestroyedCountsAtom);
+  const restoreCostComparisonRows = useAtomValue(restoreCostComparisonRowsAtom);
+  const optimizedCostResultExists = optimizedCosts.length > 0;
+  const optimizedDestroyedResultExists = optimizedDestroyedCounts.length > 0;
 
   return (
     <div className="flex flex-col gap-2">
+      {restoreCostComparisonRows.length > 0 && (
+        <>
+          <SectionSubtitle>흔적 복구 유무 비교</SectionSubtitle>
+          <div className="overflow-y-auto">
+            <RestoreCostComparisonTable rows={restoreCostComparisonRows} />
+          </div>
+          <Spacer y={2} />
+        </>
+      )}
       <SectionSubtitle>소모 비용</SectionSubtitle>
       <div
         className={cx(
@@ -37,7 +55,11 @@ export const ResultSectionContent = () => {
         {isCalculating || !isHighchartsLoaded ? (
           <Skeleton className="m-2 h-full w-full rounded-2xl" />
         ) : resultsExists ? (
-          <ResultChart dataAtom={costsAtom} type="cost" />
+          <ResultChart
+            dataAtom={costsAtom}
+            overlayDataAtom={optimizedCostsAtom}
+            type="cost"
+          />
         ) : (
           <p className="text-default-400">
             시뮬레이션 결과가 여기에 표시됩니다.
@@ -46,6 +68,14 @@ export const ResultSectionContent = () => {
       </div>
       <Spacer y={2} />
       <TopPercent dataAtom={costsAtom} type="cost" />
+      {optimizedCostResultExists && (
+        <>
+          <p className="text-sm font-bold text-default-800">
+            흔적 복구 최적화 시
+          </p>
+          <TopPercent dataAtom={optimizedCostsAtom} type="cost" />
+        </>
+      )}
       <SectionSubtitle>파괴 횟수</SectionSubtitle>
       <div
         className={cx(
@@ -56,7 +86,11 @@ export const ResultSectionContent = () => {
         {isCalculating || !isHighchartsLoaded ? (
           <Skeleton className="m-2 h-full w-full rounded-2xl" />
         ) : resultsExists ? (
-          <ResultChart dataAtom={destroyedCountsAtom} type="destroyedCount" />
+          <ResultChart
+            dataAtom={destroyedCountsAtom}
+            overlayDataAtom={optimizedDestroyedCountsAtom}
+            type="destroyedCount"
+          />
         ) : (
           <p className="text-default-400">
             시뮬레이션 결과가 여기에 표시됩니다.
@@ -65,6 +99,17 @@ export const ResultSectionContent = () => {
       </div>
       <Spacer y={2} />
       <TopPercent dataAtom={destroyedCountsAtom} type="destroyedCount" />
+      {optimizedDestroyedResultExists && (
+        <>
+          <p className="text-sm font-bold text-default-800">
+            흔적 복구 최적화 시
+          </p>
+          <TopPercent
+            dataAtom={optimizedDestroyedCountsAtom}
+            type="destroyedCount"
+          />
+        </>
+      )}
     </div>
   );
 };
