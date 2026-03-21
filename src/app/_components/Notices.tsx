@@ -41,6 +41,30 @@ const noticeContents: (Optional<
     },
     icon: <CirclePlus />,
   },
+  {
+    variant: "solid",
+    color: "danger",
+    description: (
+      <>
+        <Link
+          href="/sim/starforce"
+          className="text-sm font-bold text-white"
+          underline="always"
+          showAnchorIcon
+        >
+          스타포스 시뮬레이터
+        </Link>
+        3/21 18:37~19:00까지 확률이 잘못 적용되는 문제가 있었습니다. 불편 드려
+        죄송합니다.
+      </>
+    ),
+    date: new Date("2026-03-21"),
+    classNames: {
+      base: cx("bg-danger-500"),
+      alertIcon: cx("fill-white text-danger-500"),
+    },
+    icon: <CirclePlus />,
+  },
 ];
 
 export const revalidate = 86400;
