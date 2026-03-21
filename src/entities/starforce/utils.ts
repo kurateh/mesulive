@@ -2,7 +2,7 @@ import { match } from "ts-pattern";
 
 import {
   discountRatio,
-  starforceProbTable,
+  probTable,
   type Discount,
   type Event,
 } from "./constants";
@@ -34,24 +34,21 @@ export const getProbTable = (
     event === "샤타포스(15 16 포함)"
   ) {
     Array.from({ length: 22 }).forEach((_, i) => {
-      const destroyProbability =
-        starforceProbTable[i][PROB_TABLE_DESTROY_INDEX];
-      starforceProbTable[i][PROB_TABLE_DESTROY_INDEX] =
-        destroyProbability * 0.7;
-      starforceProbTable[i][PROB_TABLE_MAINTAIN_INDEX] +=
-        destroyProbability * 0.3;
+      const destroyProbability = probTable[i][PROB_TABLE_DESTROY_INDEX];
+      probTable[i][PROB_TABLE_DESTROY_INDEX] = destroyProbability * 0.7;
+      probTable[i][PROB_TABLE_MAINTAIN_INDEX] += destroyProbability * 0.3;
     });
   }
 
   if (event === "5/10/15성 100%" || event === "샤타포스(15 16 포함)") {
     [5, 10, 15].forEach((i) => {
-      starforceProbTable[i][PROB_TABLE_SUCCESS_INDEX] = 1;
-      starforceProbTable[i][PROB_TABLE_MAINTAIN_INDEX] = 0;
-      starforceProbTable[i][PROB_TABLE_DESTROY_INDEX] = 0;
+      probTable[i][PROB_TABLE_SUCCESS_INDEX] = 1;
+      probTable[i][PROB_TABLE_MAINTAIN_INDEX] = 0;
+      probTable[i][PROB_TABLE_DESTROY_INDEX] = 0;
     });
   }
 
-  const starcatchTable = starforceProbTable.map((row) => {
+  const starcatchTable = probTable.map((row) => {
     const successProb = row[PROB_TABLE_SUCCESS_INDEX] * 1.05;
 
     return [
@@ -63,7 +60,7 @@ export const getProbTable = (
     ];
   });
 
-  return starforceProbTable.map((defaultRow, index) => {
+  return probTable.map((defaultRow, index) => {
     const result = [
       ...(starcatchRecord[`${index}`] ? starcatchTable[index] : defaultRow),
     ];

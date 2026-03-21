@@ -47,7 +47,7 @@ export const discountRatio: Record<Discount, number> = {
 /**
  * [success prob, maintain prob, destroy prob][]
  */
-export const starforceProbTable = [
+export const probTable = [
   [0.95, 0.05, 0], // 0
   [0.9, 0.1, 0], // 1
   [0.85, 0.15, 0], // 2
@@ -80,32 +80,26 @@ export const starforceProbTable = [
   [0.01, 0.792, 0.198], // 29
 ];
 
-export const starforceRestoreAvailableLevels = [
+export const restoreAvailableLevels = [
   130, 135, 140, 145, 150, 160, 200, 250,
 ] as const;
-export type StarforceRestoreAvailableLevel =
-  (typeof starforceRestoreAvailableLevels)[number];
-export const isStarforceRestoreAvailableLevel = (
+export type RestoreAvailableLevel = (typeof restoreAvailableLevels)[number];
+export const isRestoreAvailableLevel = (
   level: number,
-): level is StarforceRestoreAvailableLevel =>
-  starforceRestoreAvailableLevels.includes(
-    level as StarforceRestoreAvailableLevel,
-  );
+): level is RestoreAvailableLevel =>
+  restoreAvailableLevels.includes(level as RestoreAvailableLevel);
 
-export const starforceRestoreAvailableStar = [
-  15, 16, 17, 18, 19, 20, 21, 22,
-] as const;
-export type StarforceRestoreAvailableStar =
-  (typeof starforceRestoreAvailableStar)[number];
+export const restoreAvailableStar = [15, 16, 17, 18, 19, 20, 21, 22] as const;
+export type RestoreAvailableStar = (typeof restoreAvailableStar)[number];
 export const isStarforceRestoreAvailableStar = (
   star: number,
-): star is StarforceRestoreAvailableStar =>
-  starforceRestoreAvailableStar.includes(star as StarforceRestoreAvailableStar);
+): star is RestoreAvailableStar =>
+  restoreAvailableStar.includes(star as RestoreAvailableStar);
 
 // [count of equip, meso(hundred millions)]
-export const starforceRestoreResourceTable: Record<
-  StarforceRestoreAvailableLevel,
-  Record<StarforceRestoreAvailableStar, [number, number]>
+export const restoreResourceTable: Record<
+  RestoreAvailableLevel,
+  Record<RestoreAvailableStar, [number, number]>
 > = {
   130: {
     15: [1, 1.19],
