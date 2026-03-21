@@ -24,7 +24,7 @@ const noticeContents: (Optional<
     description: (
       <>
         <Link
-          href="/calc/potential"
+          href="/sim/starforce"
           className="text-sm font-bold text-white"
           underline="always"
           showAnchorIcon
