@@ -18,7 +18,6 @@ export interface SimulateStarforceInput {
 
   safeguardRecord: { [key: `${number}`]: boolean };
   restoreRecord: { [key: `${number}`]: boolean };
-  starcatchRecord: { [key: `${number}`]: boolean };
   event: Starforce.Event | null;
   discounts: Starforce.Discount[];
 

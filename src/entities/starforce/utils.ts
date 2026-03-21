@@ -30,42 +30,29 @@ export const PROB_TABLE_DESTROY_INDEX = 2;
  * @returns [상승, 유지, 파괴][]
  */
 export const getProbTable = (
-  starcatchRecord: { [key: number]: boolean },
   safeguardRecord: { [key: number]: boolean },
   event: Event | null = null,
 ) => {
+  const table = structuredClone(probTable);
+
   if (event !== null && eventsWithDestroyReduction.includes(event)) {
     Array.from({ length: 22 }).forEach((_, i) => {
-      const destroyProbability = probTable[i][PROB_TABLE_DESTROY_INDEX];
-      probTable[i][PROB_TABLE_DESTROY_INDEX] = destroyProbability * 0.7;
-      probTable[i][PROB_TABLE_MAINTAIN_INDEX] += destroyProbability * 0.3;
+      const destroyProbability = table[i][PROB_TABLE_DESTROY_INDEX];
+      table[i][PROB_TABLE_DESTROY_INDEX] = destroyProbability * 0.7;
+      table[i][PROB_TABLE_MAINTAIN_INDEX] += destroyProbability * 0.3;
     });
   }
 
   if (event !== null && eventsWithGuaranteedSuccess.includes(event)) {
     [5, 10, 15].forEach((i) => {
-      probTable[i][PROB_TABLE_SUCCESS_INDEX] = 1;
-      probTable[i][PROB_TABLE_MAINTAIN_INDEX] = 0;
-      probTable[i][PROB_TABLE_DESTROY_INDEX] = 0;
+      table[i][PROB_TABLE_SUCCESS_INDEX] = 1;
+      table[i][PROB_TABLE_MAINTAIN_INDEX] = 0;
+      table[i][PROB_TABLE_DESTROY_INDEX] = 0;
     });
   }
 
-  const starcatchTable = probTable.map((row) => {
-    const successProb = row[PROB_TABLE_SUCCESS_INDEX] * 1.05;
-
-    return [
-      successProb,
-      ((1 - successProb) * row[PROB_TABLE_MAINTAIN_INDEX]) /
-        (1 - row[PROB_TABLE_SUCCESS_INDEX]),
-      ((1 - successProb) * row[PROB_TABLE_DESTROY_INDEX]) /
-        (1 - row[PROB_TABLE_SUCCESS_INDEX]),
-    ];
-  });
-
-  return probTable.map((defaultRow, index) => {
-    const result = [
-      ...(starcatchRecord[`${index}`] ? starcatchTable[index] : defaultRow),
-    ];
+  return table.map((defaultRow, index) => {
+    const result = [...defaultRow];
 
     if (safeguardRecord[index]) {
       result[PROB_TABLE_MAINTAIN_INDEX] += result[PROB_TABLE_DESTROY_INDEX];

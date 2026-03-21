@@ -263,13 +263,6 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
   );
   const isAutoOptimizeRestoreAtom = atom(false);
 
-  const starcatchRecordAtom = atom<{ [key: `${number}`]: boolean }>(
-    Array.from({ length: 30 }).reduce<{ [key: number]: boolean }>(
-      (acc, _, i) => ({ ...acc, [i]: false }),
-      {},
-    ),
-  );
-
   const eventAtom = atom<Starforce.Event | null>(null);
 
   const discountsAtom = atom<Starforce.Discount[]>([]);
@@ -316,7 +309,6 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
         ...inputs,
         safeguardRecord: get(safeGuardRecordAtom),
         restoreRecord: get(restoreRecordAtom),
-        starcatchRecord: get(starcatchRecordAtom),
         event: get(eventAtom),
         discounts: get(discountsAtom),
       })),
@@ -355,7 +347,6 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
     restoreAvailableStarsAtom,
     isRestoreEnabledAtom,
     isAutoOptimizeRestoreAtom,
-    starcatchRecordAtom,
     eventAtom,
     discountsAtom,
     inputsAtom,

@@ -25,18 +25,13 @@ addEventListener(
       restoreRecord,
       safeguardRecord,
       spareCost,
-      starcatchRecord,
       targetStar,
       simulationTotalCount,
       simulationSetCount,
       collectRestoreRecoveryCostStats,
     },
   }: MessageEvent<SimulateStarforceInput>) => {
-    const probTable = Starforce.getProbTable(
-      starcatchRecord,
-      safeguardRecord,
-      event,
-    );
+    const probTable = Starforce.getProbTable(safeguardRecord, event);
 
     const defaultCosts = Starforce.getCosts(level);
 

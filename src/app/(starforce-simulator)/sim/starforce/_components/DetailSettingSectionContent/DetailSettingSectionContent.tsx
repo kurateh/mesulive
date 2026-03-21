@@ -3,7 +3,6 @@ import { EventRadioGroup } from "./EventRadioGroup";
 import { RestoreButtonGroup } from "./RestoreButtonGroup";
 import { SafeguardButtonGroup } from "./SafeguardButtonGroup";
 import { SimulationCountInput } from "./SimulationCountInput";
-import { StarcatchButtonGroup } from "./StarcatchButtonGroup";
 
 export const DetailSettingSectionContent = () => {
   return (
@@ -11,7 +10,6 @@ export const DetailSettingSectionContent = () => {
       <SimulationCountInput />
       <SafeguardButtonGroup />
       <RestoreButtonGroup />
-      <StarcatchButtonGroup />
       <EventRadioGroup />
       <DiscountCheckbox />
     </div>
