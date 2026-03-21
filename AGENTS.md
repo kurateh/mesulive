@@ -57,6 +57,7 @@ src/
 - **tRPC:** End-to-end type-safe API layer connecting Next.js API routes to Prisma/PostgreSQL.
 - **Functional programming:** Uses fp-ts (Option, Either), ts-pattern for pattern matching, lodash-es for utilities.
 - **Provider hierarchy:** MotionProvider > JotaiProvider > HeroUIProvider > QueryProvider > OverlayProvider > MainLayout.
+- **Starforce simulator logic reference:** For starforce simulator system logic, refer to `docs/starforce-simulator-system.md`.
 
 ### UI Component Rules
 
