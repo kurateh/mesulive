@@ -208,6 +208,44 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
     17: false,
   });
 
+  const restoreRecordAtom = atom<{ [key: `${number}`]: boolean }>(
+    Starforce.restoreAvailableStar.reduce<{ [key: `${number}`]: boolean }>(
+      (acc, star) => ({
+        ...acc,
+        [star]: false,
+      }),
+      {},
+    ),
+  );
+
+  const restoreAvailableStarsAtom = atom(
+    (get): Starforce.RestoreAvailableStar[] => {
+      const levelResult = get(levelAtom).value;
+      const currentStarResult = get(currentStarAtom).value;
+      const targetStarResult = get(targetStarAtom).value;
+
+      if (
+        !E.isRight(levelResult) ||
+        !E.isRight(currentStarResult) ||
+        !E.isRight(targetStarResult)
+      ) {
+        return [];
+      }
+
+      if (!Starforce.isRestoreAvailableLevel(levelResult.right)) {
+        return [];
+      }
+
+      return Starforce.restoreAvailableStar.filter(
+        (star) => star < targetStarResult.right,
+      );
+    },
+  );
+
+  const isRestoreEnabledAtom = atom(
+    (get) => get(restoreAvailableStarsAtom).length > 0,
+  );
+
   const starcatchRecordAtom = atom<{ [key: `${number}`]: boolean }>(
     Array.from({ length: 30 }).reduce<{ [key: number]: boolean }>(
       (acc, _, i) => ({ ...acc, [i]: false }),
@@ -260,6 +298,7 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
       E.map((inputs) => ({
         ...inputs,
         safeguardRecord: get(safeGuardRecordAtom),
+        restoreRecord: get(restoreRecordAtom),
         starcatchRecord: get(starcatchRecordAtom),
         event: get(eventAtom),
         discounts: get(discountsAtom),
@@ -291,6 +330,9 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
     targetStarAtom,
     simulationCountAtom,
     safeGuardRecordAtom,
+    restoreRecordAtom,
+    restoreAvailableStarsAtom,
+    isRestoreEnabledAtom,
     starcatchRecordAtom,
     eventAtom,
     discountsAtom,

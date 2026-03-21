@@ -54,6 +54,16 @@
 2. 정수
 3. 2 이상 100000 이하
 
+### 확정 복구 섹션 활성화 조건
+
+세부 설정의 `확정 복구` 섹션은 아래 조건을 만족할 때만 활성화됩니다.
+
+1. `level`이 `Starforce.restoreAvailableLevels`에 포함됨  
+2. `targetStar`가 16 이상  
+   (`restoreAvailableStars = restoreAvailableStar.filter((star) => star < targetStar)` 이므로, 최소 15성이 포함되어야 활성화)
+
+비활성 상태에서는 버튼 입력이 막히며 안내 문구가 표시됩니다.
+
 ### 레벨별 도달 가능 스타
 
 `Starforce.getReachableStar(level)`:
@@ -219,6 +229,26 @@ UI 로직상 MVP 계열은 동시에 여러 개 선택되지 않게 처리됩니
 
 즉, 파방 추가비용은 할인 후 비용이 아니라 "기본 비용" 기준입니다.
 
+### 4-4) 확정 복구 비용
+
+파괴 발생 시 아래 조건을 모두 만족하면 확정 복구를 시도합니다.
+
+- 해당 성수에 확정 복구 ON (`restoreRecord[현재성] === true`)
+- 장비 레벨이 복구 가능 레벨 (`isRestoreAvailableLevel(level)`)
+- 현재 성수가 복구 가능 성수 (`isStarforceRestoreAvailableStar(현재성)`)
+
+복구 리소스는 `restoreResourceTable[level][star]`에서 조회합니다.
+
+- `requiredSpareCount`: 필요한 스페어 개수
+- `restoreCostInHundredMillions`: 복구 비용(억 메소 단위)
+
+적용 비용식:
+
+- `restoreCostMeso = round(restoreCostInHundredMillions * 100_000_000)`
+- `총 복구비용 = spareCost * requiredSpareCount + restoreCostMeso`
+
+복구 리소스가 `0, 0`인 경우(예: 일부 레벨의 20~22성)는 확정 복구를 적용하지 않고 일반 파괴 처리로 진행합니다.
+
 ## 5) 1회 시뮬레이션 루프 동작
 
 워커는 각 trial(1회 완주 시뮬레이션)마다 아래 상태로 시작합니다.
@@ -251,9 +281,15 @@ UI 로직상 MVP 계열은 동시에 여러 개 선택되지 않게 처리됩니
 1. 성수 변화 없음
 
 - 파괴
-1. `star = 12`로 리셋
-2. `spentCost += spareCost`
-3. `destroyedCount += 1`
+1. `destroyedAtStar = star` 저장
+2. 확정 복구 조건 검사 (`restoreRecord`, 복구 가능 레벨/성수)
+3. 확정 복구 가능 + 리소스가 유효(`requiredSpareCount > 0 && restoreCostMeso > 0`)하면:
+   - `spentCost += spareCost * requiredSpareCount + restoreCostMeso`
+   - `star = destroyedAtStar` (파괴 직전 성수로 복귀)
+4. 그 외에는 일반 파괴 처리:
+   - `star = 12`
+   - `spentCost += spareCost`
+5. `destroyedCount += 1` (복구 여부와 관계없이 파괴 횟수는 증가)
 
 목표 달성 시(`star >= targetStar`) 결과 배열에 저장:
 
@@ -323,15 +359,20 @@ UI 로직상 MVP 계열은 동시에 여러 개 선택되지 않게 처리됩니
 - `값 -> 상위 x%` 변환:
   - `샘플 <= 값`인 비율(% )
 
-## 8) 현재 시뮬레이터 범위 밖 상수
+## 8) 복구 관련 상수 사용처
 
 `src/entities/starforce/constants.ts`에는 아래 데이터도 함께 정의되어 있습니다.
 
-- `starforceRestoreAvailableLevels`
-- `starforceRestoreAvailableStar`
-- `starforceRestoreResourceTable`
+- `restoreAvailableLevels`
+- `restoreAvailableStar`
+- `restoreResourceTable`
 
-이 데이터는 "스타포스 복구" 리소스 계산용 상수이며, 현재 `sim/starforce` 워커 계산 루프에서는 직접 사용되지 않습니다.
+현재 코드에서 이 상수들은 실제로 사용됩니다.
+
+1. `molecule.ts`
+   - 복구 섹션 활성화 조건 계산 (`restoreAvailableStarsAtom`, `isRestoreEnabledAtom`)
+2. `simulateStarforce.ts`
+   - 파괴 시 확정 복구 비용 계산 및 성수 복귀 처리
 
 ## 9) 구현상 주의사항 (코드 해석 포인트)
 
@@ -340,9 +381,10 @@ UI 로직상 MVP 계열은 동시에 여러 개 선택되지 않게 처리됩니
 1. `getProbTable`은 `starforceProbTable` 원본 배열을 직접 수정하는 방식으로 이벤트를 반영합니다.
 2. 스타캐치 성공 확률은 `*1.05` 후 상한(1.0) 캡을 따로 두지 않습니다.
 3. 유지 분기에서 성수 하락 처리가 없습니다(유지 시 성수 변화 없음).
-4. 파괴 발생 시 성수는 항상 12성으로 이동하고 스페어 비용이 즉시 추가됩니다.
+4. 파괴 발생 시 확정 복구 조건을 만족하면 복구 비용을 추가로 지불하고 파괴 직전 성수로 돌아갑니다(아니면 12성으로 하락).
 5. 파괴방지 UI 토글은 15/16/17성만 제공됩니다.
-6. 할인 UI는 MVP 계열 1개 + PC Room 조합 형태가 되도록 제어됩니다.
+6. 확정 복구 UI 토글은 15~22성 버튼을 제공하고, 섹션 자체는 레벨/목표성 조건을 만족할 때만 활성화됩니다.
+7. 할인 UI는 MVP 계열 1개 + PC Room 조합 형태가 되도록 제어됩니다.
 
 ---
 

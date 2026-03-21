@@ -18,6 +18,7 @@ addEventListener(
       discounts,
       event,
       level,
+      restoreRecord,
       safeguardRecord,
       spareCost,
       starcatchRecord,
@@ -26,6 +27,7 @@ addEventListener(
       simulationSetCount,
     },
   }: MessageEvent<SimulateStarforceInput>) => {
+    const HUNDRED_MILLION = 100_000_000;
     const probTable = Starforce.getProbTable(
       starcatchRecord,
       safeguardRecord,
@@ -103,8 +105,31 @@ addEventListener(
               // 유지
             } else if (result === Starforce.PROB_TABLE_DESTROY_INDEX) {
               // 파괴
-              star = 12;
-              spentCost += spareCost;
+              const destroyedAtStar = star;
+              const isRestoreEnabled =
+                restoreRecord[`${destroyedAtStar}`] &&
+                Starforce.isRestoreAvailableLevel(level) &&
+                Starforce.isStarforceRestoreAvailableStar(destroyedAtStar);
+
+              if (isRestoreEnabled) {
+                const [requiredSpareCount, restoreCostInHundredMillions] =
+                  Starforce.restoreResourceTable[level][destroyedAtStar];
+                const restoreCostMeso = Math.round(
+                  restoreCostInHundredMillions * HUNDRED_MILLION,
+                );
+
+                if (requiredSpareCount > 0 && restoreCostMeso > 0) {
+                  spentCost += spareCost * requiredSpareCount + restoreCostMeso;
+                  star = destroyedAtStar;
+                } else {
+                  star = 12;
+                  spentCost += spareCost;
+                }
+              } else {
+                star = 12;
+                spentCost += spareCost;
+              }
+
               destroyedCount += 1;
             } else {
               throw new Error("randomPickByProbabilities failed");
