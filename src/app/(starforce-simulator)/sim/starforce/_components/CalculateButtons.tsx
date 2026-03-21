@@ -418,6 +418,14 @@ export const CalculateButtons = () => {
           optimizedRestoreRecord,
         }),
       );
+      const hasAnyOptimizedRestore = Object.values(optimizedRestoreRecord).some(
+        Boolean,
+      );
+
+      if (!hasAnyOptimizedRestore) {
+        setProgress(100);
+        return;
+      }
 
       const secondPassResult = await runSimulation({
         inputs: {
