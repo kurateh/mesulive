@@ -2,6 +2,8 @@ import { match } from "ts-pattern";
 
 import {
   discountRatio,
+  eventsWithDestroyReduction,
+  eventsWithGuaranteedSuccess,
   probTable,
   type Discount,
   type Event,
@@ -28,11 +30,7 @@ export const getProbTable = (
   safeguardRecord: { [key: number]: boolean },
   event: Event | null = null,
 ) => {
-  if (
-    event === "21성 이하 파괴 확률 30% 감소" ||
-    event === "샤타포스" ||
-    event === "샤타포스(15 16 포함)"
-  ) {
+  if (event !== null && eventsWithDestroyReduction.includes(event)) {
     Array.from({ length: 22 }).forEach((_, i) => {
       const destroyProbability = probTable[i][PROB_TABLE_DESTROY_INDEX];
       probTable[i][PROB_TABLE_DESTROY_INDEX] = destroyProbability * 0.7;
@@ -40,7 +38,7 @@ export const getProbTable = (
     });
   }
 
-  if (event === "5/10/15성 100%" || event === "샤타포스(15 16 포함)") {
+  if (event !== null && eventsWithGuaranteedSuccess.includes(event)) {
     [5, 10, 15].forEach((i) => {
       probTable[i][PROB_TABLE_SUCCESS_INDEX] = 1;
       probTable[i][PROB_TABLE_MAINTAIN_INDEX] = 0;

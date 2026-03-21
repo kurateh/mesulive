@@ -129,6 +129,7 @@
 
 - `21성 이하 파괴 확률 30% 감소`
 - `샤타포스`
+- `샤타포스(+흔적 복구 비용 20% 할인)`
 - `샤타포스(15 16 포함)`
 
 적용식:
@@ -200,7 +201,11 @@ UI에서 파괴방지 토글은 15/16/17성만 제공됩니다.
 워커에서 실제 시도 비용 배열(`discountedCosts`)을 만들 때:
 
 1. 사용자 할인(`MVP`, `PC Room`)을 0~16성에만 적용
-2. 이벤트가 `30% 할인` 또는 `샤타포스*`면 전 성수에 추가로 30% 할인 적용
+2. 이벤트가 아래 중 하나면 전 성수에 추가로 30% 할인 적용
+   - `30% 할인`
+   - `샤타포스`
+   - `샤타포스(+흔적 복구 비용 20% 할인)`
+   - `샤타포스(15 16 포함)`
 3. 각 성수 비용을 `Math.round` 처리
 
 사용자 할인율 합산은 단순 합(`getDiscountRatio`)입니다.
@@ -245,7 +250,14 @@ UI 로직상 MVP 계열은 동시에 여러 개 선택되지 않게 처리됩니
 적용 비용식:
 
 - `restoreCostMeso = round(restoreCostInHundredMillions * 100_000_000)`
-- `총 복구비용 = spareCost * requiredSpareCount + restoreCostMeso`
+- `restoreMesoDiscountRatio = (event가 '흔적 복구 비용 20% 할인' 또는 '샤타포스(+흔적 복구 비용 20% 할인)'이면 0.2, 아니면 0)`
+- `discountedRestoreCostMeso = round(restoreCostMeso * (1 - restoreMesoDiscountRatio))`
+- `총 복구비용 = spareCost * requiredSpareCount + discountedRestoreCostMeso`
+
+주의:
+
+- 복구 비용 할인 이벤트는 스페어 비용(`spareCost * requiredSpareCount`)에는 적용되지 않습니다.
+- 오직 순수 메소 복구비(`restoreCostMeso`)에만 20% 할인이 적용됩니다.
 
 복구 리소스가 `0, 0`인 경우(예: 일부 레벨의 20~22성)는 확정 복구를 적용하지 않고 일반 파괴 처리로 진행합니다.
 

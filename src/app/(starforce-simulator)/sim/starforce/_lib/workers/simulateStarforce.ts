@@ -40,13 +40,17 @@ addEventListener(
     const discountedCosts = defaultCosts
       .map((cost, index) => (index < 17 ? cost * (1 - discountRatio) : cost))
       .map(
-        event === "30% 할인" ||
-          event === "샤타포스" ||
-          event === "샤타포스(15 16 포함)"
+        event !== null && Starforce.eventsWithGlobalCostDiscount.includes(event)
           ? (cost) => cost * 0.7
           : identity,
       )
       .map(Math.round);
+    const restoreMesoDiscountRatio =
+      event !== null && Starforce.eventsWithRestoreMesoDiscount.includes(event)
+        ? 0.2
+        : 0;
+    const isOnePlusOneEvent =
+      event !== null && Starforce.eventsWithOnePlusOne.includes(event);
 
     const simulationUnitCount = Math.floor(
       simulationTotalCount / simulationSetCount,
@@ -100,7 +104,7 @@ addEventListener(
 
             if (result === Starforce.PROB_TABLE_SUCCESS_INDEX) {
               // 성공
-              star += 1 + (event === "10성 이하 1+1" && star <= 10 ? 1 : 0);
+              star += 1 + (isOnePlusOneEvent && star <= 10 ? 1 : 0);
             } else if (result === Starforce.PROB_TABLE_MAINTAIN_INDEX) {
               // 유지
             } else if (result === Starforce.PROB_TABLE_DESTROY_INDEX) {
@@ -117,9 +121,13 @@ addEventListener(
                 const restoreCostMeso = Math.round(
                   restoreCostInHundredMillions * HUNDRED_MILLION,
                 );
+                const discountedRestoreCostMeso = Math.round(
+                  restoreCostMeso * (1 - restoreMesoDiscountRatio),
+                );
 
                 if (requiredSpareCount > 0 && restoreCostMeso > 0) {
-                  spentCost += spareCost * requiredSpareCount + restoreCostMeso;
+                  spentCost +=
+                    spareCost * requiredSpareCount + discountedRestoreCostMeso;
                   star = destroyedAtStar;
                 } else {
                   star = 12;
