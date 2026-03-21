@@ -30,7 +30,11 @@ export const LoadHighCharts = () => {
   return (
     <>
       <Script
-        src="https://code.highcharts.com/12.1.2/highcharts.js"
+        src={
+          process.env.NODE_ENV === "production"
+            ? "https://code.highcharts.com/12.1.2/highcharts.js"
+            : "/highcharts.js"
+        }
         onReady={() => {
           // eslint-disable-next-line no-console
           console.log("Highcharts base loaded");
@@ -39,7 +43,11 @@ export const LoadHighCharts = () => {
       />
       {isHighChartsBaseLoaded && (
         <Script
-          src="https://code.highcharts.com/12.1.2/modules/histogram-bellcurve.js"
+          src={
+            process.env.NODE_ENV === "production"
+              ? "https://code.highcharts.com/12.1.2/modules/histogram-bellcurve.js"
+              : "/histogram-bellcurve.js"
+          }
           onReady={() => {
             // eslint-disable-next-line no-console
             console.log("Highcharts histogram bellcurve loaded");
