@@ -121,7 +121,7 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
         },
         {
           title: {
-            text: "누적확률",
+            text: "누적분포",
             style: {
               color: semanticColors.light.default[500],
             },
@@ -163,7 +163,7 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
         },
         backgroundColor: type === "cost" ? primary[600] : secondary[600],
         formatter() {
-          if (this.series.name === "누적확률") {
+          if (this.series.name === "누적분포") {
             const label =
               cdfBinWidth <= 1
                 ? putUnit(this.x)
@@ -201,7 +201,7 @@ export const ResultChart = ({ dataAtom, type }: Props) => {
           showInLegend: false,
         },
         {
-          name: "누적확률",
+          name: "누적분포",
           type: "spline",
           xAxis: 1,
           yAxis: 2,
