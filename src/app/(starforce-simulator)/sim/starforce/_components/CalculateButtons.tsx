@@ -146,7 +146,7 @@ const getRestoreCostComparisonRows = ({
 
 interface SimulationResult {
   costs: number[];
-  destroyedCounts: number[];
+  consumedEquipCounts: number[];
   restoreRecoveryCostStatsByStar: RestoreRecoveryCostStatsByStar | null;
 }
 
@@ -161,9 +161,9 @@ export const CalculateButtons = () => {
     inputsAtom,
     inputsErrorMessageAtom,
     costsAtom,
-    destroyedCountsAtom,
+    consumedEquipCountsAtom,
     optimizedCostsAtom,
-    optimizedDestroyedCountsAtom,
+    optimizedConsumedEquipCountsAtom,
     restoreCostComparisonRowsAtom,
     optimizedRestoreRecordAtom,
     isCalculatingAtom,
@@ -174,9 +174,11 @@ export const CalculateButtons = () => {
   const isAutoOptimizeRestore = useAtomValue(isAutoOptimizeRestoreAtom);
   const inputsErrorMessage = useAtomValue(inputsErrorMessageAtom);
   const setCosts = useSetAtom(costsAtom);
-  const setDestroyedCounts = useSetAtom(destroyedCountsAtom);
+  const setConsumedEquipCounts = useSetAtom(consumedEquipCountsAtom);
   const setOptimizedCosts = useSetAtom(optimizedCostsAtom);
-  const setOptimizedDestroyedCounts = useSetAtom(optimizedDestroyedCountsAtom);
+  const setOptimizedConsumedEquipCounts = useSetAtom(
+    optimizedConsumedEquipCountsAtom,
+  );
   const setRestoreCostComparisonRows = useSetAtom(
     restoreCostComparisonRowsAtom,
   );
@@ -243,7 +245,7 @@ export const CalculateButtons = () => {
         workers.current = localWorkers;
 
         let localCosts: number[] = [];
-        let localDestroyedCounts: number[] = [];
+        let localConsumedEquipCounts: number[] = [];
         let restoreRecoveryCostStatsByStar = collectRestoreRecoveryCostStats
           ? createEmptyRestoreRecoveryCostStatsByStar()
           : null;
@@ -276,9 +278,9 @@ export const CalculateButtons = () => {
 
             finishedWorkerCount += 1;
             localCosts = [...localCosts, ...output.costs];
-            localDestroyedCounts = [
-              ...localDestroyedCounts,
-              ...output.destroyedCounts,
+            localConsumedEquipCounts = [
+              ...localConsumedEquipCounts,
+              ...output.consumedEquipCounts,
             ];
             if (
               collectRestoreRecoveryCostStats &&
@@ -296,13 +298,13 @@ export const CalculateButtons = () => {
             }
 
             localCosts.sort((a, b) => a - b);
-            localDestroyedCounts.sort((a, b) => a - b);
+            localConsumedEquipCounts.sort((a, b) => a - b);
 
             setProgress((prev) => Math.max(prev, progressTarget));
             settle(() =>
               resolve({
                 costs: localCosts,
-                destroyedCounts: localDestroyedCounts,
+                consumedEquipCounts: localConsumedEquipCounts,
                 restoreRecoveryCostStatsByStar,
               }),
             );
@@ -347,7 +349,7 @@ export const CalculateButtons = () => {
     setProgress(0);
     setIsCalculating(true);
     setOptimizedCosts([]);
-    setOptimizedDestroyedCounts([]);
+    setOptimizedConsumedEquipCounts([]);
     setRestoreCostComparisonRows([]);
     setOptimizedRestoreRecord(createEmptyRestoreRecord());
 
@@ -389,7 +391,7 @@ export const CalculateButtons = () => {
       }
 
       setCosts(firstPassResult.costs);
-      setDestroyedCounts(firstPassResult.destroyedCounts);
+      setConsumedEquipCounts(firstPassResult.consumedEquipCounts);
 
       if (!shouldAutoOptimizeRestore) {
         setProgress(100);
@@ -443,7 +445,7 @@ export const CalculateButtons = () => {
       }
 
       setOptimizedCosts(secondPassResult.costs);
-      setOptimizedDestroyedCounts(secondPassResult.destroyedCounts);
+      setOptimizedConsumedEquipCounts(secondPassResult.consumedEquipCounts);
       setProgress(100);
     } catch {
       // cancelled or worker error
@@ -459,10 +461,10 @@ export const CalculateButtons = () => {
     isAutoOptimizeRestore,
     runSimulation,
     setCosts,
-    setDestroyedCounts,
+    setConsumedEquipCounts,
     setIsCalculating,
     setOptimizedCosts,
-    setOptimizedDestroyedCounts,
+    setOptimizedConsumedEquipCounts,
     setRestoreCostComparisonRows,
     setOptimizedRestoreRecord,
   ]);

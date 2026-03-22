@@ -14,7 +14,7 @@ const MAX_FRAC_DIGITS = 3;
 
 interface Props {
   dataAtom: Atom<number[]>;
-  type: "cost" | "destroyedCount";
+  type: "cost" | "consumedEquipCount";
 }
 
 export const TopPercent = ({ dataAtom, type }: Props) => {
@@ -31,7 +31,7 @@ export const TopPercent = ({ dataAtom, type }: Props) => {
   const [topPct, setTopPct] = useState("");
 
   const initialMeanCostUnitFracDigits = type === "cost" ? 0 : 2;
-  const unit = type === "cost" ? "메소" : "회";
+  const unit = type === "cost" ? "메소" : "개";
 
   useEffect(() => {
     topPctCost.current = new TopPctCost({

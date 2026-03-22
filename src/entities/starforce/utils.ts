@@ -185,3 +185,21 @@ export const getRestoreTotalCost = ({
 
   return spareCost * requiredSpareCount + discountedRestoreCostMeso;
 };
+
+export const getRestoreRequiredSpareCount = ({
+  level,
+  star,
+}: {
+  level: number;
+  star: number;
+}) => {
+  if (
+    !isRestoreAvailableLevel(level) ||
+    !isStarforceRestoreAvailableStar(star)
+  ) {
+    return null;
+  }
+
+  const [requiredSpareCount] = restoreResourceTable[level][star];
+  return requiredSpareCount > 0 ? requiredSpareCount : null;
+};

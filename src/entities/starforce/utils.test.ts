@@ -1,4 +1,5 @@
 import {
+  getRestoreRequiredSpareCount,
   getRecoveryTargetStarWithoutRestore,
   getRestoreTargetStar,
 } from "./utils";
@@ -81,6 +82,35 @@ describe("getRecoveryTargetStarWithoutRestore", () => {
       getRecoveryTargetStarWithoutRestore({
         destroyedAtStar: 14,
         level: 200,
+      }),
+    ).toBeNull();
+  });
+});
+
+describe("getRestoreRequiredSpareCount", () => {
+  it("복구 가능 성수면 필요한 스페어 개수를 반환한다", () => {
+    expect(
+      getRestoreRequiredSpareCount({
+        level: 200,
+        star: 21,
+      }),
+    ).toBe(3);
+  });
+
+  it("복구가 불가능한 성수면 null을 반환한다", () => {
+    expect(
+      getRestoreRequiredSpareCount({
+        level: 200,
+        star: 14,
+      }),
+    ).toBeNull();
+  });
+
+  it("복구 가능 레벨이 아니면 null을 반환한다", () => {
+    expect(
+      getRestoreRequiredSpareCount({
+        level: 120,
+        star: 15,
       }),
     ).toBeNull();
   });

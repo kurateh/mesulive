@@ -326,9 +326,9 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
 
   const costsAtom = atom<number[]>([]);
 
-  const destroyedCountsAtom = atom<number[]>([]);
+  const consumedEquipCountsAtom = atom<number[]>([]);
   const optimizedCostsAtom = atom<number[]>([]);
-  const optimizedDestroyedCountsAtom = atom<number[]>([]);
+  const optimizedConsumedEquipCountsAtom = atom<number[]>([]);
   const restoreCostComparisonRowsAtom = atom<RestoreCostComparisonRow[]>([]);
 
   const resultExistsAtom = atom((get) => get(costsAtom).length > 0);
@@ -353,9 +353,9 @@ const starforceSimulatorMoleculeConstructor = ((_, scope) => {
     inputsErrorMessageAtom,
     isCalculatingAtom,
     costsAtom,
-    destroyedCountsAtom,
+    consumedEquipCountsAtom,
     optimizedCostsAtom,
-    optimizedDestroyedCountsAtom,
+    optimizedConsumedEquipCountsAtom,
     restoreCostComparisonRowsAtom,
     resultExistsAtom,
     isHighchartsLoadedAtom,

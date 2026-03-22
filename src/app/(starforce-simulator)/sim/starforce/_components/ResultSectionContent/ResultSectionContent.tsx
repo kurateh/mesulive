@@ -19,9 +19,9 @@ export const ResultSectionContent = () => {
     resultExistsAtom,
     isCalculatingAtom,
     costsAtom,
-    destroyedCountsAtom,
+    consumedEquipCountsAtom,
     optimizedCostsAtom,
-    optimizedDestroyedCountsAtom,
+    optimizedConsumedEquipCountsAtom,
     restoreCostComparisonRowsAtom,
     isHighchartsLoadedAtom,
   } = useMolecule(StarforceSimulatorMolecule);
@@ -29,10 +29,13 @@ export const ResultSectionContent = () => {
   const isCalculating = useAtomValue(isCalculatingAtom);
   const isHighchartsLoaded = useAtomValue(isHighchartsLoadedAtom);
   const optimizedCosts = useAtomValue(optimizedCostsAtom);
-  const optimizedDestroyedCounts = useAtomValue(optimizedDestroyedCountsAtom);
+  const optimizedConsumedEquipCounts = useAtomValue(
+    optimizedConsumedEquipCountsAtom,
+  );
   const restoreCostComparisonRows = useAtomValue(restoreCostComparisonRowsAtom);
   const optimizedCostResultExists = optimizedCosts.length > 0;
-  const optimizedDestroyedResultExists = optimizedDestroyedCounts.length > 0;
+  const optimizedConsumedEquipResultExists =
+    optimizedConsumedEquipCounts.length > 0;
 
   return (
     <div className="flex flex-col gap-2">
@@ -76,7 +79,7 @@ export const ResultSectionContent = () => {
           <TopPercent dataAtom={optimizedCostsAtom} type="cost" />
         </>
       )}
-      <SectionSubtitle>파괴 횟수</SectionSubtitle>
+      <SectionSubtitle>소모 장비</SectionSubtitle>
       <div
         className={cx(
           "mt-2 h-[400px]",
@@ -87,9 +90,9 @@ export const ResultSectionContent = () => {
           <Skeleton className="m-2 h-full w-full rounded-2xl" />
         ) : resultsExists ? (
           <ResultChart
-            dataAtom={destroyedCountsAtom}
-            overlayDataAtom={optimizedDestroyedCountsAtom}
-            type="destroyedCount"
+            dataAtom={consumedEquipCountsAtom}
+            overlayDataAtom={optimizedConsumedEquipCountsAtom}
+            type="consumedEquipCount"
           />
         ) : (
           <p className="text-default-400">
@@ -98,15 +101,18 @@ export const ResultSectionContent = () => {
         )}
       </div>
       <Spacer y={2} />
-      <TopPercent dataAtom={destroyedCountsAtom} type="destroyedCount" />
-      {optimizedDestroyedResultExists && (
+      <TopPercent
+        dataAtom={consumedEquipCountsAtom}
+        type="consumedEquipCount"
+      />
+      {optimizedConsumedEquipResultExists && (
         <>
           <p className="text-sm font-bold text-default-800">
             흔적 복구 최적화 시
           </p>
           <TopPercent
-            dataAtom={optimizedDestroyedCountsAtom}
-            type="destroyedCount"
+            dataAtom={optimizedConsumedEquipCountsAtom}
+            type="consumedEquipCount"
           />
         </>
       )}

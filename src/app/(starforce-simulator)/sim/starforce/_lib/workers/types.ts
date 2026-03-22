@@ -31,6 +31,6 @@ export type SimulateStarforceOutput =
   | {
       type: "done";
       costs: number[];
-      destroyedCounts: number[];
+      consumedEquipCounts: number[];
       restoreRecoveryCostStatsByStar: RestoreRecoveryCostStatsByStar | null;
     };

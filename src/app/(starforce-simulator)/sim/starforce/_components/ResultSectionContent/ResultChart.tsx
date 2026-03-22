@@ -9,7 +9,7 @@ import { primary, secondary } from "~/shared/style/colors";
 interface Props {
   dataAtom: Atom<number[]>; // Sorted Data Atom (1st simulation)
   overlayDataAtom: Atom<number[]>; // Sorted Data Atom (2nd simulation)
-  type: "cost" | "destroyedCount";
+  type: "cost" | "consumedEquipCount";
 }
 
 const DISPLAY_DATA_RATIO = 0.999;
@@ -248,7 +248,7 @@ export const ResultChart = ({ dataAtom, overlayDataAtom, type }: Props) => {
           visible: false,
         },
         {
-          title: { text: type === "cost" ? "메소" : "파괴 횟수" },
+          title: { text: type === "cost" ? "메소" : "소모 장비" },
           alignTicks: false,
           min: binStart,
           max: xAxisMax,
@@ -342,7 +342,7 @@ export const ResultChart = ({ dataAtom, overlayDataAtom, type }: Props) => {
             binWidth === 1
               ? putUnit(this.x)
               : `${putUnit(this.x)} ~ ${putUnit(this.x + binWidth - Number(binDigit < 4))}`
-          } : <b>${this.y}회</b>`;
+          } : <b>${this.y}개</b>`;
         },
       },
       series: [

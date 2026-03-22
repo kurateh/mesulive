@@ -6,6 +6,7 @@ import { Starforce } from "~/entities/starforce";
 import {
   getDiscountRatio,
   getRecoveryTargetStarWithoutRestore,
+  getRestoreRequiredSpareCount,
   getRestoreTargetStar,
   getRestoreTotalCost,
 } from "~/entities/starforce/utils";
@@ -54,7 +55,7 @@ addEventListener(
     );
 
     const costs: number[] = [];
-    const destroyedCounts: number[] = [];
+    const consumedEquipCounts: number[] = [];
     const restoreRecoveryCostStatsByStar = collectRestoreRecoveryCostStats
       ? Starforce.restoreAvailableStar.reduce<RestoreRecoveryCostStatsByStar>(
           (acc, star) => ({
@@ -80,7 +81,7 @@ addEventListener(
       ) {
         let star = currentStar;
         let spentCost = 0;
-        let destroyedCount = 0;
+        let consumedEquipCount = 0;
         let recoveryTrackers: Array<{
           targetStar: Starforce.RestoreAvailableStar;
           cost: number;
@@ -146,15 +147,22 @@ addEventListener(
                 });
 
                 if (restoreTotalCost !== null) {
+                  consumedEquipCount +=
+                    getRestoreRequiredSpareCount({
+                      level,
+                      star: restoreTargetStar,
+                    }) ?? 0;
                   destroyExtraCost = restoreTotalCost;
                   spentCost += restoreTotalCost;
                   star = restoreTargetStar;
                 } else {
+                  consumedEquipCount += 1;
                   star = 12;
                   destroyExtraCost = spareCost;
                   spentCost += destroyExtraCost;
                 }
               } else {
+                consumedEquipCount += 1;
                 star = 12;
                 destroyExtraCost = spareCost;
                 spentCost += destroyExtraCost;
@@ -179,8 +187,6 @@ addEventListener(
                   });
                 }
               }
-
-              destroyedCount += 1;
             } else {
               throw new Error("randomPickByProbabilities failed");
             }
@@ -214,7 +220,7 @@ addEventListener(
           // 성공했으면 result에 넣기
           if (star >= targetStar) {
             costs.push(spentCost);
-            destroyedCounts.push(destroyedCount);
+            consumedEquipCounts.push(consumedEquipCount);
             break;
           }
         }
@@ -228,7 +234,7 @@ addEventListener(
     postMessage({
       type: "done",
       costs,
-      destroyedCounts,
+      consumedEquipCounts,
       restoreRecoveryCostStatsByStar,
     } satisfies SimulateStarforceOutput);
   },
