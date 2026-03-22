@@ -235,6 +235,11 @@ UI 로직상 MVP 계열은 동시에 여러 개 선택되지 않게 처리됩니
 - 장비 레벨이 복구 가능 레벨 (`isRestoreAvailableLevel(level)`)
 - 현재 성수가 복구 가능 성수 (`isStarforceRestoreAvailableStar(현재성)`)
 
+예외 규칙:
+
+- `22성 복구`가 켜져 있으면, 23성 이상에서 파괴되어도 22성 복구를 시도합니다.
+- 이때 복구 비용은 22성 복구 비용(`restoreResourceTable[level][22]`)을 사용합니다.
+
 복구 리소스는 `restoreResourceTable[level][star]`에서 조회합니다.
 
 - `requiredSpareCount`: 필요한 스페어 개수
@@ -290,7 +295,8 @@ UI 로직상 MVP 계열은 동시에 여러 개 선택되지 않게 처리됩니
 2. 흔적 복구 조건 검사 (`restoreRecord`, 복구 가능 레벨/성수)
 3. 흔적 복구 가능 + 리소스가 유효(`requiredSpareCount > 0 && restoreCostMeso > 0`)하면:
    - `spentCost += spareCost * requiredSpareCount + restoreCostMeso`
-   - `star = destroyedAtStar` (파괴 직전 성수로 복귀)
+   - 기본: `star = destroyedAtStar` (파괴 직전 성수로 복귀)
+   - 단, 23성 이상 파괴 + 22성 복구 ON이면 `star = 22`
 4. 그 외에는 일반 파괴 처리:
    - `star = 12`
    - `spentCost += spareCost`

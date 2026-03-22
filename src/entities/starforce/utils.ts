@@ -11,6 +11,7 @@ import {
   restoreResourceTable,
   type Discount,
   type Event,
+  type RestoreAvailableStar,
 } from "./constants";
 
 export const getReachableStar = (level: number) => {
@@ -98,6 +99,55 @@ export const getDiscountRatio = (discounts: Discount[]) => {
 };
 
 const HUNDRED_MILLION = 100_000_000;
+
+export const getRestoreTargetStar = ({
+  destroyedAtStar,
+  level,
+  restoreRecord,
+}: {
+  destroyedAtStar: number;
+  level: number;
+  restoreRecord: { [key: `${number}`]: boolean };
+}): RestoreAvailableStar | null => {
+  if (!isRestoreAvailableLevel(level)) {
+    return null;
+  }
+
+  if (
+    isStarforceRestoreAvailableStar(destroyedAtStar) &&
+    restoreRecord[`${destroyedAtStar}`]
+  ) {
+    return destroyedAtStar;
+  }
+
+  if (destroyedAtStar > 22 && restoreRecord["22"]) {
+    return 22;
+  }
+
+  return null;
+};
+
+export const getRecoveryTargetStarWithoutRestore = ({
+  destroyedAtStar,
+  level,
+}: {
+  destroyedAtStar: number;
+  level: number;
+}): RestoreAvailableStar | null => {
+  if (!isRestoreAvailableLevel(level)) {
+    return null;
+  }
+
+  if (destroyedAtStar > 22) {
+    return 22;
+  }
+
+  if (isStarforceRestoreAvailableStar(destroyedAtStar)) {
+    return destroyedAtStar;
+  }
+
+  return null;
+};
 
 export const getRestoreTotalCost = ({
   level,

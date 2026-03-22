@@ -5,6 +5,8 @@ import { identity } from "fp-ts/lib/function";
 import { Starforce } from "~/entities/starforce";
 import {
   getDiscountRatio,
+  getRecoveryTargetStarWithoutRestore,
+  getRestoreTargetStar,
   getRestoreTotalCost,
 } from "~/entities/starforce/utils";
 
@@ -128,15 +130,17 @@ addEventListener(
               // 파괴
               const destroyedAtStar = star;
               let destroyExtraCost = 0;
-              const isRestoreEnabled =
-                restoreRecord[`${destroyedAtStar}`] &&
-                Starforce.isRestoreAvailableLevel(level) &&
-                Starforce.isStarforceRestoreAvailableStar(destroyedAtStar);
+              const restoreTargetStar = getRestoreTargetStar({
+                destroyedAtStar,
+                level,
+                restoreRecord,
+              });
+              const isRestoreEnabled = restoreTargetStar !== null;
 
-              if (isRestoreEnabled) {
+              if (restoreTargetStar !== null) {
                 const restoreTotalCost = getRestoreTotalCost({
                   level,
-                  star: destroyedAtStar,
+                  star: restoreTargetStar,
                   spareCost,
                   event,
                 });
@@ -144,7 +148,7 @@ addEventListener(
                 if (restoreTotalCost !== null) {
                   destroyExtraCost = restoreTotalCost;
                   spentCost += restoreTotalCost;
-                  star = destroyedAtStar;
+                  star = restoreTargetStar;
                 } else {
                   star = 12;
                   destroyExtraCost = spareCost;
@@ -164,13 +168,13 @@ addEventListener(
                   }));
                 }
 
-                if (
-                  Starforce.isRestoreAvailableLevel(level) &&
-                  Starforce.isStarforceRestoreAvailableStar(destroyedAtStar) &&
-                  !isRestoreEnabled
-                ) {
+                const recoveryTargetStar = getRecoveryTargetStarWithoutRestore({
+                  destroyedAtStar,
+                  level,
+                });
+                if (recoveryTargetStar !== null && !isRestoreEnabled) {
                   recoveryTrackers.push({
-                    targetStar: destroyedAtStar,
+                    targetStar: recoveryTargetStar,
                     cost: destroyExtraCost,
                   });
                 }
